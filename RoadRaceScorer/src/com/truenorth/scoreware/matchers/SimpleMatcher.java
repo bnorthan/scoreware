@@ -2,7 +2,7 @@ package com.truenorth.scoreware.matchers;
 
 import com.truenorth.scoreware.Racer;
 
-public class SimpleMatcher implements Matcher
+public class SimpleMatcher extends AbstractMatcher
 {
 	public double Match(Racer member, Racer racer)
 	{
@@ -37,8 +37,23 @@ public class SimpleMatcher implements Matcher
 		return match;
 	}
 	
-	public double minMatch()
+	public double getMatchThreshold()
 	{
 		return 3.9;
+	}
+	
+	public double getCheckThreshold()
+	{
+		return 3.9;
+	}
+	
+	public double getMaxMatch()
+	{
+		return 4.0;
+	}
+	
+	public void verboseMatch(Racer member, Racer racer)
+	{
+		
 	}
 }

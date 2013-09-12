@@ -41,7 +41,7 @@ public class Sefcu2013Parser extends AbstractResultParser
 			{
 				// if we didn't parse age it was likely because there were 3 names
 				// parse the last name again and then go for number...
-				result.getRacer().setLastName(split[n++]);
+				result.getRacer().setLastName(result.getRacer().getLastName()+" "+split[n++]);
 				Integer.parseInt(split[n++]);
 				//result.getRacer().setAge(Integer.parseInt(split[n++]));
 			}

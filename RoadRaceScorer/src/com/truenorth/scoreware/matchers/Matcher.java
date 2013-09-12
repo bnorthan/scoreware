@@ -6,5 +6,11 @@ public interface Matcher
 {
 	double Match(Racer member, Racer racer);
 	
-	double minMatch();
+	double getMatchThreshold();
+	
+	double getCheckThreshold();
+	
+	double getMaxMatch();
+	
+	String getInfo();
 }

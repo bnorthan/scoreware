@@ -1,6 +1,8 @@
 package com.truenorth.scoreware.extractors;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
+
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -13,18 +15,28 @@ import org.jsoup.nodes.TextNode;
 public class HtmlExtractor implements TextExtractor
 {
 	boolean keepSpaces=false;
+	boolean online=false;
 	
 	public ArrayList<String> extractText(String name)
 	{
 		try
 		{
 			ArrayList<String> strings=new ArrayList<String>();
+			
+			BufferedReader in;
+			
+			if (online)
+			{
+				URL url = new URL(name);
+				URLConnection yc = url.openConnection();
 		
-			URL url = new URL(name);
-			URLConnection yc = url.openConnection();
-		
-			BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-		
+				in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+			}
+			else
+			{
+				in = new BufferedReader(new FileReader("D:\\Brian2012\\hmrrc\\data\\HMRRC Labor Day 5k.htm"));
+			}
+			
 			String inputLine;
 		
 			String html="";
@@ -63,5 +75,10 @@ public class HtmlExtractor implements TextExtractor
 	public void setKeepSpaces(boolean keepSpaces)
 	{
 		this.keepSpaces=keepSpaces;
+	}
+	
+	public void setOnline(boolean online)
+	{
+		this.online=online;
 	}
 }

@@ -178,7 +178,19 @@ public class HmrrcExcelReader extends MembershipReader
 					{
 						racer.setSex(Racer.Sex.MALE);
 					}
+					else if (sex.equals("m"))
+					{
+						racer.setSex(Racer.Sex.MALE);
+					}
 					else if (sex.equals("female"))
+					{
+						racer.setSex(Racer.Sex.FEMALE);
+					}
+					else if (sex.equals("f"))
+					{
+						racer.setSex(Racer.Sex.FEMALE);
+					}
+					else
 					{
 						racer.setSex(Racer.Sex.FEMALE);
 					}

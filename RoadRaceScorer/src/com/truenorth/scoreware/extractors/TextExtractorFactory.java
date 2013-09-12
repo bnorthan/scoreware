@@ -11,7 +11,7 @@ public class TextExtractorFactory
 		{
 			return new HtmlExtractor();
 		}
-		
+
 		return null;
 	}
 
