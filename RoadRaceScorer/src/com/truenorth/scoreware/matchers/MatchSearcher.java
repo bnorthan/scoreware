@@ -18,6 +18,8 @@ public class MatchSearcher
 	
 	Report report=null;
 	
+	IsRacerMember isRacerMember;
+	
 	public MatchSearcher()
 	{
 		matcher=new FuzzyLevenshteinMatcher();
@@ -40,8 +42,8 @@ public class MatchSearcher
 	public Racer searchForMatch(Racer racer, ArrayList<Racer> members)
 	{
 		Racer match=null;
-		double bestMatch=-1.0;
 		
+		double bestMatch=-1.0;
 		//System.out.println(racer);
 	
 		// loop through all members
@@ -79,7 +81,7 @@ public class MatchSearcher
 			// if the match is between the match trheshold and the check threshold
 			else if ( (matchNum>bestMatch)&&(matchNum>matchThreshold)&&(matchNum<=checkThreshold))
 			{
-				if (interactive)
+			/*	if (interactive)
 				{
 					printMatch(matcher.getInfo());
 					boolean acceptMatch=acceptMatch();
@@ -90,7 +92,7 @@ public class MatchSearcher
 						match=member;
 					}
 				}
-				else
+				else*/
 				{
 					bestMatch=matchNum;
 					match=member;
@@ -104,8 +106,39 @@ public class MatchSearcher
 			}
 		}
 		
+		if ( (bestMatch>matchThreshold)&&(bestMatch<=checkThreshold))
+		{
+			if (interactive)
+			{
+				matcher.Match(match, racer);
+				
+				boolean acceptMatch=isRacerMember(racer, match);
+				
+				if (acceptMatch)
+				{
+					return match;
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
 		
 		return match;
+	}
+	
+	boolean isRacerMember(Racer racer, Racer member)
+	{
+		if (isRacerMember!=null)
+		{
+			return isRacerMember.IsRacerAMember(racer, member);
+		}
+		else
+		{
+			printMatch(matcher.getInfo());
+			return acceptMatch();
+		}
 	}
 	
 	public void setVerbose(boolean verbose)
@@ -116,6 +149,11 @@ public class MatchSearcher
 	public void setInteractive(boolean interactive)
 	{
 		this.interactive=interactive;
+	}
+	
+	public void setIsRacerMember(IsRacerMember isRacerMember)
+	{
+		this.isRacerMember=isRacerMember;
 	}
 	
 	protected void printMatch(String match)

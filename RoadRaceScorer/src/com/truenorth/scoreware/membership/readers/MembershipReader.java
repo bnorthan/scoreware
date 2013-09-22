@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import com.truenorth.scoreware.Racer;
 import com.truenorth.scoreware.Reader;
 
+/**
+ * Abstract class used to read a membership list
+ * @author bnorthan
+ *
+ */
 public abstract class MembershipReader extends Reader 
 {
 	public MembershipReader(String sourceName)

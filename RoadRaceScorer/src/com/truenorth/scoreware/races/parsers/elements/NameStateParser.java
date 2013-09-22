@@ -3,6 +3,14 @@ package com.truenorth.scoreware.races.parsers.elements;
 import com.truenorth.scoreware.Result;
 import com.truenorth.scoreware.races.parsers.ElementParser;
 
+/**
+ * Parses name and state in format "name" "SS" where SS is the state
+ * 
+ * deals with various cases.  Sometimes city is one word (Albany NY) sometimes
+ * city is two word (Clifton Park NY)
+ * @author bnorthan
+ *
+ */
 public class NameStateParser implements ElementParser
 {
 	static public int parse(String[] elements, int startElement, Result result)

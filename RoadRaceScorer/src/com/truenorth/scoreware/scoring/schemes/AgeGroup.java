@@ -1,5 +1,10 @@
 package com.truenorth.scoreware.scoring.schemes;
 
+/**
+ * represents an age group
+ * @author bnorthan
+ *
+ */
 public class AgeGroup 
 {
 	int start;

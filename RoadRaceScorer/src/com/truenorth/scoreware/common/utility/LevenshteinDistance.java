@@ -1,5 +1,11 @@
 package com.truenorth.scoreware.common.utility;
 
+/**
+ * Levenshtein Distance Calculator
+ * 
+ * from: http://stackoverflow.com/questions/955110/similarity-string-comparison-in-java
+ *
+ */
 public class LevenshteinDistance 
 {
 

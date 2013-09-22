@@ -1,7 +1,20 @@
 package com.truenorth.scoreware.extractors;
 
+/**
+ * Class used to create an appropriate TextExtractor given the name of a source
+ * @author bnorthan
+ *
+ */
 public class TextExtractorFactory 
 {
+	/**
+	 * 
+	 * @param name
+	 * name of the source
+	 * 
+	 * @return
+	 * returns an appropriate TextExtractor
+	 */
 	public static TextExtractor MakeExtractor(String name)
 	{
 		// 1.  check extension 

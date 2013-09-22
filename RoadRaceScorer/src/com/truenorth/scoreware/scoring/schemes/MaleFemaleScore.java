@@ -5,6 +5,11 @@ import com.truenorth.scoreware.Result;
 
 import com.truenorth.scoreware.Racer.Sex;
 
+/**
+ * extracts all males (or females) from a larger list
+ * @author bnorthan
+ *
+ */
 public class MaleFemaleScore implements ScoringScheme
 {
 	ArrayList<Result> females;
@@ -17,15 +22,22 @@ public class MaleFemaleScore implements ScoringScheme
 	}
 	public void Score(ArrayList<Result> results)
 	{
+		
 		for (Result result:results)
 		{
-			if (result.getRacer().getSex()==Sex.FEMALE)
+			try
 			{
-				females.add(result);
+				if (result.getRacer().getSex()==Sex.FEMALE)
+				{
+					females.add(result);
+				}
+				else if (result.getRacer().getSex()==Sex.MALE)
+				{
+					males.add(result);
+				}
 			}
-			else if (result.getRacer().getSex()==Sex.MALE)
+			catch(Exception objEx)
 			{
-				males.add(result);
 			}
 		}
 	}

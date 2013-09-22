@@ -1,5 +1,10 @@
 package com.truenorth.scoreware.common.utility;
 
+/**
+ * Some utilities used for fuzzy logic
+ * @author bnorthan
+ *
+ */
 public class FuzzyUtilities 
 {
 	public static double sigmoid(double val, double alpha)

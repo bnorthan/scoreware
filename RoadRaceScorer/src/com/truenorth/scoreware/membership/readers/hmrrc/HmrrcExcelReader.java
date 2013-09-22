@@ -20,6 +20,11 @@ import com.truenorth.scoreware.common.utility.DateParser;
 import com.truenorth.scoreware.membership.readers.MembershipReader;
 import com.truenorth.scoreware.Racer;
 
+/**
+ * Extends MembershipReader to read in the HMRRC membership list in excel format
+ * @author bnorthan
+ *
+ */
 public class HmrrcExcelReader extends MembershipReader
 {
 	public HmrrcExcelReader(String sourceName)
@@ -57,7 +62,6 @@ public class HmrrcExcelReader extends MembershipReader
 			for(Cell cell:row)
 			{
 				String name = cell.getStringCellValue();
-				System.out.println(name);
 				
 				if (name.equals("First name"))
 				{
@@ -102,7 +106,6 @@ public class HmrrcExcelReader extends MembershipReader
 				else 
 				{
 					racer.setFirstName(cell.getStringCellValue());
-					//System.out.print(cell.getStringCellValue()+" ");
 				}
 					
 				cell = row.getCell(lastNameIndex);
@@ -114,7 +117,6 @@ public class HmrrcExcelReader extends MembershipReader
 				else 
 				{
 					racer.setLastName(cell.getStringCellValue());
-					//System.out.print(cell.getStringCellValue()+" ");
 				}
 				
 				cell = row.getCell(birthDateIndex);
@@ -126,7 +128,6 @@ public class HmrrcExcelReader extends MembershipReader
 				else 
 				{
 					String dateString=cell.getStringCellValue();
-					System.out.print(dateString+" ");
 					
 					Date date=DateParser.getDate(dateString);
 					
@@ -140,11 +141,7 @@ public class HmrrcExcelReader extends MembershipReader
 					{
 						int age=DateParser.howOldInYears(date, new Date());
 						racer.setAge(age);
-						System.out.print("!!age:"+age+"!!");
 					}
-					
-					
-					
 					
 				}
 				
@@ -156,8 +153,6 @@ public class HmrrcExcelReader extends MembershipReader
 				} 
 				else 
 				{
-					System.out.print(cell.getStringCellValue()+" ");
-					
 					racer.setCity(cell.getStringCellValue());
 				}
 				
@@ -170,9 +165,7 @@ public class HmrrcExcelReader extends MembershipReader
 				else 
 				{
 					String sex=cell.getStringCellValue();
-					sex=sex.toLowerCase();
-					System.out.print(sex+" ");
-					
+					sex=sex.toLowerCase();					
 					
 					if (sex.equals("male"))
 					{
@@ -195,26 +188,17 @@ public class HmrrcExcelReader extends MembershipReader
 						racer.setSex(Racer.Sex.FEMALE);
 					}
 				}
-
-				
-				System.out.println("============");
-				
+	
 				members.add(racer);
-			
-				/*for(Cell cell:row)
-				{
-					System.out.println(cell.getStringCellValue());
-				}*/
 			}
 			
-			for(Racer racer:members)
+			/*for(Racer racer:members)
 			{
 				System.out.println(racer.getFirstName()+" "+racer.getLastName()+" "
 						+racer.getCity()+" "+racer.getAge()+" "+racer.getSex());
 				
 			}
-			
-			System.out.println("problems detected: "+ p);
+			System.out.println("problems detected: "+ p);*/
 		}
 		
 		catch (FileNotFoundException e) 

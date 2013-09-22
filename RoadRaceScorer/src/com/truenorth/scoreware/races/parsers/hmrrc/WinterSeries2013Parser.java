@@ -8,6 +8,11 @@ import com.truenorth.scoreware.Racer.Sex;
 import com.truenorth.scoreware.races.parsers.elements.NameStateParser;
 import com.truenorth.scoreware.races.parsers.AbstractResultParser;
 
+/**
+ * Parses the lines of the result table from Hang over half 2013
+ * @author bnorthan
+ *
+ */
 public class WinterSeries2013Parser extends AbstractResultParser
 {
 	

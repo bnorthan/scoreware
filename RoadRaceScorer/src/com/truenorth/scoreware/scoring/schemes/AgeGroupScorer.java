@@ -3,6 +3,11 @@ package com.truenorth.scoreware.scoring.schemes;
 import java.util.ArrayList;
 import com.truenorth.scoreware.Result;
 
+/**
+ * Extracts all Racers of an age group from a larger list of results
+ * @author bnorthan
+ *
+ */
 public class AgeGroupScorer implements ScoringScheme
 {
 	public static ArrayList<Result> ScoreAge(ArrayList<Result> results, int start, int finish)

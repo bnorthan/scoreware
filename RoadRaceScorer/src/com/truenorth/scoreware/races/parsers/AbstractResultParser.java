@@ -6,6 +6,11 @@ import com.truenorth.scoreware.Result;
 import com.truenorth.scoreware.Enums.ResultHeader;
 import com.truenorth.scoreware.races.parsers.ResultParser;
 
+/**
+ * Used to parse a line of text representing a race result
+ * @author bnorthan
+ *
+ */
 public abstract class AbstractResultParser implements ResultParser
 {
 	protected ArrayList<ResultHeader> order;
@@ -15,29 +20,18 @@ public abstract class AbstractResultParser implements ResultParser
 		this.order=order;	
 	}
 	
+	/**
+	 * Given a line of text representing a result parses that information
+	 * and returns a "Result". 
+	 */
 	public Result parseResultFromLine(String line)
 	{	
+		// This approach splits the line into separate elements
+		//
+		// Todo: keep in mind other approaches.  Such as results tables 
 		String[] split=line.split("\\s+");
 		
-		int n=split.length;
-		
-		boolean parsed=false;
-		
-		Result result=null;
-		
-		result=parseResultFromLine(split);
-			
-		if (result!=null)
-		{
-			System.out.println("YES: "+n+":"+line);
-			return result;
-		}
-		else
-		{
-			System.out.println("NO: "+n+":"+line);
-			return null;
-		}
-		
+		return(parseResultFromLine(split));
 	}
 	
 	public abstract Result parseResultFromLine(String[] split);

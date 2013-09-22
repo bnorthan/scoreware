@@ -2,6 +2,11 @@ package com.truenorth.scoreware.matchers;
 
 import com.truenorth.scoreware.Racer;
 
+/**
+ * Simple implementation of matcher
+ * @author bnorthan
+ *
+ */
 public class SimpleMatcher extends AbstractMatcher
 {
 	public double Match(Racer member, Racer racer)

@@ -4,6 +4,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Tries to parse the date using a variety of possible formats
+ * @author bnorthan
+ *
+ */
 public class DateParser 
 {
 	public static Date getDate(String dateString)
@@ -198,14 +203,14 @@ public class DateParser
 		{
 		}
 		
-		System.out.print("****"+"nothing worked!!"+"****");
+		//System.out.print("****"+"nothing worked!!"+"****");
 		
 		return null;
 	}
 	
 	public static int howOldInYears(Date birthday, Date today)
 	{
-		System.out.println(birthday+" "+today);
+		//System.out.println(birthday+" "+today);
 		long howOldInMils=today.getTime()-birthday.getTime();
 		int howOldInYears=(int)(howOldInMils/(1000*60*60*24*365.25));
 		

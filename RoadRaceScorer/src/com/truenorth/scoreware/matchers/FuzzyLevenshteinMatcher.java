@@ -5,6 +5,12 @@ import com.truenorth.scoreware.Racer;
 import com.truenorth.scoreware.common.utility.LevenshteinDistance;
 import com.truenorth.scoreware.common.utility.FuzzyUtilities;
 
+/**
+ * A matching algorithm that uses fuzzy logic and the Levenshtein algorithm
+ * to determine how closely two racers match.
+ * @author bnorthan
+ *
+ */
 public class FuzzyLevenshteinMatcher extends AbstractMatcher
 {
 	public double getMatchThreshold()  

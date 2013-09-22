@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import com.truenorth.scoreware.Result;
 import com.truenorth.scoreware.Enums.ResultHeader;
 import com.truenorth.scoreware.extractors.overall.OverallFromSizeAndOrder;
-import com.truenorth.scoreware.races.parsers.hmrrc.WinterSeries2013Parser;
+import com.truenorth.scoreware.races.parsers.hmrrc.Anniversary2013Parser;
 
 import com.truenorth.scoreware.races.readers.RaceReader;
 
 /**
- * Extends race reader to read winter series 2013 results
+ * Extends RaceReader to read Anniversarry 2013 results
  * @author bnorthan
  *
  */
-public class WinterSeries2013Reader extends RaceReader
+public class Anniversary2013Reader extends RaceReader
 {
-	public WinterSeries2013Reader(String sourceName)
+	public Anniversary2013Reader(String sourceName)
 	{
 		super(sourceName);
 		
@@ -26,14 +26,10 @@ public class WinterSeries2013Reader extends RaceReader
 		order.add(ResultHeader.AGE);
 		order.add(ResultHeader.SEX);
 		order.add(ResultHeader.CITY);
-		order.add(ResultHeader.STATE);
-		order.add(ResultHeader.TIME);
-		order.add(ResultHeader.PACE);
 		
 		overallExtractor=new OverallFromSizeAndOrder(order);
-		resultParser=new WinterSeries2013Parser(order);	
+		resultParser=new Anniversary2013Parser(order);	
 		
 		results=new ArrayList<Result>();
 	}
-
 }

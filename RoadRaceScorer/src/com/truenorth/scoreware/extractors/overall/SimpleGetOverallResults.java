@@ -11,15 +11,8 @@ import com.truenorth.scoreware.extractors.TextExtractor;
  * @author bnorthan
  *
  */
-public class OverallFromSizeAndOrder implements OverallExtractor
-{
-	ArrayList<ResultHeader> order;
-	
-	public OverallFromSizeAndOrder(ArrayList<ResultHeader> order)
-	{
-		this.order=order;
-	}
-	
+public class SimpleGetOverallResults implements OverallExtractor
+{	
 	public ArrayList<String> extractText(ArrayList<String> lines)
 	{
 		ArrayList<String> overall=new ArrayList<String>();
@@ -32,28 +25,25 @@ public class OverallFromSizeAndOrder implements OverallExtractor
 			
 			int n=split.length;
 			
-			//if (n>=order.size()-1)
+			try
 			{
-				try
-				{
-					int place=Integer.parseInt(split[0]);
-					//System.out.println("place/expected: "+place+" : "+expectedPlace);
+				int place=Integer.parseInt(split[0]);
+				System.out.println("place/expected: "+place+" : "+expectedPlace);
 					
-					if (place==expectedPlace)
-					{
-						overall.add(line);
-						expectedPlace++;
-					}
-				}
-				catch(Exception ex)
+				if (place==expectedPlace)
 				{
-					//System.out.println("Parse Exception");
+					overall.add(line);
+					expectedPlace++;
 				}
-				
-				
 			}
+			catch(Exception ex)
+			{
+				System.out.println("Parse Exception");
+			}
+				
 		}
 		
 		return overall;
 	}
 }
+

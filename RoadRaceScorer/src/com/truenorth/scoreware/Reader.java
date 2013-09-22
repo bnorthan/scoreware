@@ -1,7 +1,5 @@
 package com.truenorth.scoreware;
 
-import java.util.ArrayList;
-
 import com.truenorth.scoreware.extractors.TextExtractor;
 import com.truenorth.scoreware.extractors.TextExtractorFactory;
 
@@ -17,11 +15,11 @@ public abstract class Reader
 	{
 		this.sourceName=sourceName;
 		
+		// use the TextExtractorFactory to create the appropriate text extractor
+		// based on the type of source
 		this.extractor=TextExtractorFactory.MakeExtractor(sourceName);
 	}
 	
 	public abstract void read();
-
-	//public abstract ArrayList<Racer> getMembers();
 	
 }

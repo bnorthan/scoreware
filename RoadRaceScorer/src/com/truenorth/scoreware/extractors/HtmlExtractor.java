@@ -12,10 +12,15 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.TextNode;
 
+/**
+ * Converts html to text
+ * @author bnorthan
+ *
+ */
 public class HtmlExtractor implements TextExtractor
 {
 	boolean keepSpaces=false;
-	boolean online=false;
+	boolean online=true;
 	
 	public ArrayList<String> extractText(String name)
 	{
@@ -34,7 +39,7 @@ public class HtmlExtractor implements TextExtractor
 			}
 			else
 			{
-				in = new BufferedReader(new FileReader("D:\\Brian2012\\hmrrc\\data\\HMRRC Labor Day 5k.htm"));
+				in = new BufferedReader(new FileReader(name));
 			}
 			
 			String inputLine;
