@@ -5,18 +5,11 @@ import java.util.ArrayList;
 import com.truenorth.scoreware.Result;
 import com.truenorth.scoreware.Enums.ResultHeader;
 import com.truenorth.scoreware.Racer.Sex;
-import com.truenorth.scoreware.races.parsers.elements.NameStateParser;
 import com.truenorth.scoreware.races.parsers.StringResultParser;
 
-/**
- * Parses the lines of the result table from Hang over half 2013
- * @author bnorthan
- *
- */
-public class WinterSeries2013Parser extends StringResultParser
+public class Voorhesville2013Parser extends StringResultParser
 {
-	
-	public WinterSeries2013Parser(ArrayList<ResultHeader> order)
+	public Voorhesville2013Parser(ArrayList<ResultHeader> order)
 	{
 		super(order);	
 	}
@@ -36,6 +29,7 @@ public class WinterSeries2013Parser extends StringResultParser
 			result.getRacer().setFirstName(split[n++]);
 			result.getRacer().setLastName(split[n++]);
 			
+			int age=-1;
 			// next should be age so try and parse that
 			try
 			{
@@ -45,8 +39,8 @@ public class WinterSeries2013Parser extends StringResultParser
 			catch (Exception ex)
 			{
 				// if we didn't parse age it was likely because there were 3 names
-				// parse the last name again and then go for age...
-				result.getRacer().setLastName(split[n++]);
+				// parse the last name again and then go for number...
+				result.getRacer().setLastName(result.getRacer().getLastName()+" "+split[n++]);
 				result.getRacer().setAge(Integer.parseInt(split[n++]));
 			}
 			
@@ -63,16 +57,16 @@ public class WinterSeries2013Parser extends StringResultParser
 			{
 				// something went wrong			
 			}
-					
-			// next is town and state (can be parsed together)
-			n=NameStateParser.parse(split, ++n, result);
+			n++;
 			
 			return result;
 		}
 		catch(Exception ex)
 		{
-			System.out.println("Parse Exception: Scheme1 failed");
+			System.out.println("Parse Exception: Voorhesville failed");
 			return null;
 		}
 	}
+
+
 }

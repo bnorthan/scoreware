@@ -6,14 +6,14 @@ import com.truenorth.scoreware.Result;
 import com.truenorth.scoreware.Enums.ResultHeader;
 import com.truenorth.scoreware.Racer.Sex;
 import com.truenorth.scoreware.races.parsers.elements.NameStateParser;
-import com.truenorth.scoreware.races.parsers.AbstractResultParser;
+import com.truenorth.scoreware.races.parsers.StringResultParser;
 
 /**
  * Parses the lines of the result table from Anniversary 2013
  * @author bnorthan
  *
  */
-public class Anniversary2013Parser extends AbstractResultParser
+public class Anniversary2013Parser extends StringResultParser
 {
 	
 	public Anniversary2013Parser(ArrayList<ResultHeader> order)

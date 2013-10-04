@@ -24,6 +24,10 @@ public class TextExtractorFactory
 		{
 			return new HtmlExtractor();
 		}
+		else if (ext.equals("txt"))
+		{
+			return new TextFileExtractor();
+		}
 
 		return null;
 	}

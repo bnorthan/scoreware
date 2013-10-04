@@ -8,10 +8,14 @@ public class Result
 	int overallPlace;
 	int categoryPlace;
 	
+	String categoryString;
+	
 	String time;
 	String pace;
 	
 	int number;
+	
+	int points;
 	
 	public Result()
 	{
@@ -48,6 +52,26 @@ public class Result
 	public Racer getRacer()
 	{
 		return racer;
+	}
+	
+	public int getPoints()
+	{
+		return points;
+	}
+	
+	public void setPoints(int points)
+	{
+		this.points=points;
+	}
+	
+	public void setCategoryString(String categoryString)
+	{
+		this.categoryString=categoryString;
+	}
+	
+	public String getCategoryString()
+	{
+		return categoryString;
 	}
 	
 	@Override

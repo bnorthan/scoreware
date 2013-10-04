@@ -9,12 +9,14 @@ import com.truenorth.scoreware.races.parsers.hmrrc.WinterSeries2013Parser;
 
 import com.truenorth.scoreware.races.readers.RaceReader;
 
+import com.truenorth.scoreware.races.readers.HtmlRaceReader;
+
 /**
  * Extends race reader to read winter series 2013 results
  * @author bnorthan
  *
  */
-public class WinterSeries2013Reader extends RaceReader
+public class WinterSeries2013Reader extends HtmlRaceReader
 {
 	public WinterSeries2013Reader(String sourceName)
 	{

@@ -16,6 +16,15 @@ public class Enums
 		NUMBER,
 		CATEGORY,
 		YESNO,
-		TEAM
+		TEAM,
+		POINTS
 	};
+	
+	public enum HmrrcRaces
+	{
+		HUDSONMOHAWK2012,
+		SEFCU2013,
+		ANNIVERSARY2013,
+		VOORHESVILLE2013,
+	}
 }

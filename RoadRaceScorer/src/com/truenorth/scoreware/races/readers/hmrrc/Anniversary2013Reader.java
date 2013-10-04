@@ -8,13 +8,14 @@ import com.truenorth.scoreware.extractors.overall.OverallFromSizeAndOrder;
 import com.truenorth.scoreware.races.parsers.hmrrc.Anniversary2013Parser;
 
 import com.truenorth.scoreware.races.readers.RaceReader;
+import com.truenorth.scoreware.races.readers.HtmlRaceReader;
 
 /**
  * Extends RaceReader to read Anniversarry 2013 results
  * @author bnorthan
  *
  */
-public class Anniversary2013Reader extends RaceReader
+public class Anniversary2013Reader extends HtmlRaceReader
 {
 	public Anniversary2013Reader(String sourceName)
 	{

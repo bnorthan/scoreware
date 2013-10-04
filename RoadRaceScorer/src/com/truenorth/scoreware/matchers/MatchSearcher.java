@@ -3,21 +3,18 @@ package com.truenorth.scoreware.matchers;
 import java.util.ArrayList;
 
 import com.truenorth.scoreware.Racer;
-
-import com.truenorth.scoreware.Report;
+import com.truenorth.scoreware.Result;
 
 public class MatchSearcher 
 {
 	Matcher matcher;
 	boolean verbose=false;
-	boolean interactive;
+	boolean interactive=true;
 	
 	double matchThreshold=0;
 	double checkThreshold=0;
 	double maxThreshold=0;
-	
-	Report report=null;
-	
+
 	IsRacerMember isRacerMember;
 	
 	public MatchSearcher()
@@ -27,6 +24,8 @@ public class MatchSearcher
 		matchThreshold=matcher.getMatchThreshold();
 		checkThreshold=matcher.getCheckThreshold();
 		maxThreshold=matcher.getMaxMatch();
+		
+		isRacerMember=new IsRacerMemberCommandLine();
 	}
 	
 	public void setMatchThreshold(double percentMax)
@@ -38,6 +37,38 @@ public class MatchSearcher
 	{
 		checkThreshold=maxThreshold*percentMax/100.0;
 	}
+	
+	public ArrayList<Result> findMembers(ArrayList<Result> racers, ArrayList<Racer> membershipList, int num)
+	{
+		ArrayList<Result> members=new ArrayList<Result>();
+		
+		resultsLoop:
+		for (Result result:racers)
+		{
+			try
+			{
+				Racer match=searchForMatch(result.getRacer(), membershipList);
+		
+				if (match!=null)
+				{
+					members.add(result);
+				}
+			
+			}
+			catch (Exception objEx)
+			{
+			
+			}
+			
+			if (members.size()==num)
+			{
+				break resultsLoop;
+			}
+		}
+		
+		return members;
+	}
+	
 	
 	public Racer searchForMatch(Racer racer, ArrayList<Racer> members)
 	{
@@ -112,7 +143,7 @@ public class MatchSearcher
 			{
 				matcher.Match(match, racer);
 				
-				boolean acceptMatch=isRacerMember(racer, match);
+				boolean acceptMatch=isRacerMember.IsRacerAMember(racer, match);
 				
 				if (acceptMatch)
 				{
@@ -126,19 +157,6 @@ public class MatchSearcher
 		}
 		
 		return match;
-	}
-	
-	boolean isRacerMember(Racer racer, Racer member)
-	{
-		if (isRacerMember!=null)
-		{
-			return isRacerMember.IsRacerAMember(racer, member);
-		}
-		else
-		{
-			printMatch(matcher.getInfo());
-			return acceptMatch();
-		}
 	}
 	
 	public void setVerbose(boolean verbose)
@@ -161,19 +179,30 @@ public class MatchSearcher
 		System.out.print(match);
 	}
 	
-	protected boolean acceptMatch()
+	class IsRacerMemberCommandLine implements IsRacerMember
 	{
-		System.out.println("accept match (y/n)?");
-		String yesOrNo=new java.util.Scanner(System.in).next();
-		
-		if (yesOrNo.equals("y"))
+		public boolean IsRacerAMember(Racer racer, Racer member)
 		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+			System.out.println("************************");
+			System.out.println("Is this person a member (y/n)?");
+			System.out.println(racer);
+			System.out.println("************************");
+			
+			System.out.println("(they are possibly this person)");
+			System.out.println(member);
+			
+			String yesOrNo=new java.util.Scanner(System.in).next();
+			
+			if (yesOrNo.equals("y"))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		
+		}
 	}
+
 }

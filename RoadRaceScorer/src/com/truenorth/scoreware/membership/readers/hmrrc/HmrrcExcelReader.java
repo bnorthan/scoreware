@@ -42,7 +42,7 @@ public class HmrrcExcelReader extends MembershipReader
         
 			//Get the workbook instance for XLS file 
 			HSSFWorkbook workbook = new HSSFWorkbook(file);
-		 
+		    
 			//Get first sheet from the workbook
 			HSSFSheet sheet = workbook.getSheetAt(0);
 		 

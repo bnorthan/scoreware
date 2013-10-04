@@ -10,6 +10,6 @@ import com.truenorth.scoreware.Result;
  */
 public interface ResultParser 
 {
-	Result parseResultFromLine(String line);
+	Result parseResultFromLine(Object line);
 }
 

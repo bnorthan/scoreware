@@ -29,7 +29,8 @@ public class HtmlExtractor implements TextExtractor
 			ArrayList<String> strings=new ArrayList<String>();
 			
 			BufferedReader in;
-			
+		
+			online=false;
 			if (online)
 			{
 				URL url = new URL(name);
@@ -39,6 +40,7 @@ public class HtmlExtractor implements TextExtractor
 			}
 			else
 			{
+				//name="D:/Brian2012/hmrrc/data/HMRRC Labor Day 5k.htm";
 				in = new BufferedReader(new FileReader(name));
 			}
 			

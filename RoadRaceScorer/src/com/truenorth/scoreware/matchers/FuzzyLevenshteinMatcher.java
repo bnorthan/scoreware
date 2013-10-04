@@ -37,22 +37,19 @@ public class FuzzyLevenshteinMatcher extends AbstractMatcher
 	{
 		double nameMatch=matchName(racer, member);
 		
-		double ageDif=Math.abs(member.getAge()-racer.getAge());
+		double ageMatch=matchAge(racer, member);
 		
-		double ageMatch=FuzzyUtilities.sigmoid(-ageDif, .1);
-		
-		double sexMatch;
-		
-		if (member.getSex()==racer.getSex())
+		double sexMatch=matchSex(racer, member);
+	
+		double cityMatch;
+		if (racer.getCity()!=null)
 		{
-			sexMatch=0.5;
+			cityMatch=0.5*LevenshteinDistance.similarity(member.getCity(), racer.getCity());
 		}
 		else
 		{
-			sexMatch=0.0;
+			cityMatch=0.5;
 		}
-		
-		double cityMatch=0.5*LevenshteinDistance.similarity(member.getCity(), racer.getCity());
 		
 		double match=nameMatch+ageMatch+sexMatch+cityMatch;
 		
@@ -62,12 +59,31 @@ public class FuzzyLevenshteinMatcher extends AbstractMatcher
 		info+="Racer Name: "+racer.getFirstName()+" "+racer.getLastName()+"\n";
 		info+="Member Name: "+member.getFirstName()+" "+member.getLastName()+"\n";
 		info+="name match: "+nameMatch+"\n";
-		info+="age: "+racer.getAge()+" "+member.getAge()+" "+ageDif+" "+ageMatch+"\n";
+	//	info+="age: "+racer.getAge()+" "+member.getAge()+" "+ageDif+" "+ageMatch+"\n";
 		info+="sex: "+racer.getSex()+" "+member.getSex()+" "+sexMatch+"\n";
 		info+="city: "+racer.getCity()+" "+member.getCity()+" "+cityMatch+"\n";
 		info+="Total match: "+match+"/"+getMaxMatch()+"\n";
 		
 		return match;
+	}
+	
+	double matchAge(Racer racer, Racer member)
+	{
+		double ageDif=Math.abs(member.getAge()-racer.getAge());
+		
+		return FuzzyUtilities.sigmoid(-ageDif, .1);
+	}
+	
+	double matchSex(Racer racer, Racer member)
+	{
+		if (member.getSex()==racer.getSex())
+		{
+			return 0.5;
+		}
+		else
+		{
+			return 0.0;
+		}
 	}
 	
 	double matchName(Racer racer, Racer member)
