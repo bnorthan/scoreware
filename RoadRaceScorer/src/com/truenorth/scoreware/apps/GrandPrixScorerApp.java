@@ -22,56 +22,14 @@ import com.truenorth.scoreware.writers.CommandLineWriter;
 import com.truenorth.scoreware.writers.FileWriter;
 import com.truenorth.scoreware.writers.JDBCSqlWriter;
 
-import com.truenorth.scoreware.Enums.HmrrcRaces;
+import com.truenorth.scoreware.Enums.RacePatterns;
 
-public class GrandPrixScorerApp 
+public class GrandPrixScorerApp extends ScoringApp
 {
-	String membershipSourceName;
-	String raceSourceName;
-	
-	MembershipReader membershipReader;
-	RaceReader raceReader;
 	GrandPrixScoringScheme scheme;
-	
-	IsRacerMember isRacerMember=null;
-	
-	HmrrcRaces racePattern;
-		
-	public void setMembershipSourceName(String membershipSourceName)
-	{
-		this.membershipSourceName=membershipSourceName;
-	}
-	
-	public void setRaceSourceName(String raceSourceName)
-	{
-		this.raceSourceName=raceSourceName;
-	}
-	
-	public void setIsRacerMember(IsRacerMember isRacerMember)
-	{
-		this.isRacerMember=isRacerMember;
-	}
-	
-	public void ReadMembership()
-	{
-		// use the membership source name to get a membership reader
-		membershipReader=MembershipReaderFactory.getMembershipReader(membershipSourceName);
-		membershipReader.read();			
-	}
 	
 	public void Score()
 	{
-		//ReadMembership();
-		
-		System.out.println("Race Pattern: "+racePattern);
-		
-		// use the race source name to get a race reader
-		raceReader=RaceReaderFactory.getRaceReader(raceSourceName, racePattern);
-		
-		System.out.println("Race Reader: "+raceReader.getClass().toString());
-		
-		raceReader.read();
-			
 		scheme=new GrandPrixScoringScheme();
 		
 		scheme.AddAgeGroup(1, 29);
@@ -125,11 +83,6 @@ public class GrandPrixScorerApp
 	{
 		FileWriter writer=new FileWriter(fileName);
 		WriteGrandPrixResults(writer);
-	}
-	
-	public void setRacePattern(HmrrcRaces racePattern)
-	{
-		this.racePattern=racePattern;
 	}
 	
 	public void writeToDatabase()

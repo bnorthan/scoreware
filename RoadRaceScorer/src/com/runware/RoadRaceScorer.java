@@ -13,7 +13,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import com.truenorth.scoreware.membership.readers.hmrrc.*;
 
-import com.truenorth.scoreware.extractors.HtmlExtractor;
 import com.truenorth.scoreware.races.readers.RaceReader;
 import com.truenorth.scoreware.matchers.MatchSearcher;
 

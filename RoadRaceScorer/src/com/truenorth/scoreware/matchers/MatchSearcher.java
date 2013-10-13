@@ -38,6 +38,11 @@ public class MatchSearcher
 		checkThreshold=maxThreshold*percentMax/100.0;
 	}
 	
+	public void setMatcher(Matcher matcher)
+	{
+		this.matcher=matcher;
+	}
+	
 	public ArrayList<Result> findMembers(ArrayList<Result> racers, ArrayList<Racer> membershipList, int num)
 	{
 		ArrayList<Result> members=new ArrayList<Result>();
@@ -75,7 +80,7 @@ public class MatchSearcher
 		Racer match=null;
 		
 		double bestMatch=-1.0;
-		//System.out.println(racer);
+		System.out.println(racer);
 	
 		// loop through all members
 		for(Racer member:members)
@@ -83,16 +88,17 @@ public class MatchSearcher
 			// check for a match
 			double matchNum=matcher.Match(member, racer);
 			
-			/*if ( (member.getLastName().equals("Munson")) &&
-					(racer.getLastName().equals("Munson")) )
+			/*if ( (racer.getFirstName().equals("Linda")) &&
+					(racer.getLastName().equals("Keeley")) &&
+					(member.getLastName().equals("Keeley")))
 			//if (result.getRacer().getLastName().equals("O'Connor T"))
 			{
 				
 				System.out.println(matcher.getInfo());
-				System.out.println("matchNum: "+matchNum);
+				//System.out.println("matchNum: "+matchNum);
 				new java.util.Scanner(System.in).nextLine();
 			}*/
-			
+				
 			//System.out.println(racer.getLastName()+ " matches "+member.getLastName()+" to degree "+matchNum);
 			
 			// if the match is better then the best so far and higher then both the match threshold
@@ -142,6 +148,7 @@ public class MatchSearcher
 			if (interactive)
 			{
 				matcher.Match(match, racer);
+				System.out.println(matcher.getInfo());
 				
 				boolean acceptMatch=isRacerMember.IsRacerAMember(racer, match);
 				
@@ -155,6 +162,16 @@ public class MatchSearcher
 				}
 			}
 		}
+		
+	/*	if ( (racer.getFirstName().equals("Shana")) &&
+				(racer.getLastName().equals("Marra")) )
+		//if (result.getRacer().getLastName().equals("O'Connor T"))
+		{
+			
+			System.out.println(matcher.getInfo());
+			//System.out.println("matchNum: "+matchNum);
+			new java.util.Scanner(System.in).nextLine();
+		}*/
 		
 		return match;
 	}
@@ -204,5 +221,4 @@ public class MatchSearcher
 		
 		}
 	}
-
 }

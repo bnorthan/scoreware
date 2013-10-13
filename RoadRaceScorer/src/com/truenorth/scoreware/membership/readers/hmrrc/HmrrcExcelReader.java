@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import com.truenorth.scoreware.common.utility.DateParser;
+import com.truenorth.scoreware.common.utility.SexParser;
 import com.truenorth.scoreware.membership.readers.MembershipReader;
 import com.truenorth.scoreware.Racer;
 
@@ -165,28 +166,7 @@ public class HmrrcExcelReader extends MembershipReader
 				else 
 				{
 					String sex=cell.getStringCellValue();
-					sex=sex.toLowerCase();					
-					
-					if (sex.equals("male"))
-					{
-						racer.setSex(Racer.Sex.MALE);
-					}
-					else if (sex.equals("m"))
-					{
-						racer.setSex(Racer.Sex.MALE);
-					}
-					else if (sex.equals("female"))
-					{
-						racer.setSex(Racer.Sex.FEMALE);
-					}
-					else if (sex.equals("f"))
-					{
-						racer.setSex(Racer.Sex.FEMALE);
-					}
-					else
-					{
-						racer.setSex(Racer.Sex.FEMALE);
-					}
+					racer.setSex(SexParser.parseSex(sex));
 				}
 	
 				members.add(racer);

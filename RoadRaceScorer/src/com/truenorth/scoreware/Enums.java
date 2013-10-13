@@ -20,7 +20,7 @@ public class Enums
 		POINTS
 	};
 	
-	public enum HmrrcRaces
+	public enum RacePatterns
 	{
 		HUDSONMOHAWK2012,
 		SEFCU2013,

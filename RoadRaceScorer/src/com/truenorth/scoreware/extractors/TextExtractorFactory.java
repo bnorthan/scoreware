@@ -22,7 +22,7 @@ public class TextExtractorFactory
 		
 		if (ext.equals("html")||ext.equals("htm"))
 		{
-			return new HtmlExtractor();
+			return new HtmlTextExtractor();
 		}
 		else if (ext.equals("txt"))
 		{

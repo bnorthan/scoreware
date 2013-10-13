@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 
-public class TextFileExtractor implements TextExtractor
+public class TextFileExtractor extends TextExtractor
 {
 	public ArrayList<String> extractText(String name)
 	{

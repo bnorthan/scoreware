@@ -31,10 +31,16 @@ public class HudsonMohawk2013Parser extends TableResultParser
 			}
 			
 			result.getRacer().setCity(elements.child(6).text());
-			System.out.println(result.getRacer());
-		
+			
 			result.getRacer().setState(elements.child(7).text());
-			return null;
+			
+			int place=Integer.parseInt(elements.child(0).text());
+			result.setOverallPlace(place);
+			
+			System.out.println(result.getRacer());
+			System.out.println(result);
+			
+			return result;
 		}
 		catch (Exception ex)
 		{

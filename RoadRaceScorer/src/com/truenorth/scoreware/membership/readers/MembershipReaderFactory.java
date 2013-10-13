@@ -19,6 +19,11 @@ public class MembershipReaderFactory
 			return new HmrrcXmlReader(membershipSource);
 		}
 		
+		else if (ext.equals("txt"))
+		{
+			return new SimpleTextMembershipReader(membershipSource);
+		}
+		
 		return null;
 	}
 }

@@ -8,14 +8,14 @@ import com.truenorth.scoreware.extractors.overall.OverallFromSizeAndOrder;
 import com.truenorth.scoreware.races.parsers.hmrrc.Sefcu2013Parser;
 import com.truenorth.scoreware.races.readers.RaceReader;
 
-import com.truenorth.scoreware.races.readers.HtmlRaceReader;
+import com.truenorth.scoreware.races.readers.RunScoreTextReader;
 
 /**
  * Extends RaceReader to read Sefcu 2013 results
  * @author bnorthan
  *
  */
-public class Sefcu2013Reader extends HtmlRaceReader
+public class Sefcu2013Reader extends RunScoreTextReader
 {
 	public Sefcu2013Reader(String sourceName)
 	{
@@ -34,6 +34,8 @@ public class Sefcu2013Reader extends HtmlRaceReader
 		order.add(ResultHeader.PACE);
 		
 		overallExtractor=new OverallFromSizeAndOrder(order);
-		resultParser=new Sefcu2013Parser(order);		
+		resultParser=new Sefcu2013Parser(order);	
+		
+		extractor.setKeepSpaces(true);
 	}
 }

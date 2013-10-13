@@ -1,7 +1,7 @@
 package com.truenorth.scoreware.races.readers;
 
 import com.truenorth.scoreware.races.readers.hmrrc.*;
-import com.truenorth.scoreware.Enums.HmrrcRaces;
+import com.truenorth.scoreware.Enums.RacePatterns;
 
 public class RaceReaderFactory 
 {
@@ -11,22 +11,22 @@ public class RaceReaderFactory
 		//return new Voorhesville2013Reader(raceSource);
 	}
 	
-	static public RaceReader getRaceReader(String raceSource, HmrrcRaces racePattern)
+	static public RaceReader getRaceReader(String raceSource, RacePatterns racePattern)
 	{
 		System.out.println(racePattern);
-		if (racePattern.equals(HmrrcRaces.SEFCU2013))
+		if (racePattern.equals(RacePatterns.SEFCU2013))
 		{
 			return new Sefcu2013Reader(raceSource);
 		}
-		else if (racePattern.equals(HmrrcRaces.ANNIVERSARY2013))
+		else if (racePattern.equals(RacePatterns.ANNIVERSARY2013))
 		{
 			return new Anniversary2013Reader(raceSource);
 		}
-		else if (racePattern.equals(HmrrcRaces.VOORHESVILLE2013))
+		else if (racePattern.equals(RacePatterns.VOORHESVILLE2013))
 		{
 			return new Voorhesville2013Reader(raceSource);
 		}
-		else if (racePattern.equals(HmrrcRaces.HUDSONMOHAWK2012))
+		else if (racePattern.equals(RacePatterns.HUDSONMOHAWK2012))
 		{
 			return new HudsonMohawk2012Reader(raceSource);
 		}
@@ -34,6 +34,5 @@ public class RaceReaderFactory
 		System.out.println("NOTHING!");
 		
 		return null;
-		//return new Voorhesville2013Reader(raceSource);
 	}
 }

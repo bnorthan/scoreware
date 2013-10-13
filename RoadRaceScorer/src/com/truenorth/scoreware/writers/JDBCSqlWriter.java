@@ -51,7 +51,8 @@ public class JDBCSqlWriter extends SqlWriter
 			{
 				Statement statement=connection.createStatement();
 			
-				String query = "CREATE TABLE "+tableName+ " (Name CHAR(50), CAT CHAR(20), POINTS INT)";
+				//String query = "CREATE TABLE "+tableName+ " (Name CHAR(50), CAT CHAR(20), POINTS INT)";
+				String query = "CREATE TABLE "+tableName+ " (Name CHAR(50), PLACE INT)";
 				
 				statement.execute(query);
 			}
@@ -91,8 +92,11 @@ public class JDBCSqlWriter extends SqlWriter
 			
 			String racerName=result.getRacer().getFirstName()+" "+result.getRacer().getLastName();
 			
+			//String query="INSERT INTO "+tableName+" VALUES (";
+			//query+="'"+racerName+"', '"+result.getCategoryString()+"', '"+ result.getPoints()+"')";
+			
 			String query="INSERT INTO "+tableName+" VALUES (";
-			query+="'"+racerName+"', '"+result.getCategoryString()+"', '"+ result.getPoints()+"')";
+			query+="'"+racerName+"', '"+result.getOverallPlace()+"')";
 			
 			statement.execute(query);
 		}

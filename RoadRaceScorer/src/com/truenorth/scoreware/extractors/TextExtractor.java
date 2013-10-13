@@ -8,8 +8,10 @@ import java.util.ArrayList;
  *
  * an interface used to extract text from a source   
  */
-public interface TextExtractor 
+public abstract class TextExtractor 
 {
+	boolean keepSpaces=false;
+	
 	/**
 	 * extract text from a source
 	 * @param name
@@ -17,5 +19,11 @@ public interface TextExtractor
 	 * @return
 	 * an arraylist of strings.  Each String represents a line of text
 	 */
-	ArrayList<String> extractText(String name);
+	public abstract ArrayList<String> extractText(String name);
+	
+	public void setKeepSpaces(boolean keepSpaces)
+	{
+		this.keepSpaces=keepSpaces;
+	}
+	
 }
