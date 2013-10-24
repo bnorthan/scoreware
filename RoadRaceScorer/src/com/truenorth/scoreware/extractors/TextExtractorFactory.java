@@ -28,6 +28,10 @@ public class TextExtractorFactory
 		{
 			return new TextFileExtractor();
 		}
+		else if (ext.equals("pdf"))
+		{
+			return new PdfTextExtractor();
+		}
 
 		return null;
 	}

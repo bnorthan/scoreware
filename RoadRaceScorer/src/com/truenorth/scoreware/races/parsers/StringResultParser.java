@@ -11,15 +11,8 @@ import com.truenorth.scoreware.races.parsers.ResultParser;
  * @author bnorthan
  *
  */
-public abstract class StringResultParser implements ResultParser
+public abstract class StringResultParser extends ResultParser
 {
-	protected ArrayList<ResultHeader> order;
-
-	public StringResultParser(ArrayList<ResultHeader> order)
-	{
-		this.order=order;	
-	}
-	
 	/**
 	 * Given a line of text representing a result parses that information
 	 * and returns a "Result". 

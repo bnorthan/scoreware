@@ -87,7 +87,7 @@ public class FuzzyLevenshteinMatcher extends AbstractMatcher
 	
 	double matchAge(Racer racer, Racer member)
 	{
-		double ageDif=Math.abs(member.getAge()-racer.getAge()-1);
+		double ageDif=Math.abs(member.getAge()-racer.getAge());
 		
 		return 2*FuzzyUtilities.sigmoid(-ageDif, 1);
 	}

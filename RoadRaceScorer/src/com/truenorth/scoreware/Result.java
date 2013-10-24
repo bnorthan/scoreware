@@ -1,25 +1,42 @@
 package com.truenorth.scoreware;
 
 import java.util.Date;
+import java.util.ArrayList;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import com.truenorth.scoreware.common.utility.DateTimeParser;
 
 public class Result 
 {
 	Racer racer;
+	
 	int overallPlace;
+	
 	int categoryPlace;
 	
 	String categoryString;
-	
-	String time;
+		
 	String pace;
 	
 	int number;
 	
 	int points;
 	
+	String chipTimeString;
+	String gunTimeString;
+	
+	Date chipTime;
+	Date gunTime;
+	ArrayList<Date> splits;
+	
 	public Result()
 	{
 		racer=new Racer();
+		
+		categoryString="unknown";
+		points=0;
 	}
 	
 	public void setOverallPlace(int overallPlace)
@@ -44,11 +61,56 @@ public class Result
 	{
 		this.number=number;
 	}
+	
 	public int getNumber()
 	{
 		return(number);
 	}
 	
+	public void setChipTime(Date chipTime)
+	{
+		this.chipTime=chipTime;
+	}
+	
+	public Date getChipTime()
+	{
+		return chipTime;
+	}
+	
+	public void setGunTime(Date gunTime)
+	{
+		this.gunTime=gunTime;
+	}
+	
+	public Date getGunTime()
+	{
+		return gunTime;
+	}
+	
+	public void setChipTimeString(String chipTimeString)
+	{
+		this.chipTimeString=chipTimeString;
+		
+		chipTime=DateTimeParser.getTime(chipTimeString);
+	}
+	
+	public String getChipTimeString()
+	{
+		return chipTimeString;
+	}
+	
+	public void setGunTimeString(String gunTimeString)
+	{
+		this.gunTimeString=gunTimeString;
+		
+		gunTime=DateTimeParser.getTime(gunTimeString);
+	}
+	
+	public String getGunTimeString()
+	{
+		return gunTimeString;
+	}
+
 	public Racer getRacer()
 	{
 		return racer;
@@ -76,9 +138,29 @@ public class Result
 	
 	@Override
 	public String toString()
-	{
+	{	
+		DateFormat format=new SimpleDateFormat("H:mm:ss");
 		
-		String str= overallPlace+" "+racer+" "+categoryPlace+" "+number+" "+time+" "+pace+" ";
+		String chipTimeString=null;
+		try
+		{
+			chipTimeString=format.format(chipTime);
+		}
+		catch(Exception e)
+		{
+		}
+		
+		String gunTimeString=null;
+		try
+		{
+			gunTimeString=format.format(gunTime);
+		}
+		catch(Exception e)
+		{
+		}
+	
+		String str= overallPlace+" "+racer+" "+categoryPlace+" "+number+" "+chipTimeString
+				+" "+gunTimeString+" "+pace+" ";
 		
 		return str;
 	}

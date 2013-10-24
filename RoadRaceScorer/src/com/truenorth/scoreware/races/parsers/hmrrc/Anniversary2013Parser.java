@@ -16,11 +16,6 @@ import com.truenorth.scoreware.races.parsers.StringResultParser;
 public class Anniversary2013Parser extends StringResultParser
 {
 	
-	public Anniversary2013Parser(ArrayList<ResultHeader> order)
-	{
-		super(order);	
-	}
-	
 	public Result parseResultFromLine(String[] split)
 	{
 		try

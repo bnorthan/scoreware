@@ -13,12 +13,6 @@ import com.truenorth.scoreware.extractors.TextExtractor;
  */
 public class OverallFromSizeAndOrder implements OverallExtractor
 {
-	ArrayList<ResultHeader> order;
-	
-	public OverallFromSizeAndOrder(ArrayList<ResultHeader> order)
-	{
-		this.order=order;
-	}
 	
 	public ArrayList<String> extractText(ArrayList<String> lines)
 	{
@@ -48,9 +42,7 @@ public class OverallFromSizeAndOrder implements OverallExtractor
 				catch(Exception ex)
 				{
 					//System.out.println("Parse Exception");
-				}
-				
-				
+				}			
 			}
 		}
 		

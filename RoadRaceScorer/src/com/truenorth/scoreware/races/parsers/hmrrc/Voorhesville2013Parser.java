@@ -9,11 +9,6 @@ import com.truenorth.scoreware.races.parsers.StringResultParser;
 
 public class Voorhesville2013Parser extends StringResultParser
 {
-	public Voorhesville2013Parser(ArrayList<ResultHeader> order)
-	{
-		super(order);	
-	}
-	
 	public Result parseResultFromLine(String[] split)
 	{
 		try

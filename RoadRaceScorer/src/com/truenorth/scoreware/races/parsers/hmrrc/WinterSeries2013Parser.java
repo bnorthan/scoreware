@@ -16,11 +16,6 @@ import com.truenorth.scoreware.races.parsers.StringResultParser;
 public class WinterSeries2013Parser extends StringResultParser
 {
 	
-	public WinterSeries2013Parser(ArrayList<ResultHeader> order)
-	{
-		super(order);	
-	}
-	
 	public Result parseResultFromLine(String[] split)
 	{
 		try

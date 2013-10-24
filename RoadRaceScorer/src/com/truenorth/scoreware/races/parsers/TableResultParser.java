@@ -2,11 +2,18 @@ package com.truenorth.scoreware.races.parsers;
 
 import com.truenorth.scoreware.Result;
 
-import org.jsoup.nodes.Element;
+import java.util.ArrayList;
 
-abstract public class TableResultParser implements ResultParser 
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import com.truenorth.scoreware.HeaderStrings;
+
+abstract public class TableResultParser extends ResultParser 
 {
 	protected Element elements;
+	
+	ArrayList<Integer> splits=new ArrayList<Integer>();
 	
 	public Result parseResultFromLine(Object line)
 	{
@@ -15,5 +22,24 @@ abstract public class TableResultParser implements ResultParser
 		return parseElements();
 	}
 	
+	public void parseHeader(Elements header)
+	{
+		int i=0;
+		for (int j=0;j<header.size();j++)
+		{
+			String headerString=header.get(i).text();
+			
+			System.out.println(headerString);
+			
+			setHeaderIndex(headerString, i);
+				
+			i++;
+		}
+		
+		int stop=5;
+	}
+	
+	
+
 	public abstract Result parseElements();
 }

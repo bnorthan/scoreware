@@ -11,7 +11,8 @@ public class Enums
 		SEX, 
 		CITY, 
 		STATE, 
-		TIME, 
+		CHIP_TIME,
+		GUN_TIME,
 		PACE,
 		NUMBER,
 		CATEGORY,
@@ -22,9 +23,15 @@ public class Enums
 	
 	public enum RacePatterns
 	{
+		RUNSCORE,
+		TABLE,
+		UNKNOWN,
+		PDF_TEXT,
+		PDF_TABLE,
 		HUDSONMOHAWK2012,
 		SEFCU2013,
 		ANNIVERSARY2013,
 		VOORHESVILLE2013,
+		WINEGLASS2013
 	}
 }

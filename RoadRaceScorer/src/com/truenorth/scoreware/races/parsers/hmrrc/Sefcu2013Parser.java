@@ -15,12 +15,6 @@ import com.truenorth.scoreware.races.parsers.StringResultParser;
  */
 public class Sefcu2013Parser extends StringResultParser
 {
-	
-	public Sefcu2013Parser(ArrayList<ResultHeader> order)
-	{
-		super(order);	
-	}
-	
 	public Result parseResultFromLine(String[] split)
 	{
 		try

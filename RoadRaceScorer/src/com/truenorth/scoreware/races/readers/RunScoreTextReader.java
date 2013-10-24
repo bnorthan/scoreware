@@ -1,30 +1,43 @@
 package com.truenorth.scoreware.races.readers;
 
 import java.util.ArrayList;
+import com.truenorth.scoreware.races.parsers.RunScoreResultParser;
+import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.Race;
 
+/**
+ * Extends TextRaceReader to read results that are in the "run score" format
+ * @author bnorthan
+ *
+ */
 public class RunScoreTextReader extends TextRaceReader
 {
 	
-	public RunScoreTextReader(String source)
+	public RunScoreTextReader(Race race)
 	{
-		super(source);
+		super(race);
+		
+		resultParser=new RunScoreResultParser();
+		
+		extractor.setKeepSpaces(true);
 	}
-	
+		
 	@Override
-	public void parseAsText()
+	public void read()
 	{
 		// extract text from the source data (could be a PDF, web page, database, etc.)
-		ArrayList<String> text=extractor.extractText(sourceName);
+		ArrayList<String> text=extractor.extractText(race.getSourceName());
 			
 		if (text!=null)
 		{
-			System.out.println(sourceName+": lines read: "+text.size());
+			System.out.println(race.getSourceName()+": lines read: "+text.size());
 		}
 		else
 		{
 			System.out.println("could not read file: ");
 		}
 	
+		// find the line with all the "=" characters that will be just above the table header
 		int maxMarkersLine=0;
 		int maxMarkers=-1;
 		String maxMarkersString="";
@@ -51,36 +64,52 @@ public class RunScoreTextReader extends TextRaceReader
 			j++;
 		}
 		
+		// the header names will be just above the "maxMarkersLine"
 		String headerLine=text.get(maxMarkersLine-1);
 		
-		System.out.println(headerLine);
-		System.out.println(maxMarkersString);
+		RunScoreResultParser rsParser=(RunScoreResultParser)(this.resultParser);
 		
-		String[] split=maxMarkersString.split(" ");
-		
-		int[] locs=new int[split.length];
-		int i=0;
+		rsParser.parseHeader(maxMarkersString, headerLine);
+	    
+		int startOfTable=maxMarkersLine+1;
+		boolean endOfTable=false;
 		j=0;
 		
-		for (String s:split)
+		while(!endOfTable)
 		{
+			Result result;
 			
-			j+=s.length()+1;
-			locs[i]=j;
-			System.out.println(s+" "+j+" "+i+" "+locs[i]);
-			i++;
+			try
+			{
+				result=rsParser.parseResultFromLine(text.get(startOfTable+j));
+				//	System.out.println(j+" "+result);
+				results.add(result);
+			}
+			catch(Exception e)
+			{
+				
+			}
+			
+			j++;
+			
+			if (text.get(startOfTable+j).trim().length()<10)
+			{
+				endOfTable=true;
+			}
 		}
+		
+		
+	/*	String testLine=text.get(maxMarkersLine+1);
 		
 		i=0;
 		for (int n:locs)
 		{
-			String temp=headerLine.substring(i,n);
+			String temp=testLine.substring(i,n);
 			i=n;
+			temp=temp.trim();
 			System.out.println(temp);
 		}
 		
-		System.out.println(split.length);
-		
-	
+		System.out.println(split.length);*/
 	}
 }

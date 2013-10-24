@@ -4,124 +4,121 @@ import java.util.ArrayList;
 
 import com.truenorth.scoreware.Result;
 import com.truenorth.scoreware.extractors.overall.OverallExtractor;
-import com.truenorth.scoreware.extractors.TableExtractor;
+import com.truenorth.scoreware.extractors.DOMExtractor;
 import com.truenorth.scoreware.extractors.TextExtractor;
 import com.truenorth.scoreware.extractors.TextExtractorFactory;
+import com.truenorth.scoreware.races.parsers.TableResultParser;
+import com.truenorth.scoreware.Race;
 
 import org.jsoup.select.Elements;
 
 /**
- * Extends Reader to implement a RaceReader.  RaceReader reads
- * race results
+ * Extends RaceReader to implement a text based RaceReader.  
+ * 
  * @author bnorthan
  *
  */
 public class TextRaceReader extends RaceReader
 {
-	protected boolean table=false;
-	
 	// utility to extract the source as text
 	protected TextExtractor extractor;
 	
 	protected OverallExtractor overallExtractor;
 	
-	public TextRaceReader(String sourceName)
+	protected ArrayList<String> throwAwayLines; 
+	
+	protected ArrayList<String> text;
+	
+	public TextRaceReader(Race race)
 	{
-		super(sourceName);
-		
+		super(race);
 		// use the TextExtractorFactory to create the appropriate text extractor
 		// based on the type of source
-		this.extractor=TextExtractorFactory.MakeExtractor(sourceName);
+		this.extractor=TextExtractorFactory.MakeExtractor(race.getSourceName());
 		
 		results=new ArrayList<Result>();
 	}
-	
+		
 	public void read()
 	{
-		if (table)
-		{
-			parseAsTable();
-		}
-		else
-		{
-			parseAsText();
-		}
-	}
-	
-	public void parseAsTable()
-	{
-		Elements table=TableExtractor.getTable(sourceName, false);
-		
-		for (int i=0;i<table.size();i++)
-		{
-			Result result=resultParser.parseResultFromLine(table.get(i));
-			results.add(result);
-		}
-	}
-	
-	public void parseAsText()
-	{
 		// extract text from the source data (could be a PDF, web page, database, etc.)
-		ArrayList<String> text=extractor.extractText(sourceName);
-			
-		if (text!=null)
+		text=extractor.extractText(race.getSourceName());
+		
+		// set things up for the next steps
+		boolean initialized=initialize();
+		
+		if (!initialized)
 		{
-			System.out.println(sourceName+": lines read: "+text.size());
+			return;// false;
 		}
-		else
+		
+		// if there are any lines marked to be "thrown away" throw them away
+		if (throwAwayLines!=null)
 		{
-			System.out.println("could not read file: ");
+			throwAway();
 		}
 		
-		
-
-	/*	for (String s:text)
-		{
-			
-			int n=4;
-		
-			if (s.length()>90)
-			{
-				String num=s.substring(0,5);
-				System.out.println(num);
-			}
-			
-			System.out.println(s.length()+" "+s);
-		}*/
-	
-				
-		// extract the overall results table
+		// the overall results table may have to be extracted from the rest of the data
 		if (overallExtractor!=null)
 		{
 			text=overallExtractor.extractText(text);
 		}
 		
-				
-		System.out.println("number parsed: "+text.size());
-				
-	/*	// loop through each line of text in the overall results
-		for(String line:text)
+		// at this point we should just have a list of overall results.  Loop through each line 
+		// and parse out the data
+		if (text!=null)
 		{
-			System.out.println(line);
-					
-			// parse the result
-			Result result=resultParser.parseResultFromLine(line);
-					
-			// add the result to the list
-			results.add(result);
-		}		
+			for (String line:text)
+			{
+				Result result=resultParser.parseResultFromLine(line);
 				
-		for(Result result:results)
+				if (result!=null)
+				{
+					results.add(result);
+				}
+			}
+		}
+		
+		for (Result r:results)
 		{
-			System.out.println(result);//.getOverallPlace()+": "+result.getRacer().getFirstName()+
-				//" "+result.getRacer().getLastName()+" "+result.getRacer().getAge()+" "+result.getRacer().getSex()
-				//+" "+result.getRacer().getCity()+" "+result.getRacer().getState());
-		}*/
-
+			System.out.println(r);
+		}
+		
 	}
 	
-	public void setTable(boolean table)
+	public void throwAway()
 	{
-		this.table=table;
+		ArrayList<String> keepLines=new ArrayList<String>();
+		for (String s:text)
+		{
+			boolean keep=true;
+			
+			for (String t:throwAwayLines)
+			{
+				if (t.equals(s))
+				{
+					keep = false;
+				}
+			}
+			
+			if (keep) 
+			{
+				keepLines.add(s);
+			}
+		}
+		
+		System.out.println("num lines: "+text.size());
+		System.out.println("keep linesL "+keepLines.size());
+		text=keepLines;
+	}
+	
+	public boolean initialize()
+	{
+		return true;
+	}
+	
+	public void ReadRaceHeader()
+	{
+		
 	}
 }

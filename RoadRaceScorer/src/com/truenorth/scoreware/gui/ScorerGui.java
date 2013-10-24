@@ -8,16 +8,6 @@ import javax.swing.*;
 import java.io.*;
 import java.awt.GridBagLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
 import com.truenorth.scoreware.Enums;
 import com.truenorth.scoreware.Racer;
 import com.truenorth.scoreware.Enums.RacePatterns;
@@ -47,6 +37,8 @@ public abstract class ScorerGui extends JFrame
 	JLabel racePatternLabel;
 	JComboBox raceCombo;
 	
+	JButton raceInfo;
+	
 	ScoringApp app;
 	
 	public ScorerGui(ScoringApp app)
@@ -54,7 +46,7 @@ public abstract class ScorerGui extends JFrame
 		this.app=app;
 		
 		GridBagLayout layout = new GridBagLayout();
-		setLayout(layout);
+		setLayout(layout); 
 		
 		membershipButton=new JButton("Open Membership");
 		membershipButton.addActionListener(new membershipActionListener());
@@ -62,6 +54,12 @@ public abstract class ScorerGui extends JFrame
 		
 		raceCombo=new JComboBox();
 		
+		raceCombo.addItem(Enums.RacePatterns.UNKNOWN);
+		raceCombo.addItem(Enums.RacePatterns.WINEGLASS2013);
+		raceCombo.addItem(Enums.RacePatterns.PDF_TEXT);
+		raceCombo.addItem(Enums.RacePatterns.RUNSCORE);
+		raceCombo.addItem(Enums.RacePatterns.PDF_TABLE);
+		raceCombo.addItem(Enums.RacePatterns.TABLE);
 		raceCombo.addItem(Enums.RacePatterns.SEFCU2013);
 		raceCombo.addItem(Enums.RacePatterns.ANNIVERSARY2013);
 		raceCombo.addItem(Enums.RacePatterns.VOORHESVILLE2013);
@@ -87,7 +85,7 @@ public abstract class ScorerGui extends JFrame
 	    
 		textArea=new JTextArea();
 		textArea.setBorder(BorderFactory.createEtchedBorder());
-	    Console.redirectOutput( textArea );
+	    //Console.redirectOutput( textArea );
 	    
 	    scroll=new JScrollPane(textArea);
 	    
@@ -107,6 +105,10 @@ public abstract class ScorerGui extends JFrame
 		add(membershipLocation, new GBC(1,7,3,1).setFill(GBC.BOTH));
 		add(raceLocation, new GBC(1,9,3,1).setFill(GBC.BOTH));
 
+		raceInfo=new JButton("set race info");
+		raceInfo.addActionListener(new raceInfoListener());
+		add(raceInfo, new GBC(1,12));
+		
 	}
 	
 	private class membershipActionListener implements ActionListener
@@ -193,6 +195,19 @@ public abstract class ScorerGui extends JFrame
 			
 			return isRacerAMember.showDialog(ScorerGui.this, "Hello");
 		
+		}
+	}
+	
+	private class raceInfoListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event)
+		{
+			RaceInfoFrame frame=new RaceInfoFrame();
+			
+			frame.showDialog(ScorerGui.this);
+			//frame.setVisible(true);
+			
+			ScorerGui.this.app.setRaceInfo(frame.getID(), frame.getName(), frame.getDate(), frame.getCity(), frame.getStateProvince(), "USA");
 		}
 	}
 	

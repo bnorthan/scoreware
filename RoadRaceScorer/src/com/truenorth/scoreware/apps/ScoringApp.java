@@ -1,12 +1,15 @@
 package com.truenorth.scoreware.apps;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 import com.truenorth.scoreware.Enums.RacePatterns;
 import com.truenorth.scoreware.matchers.IsRacerMember;
 import com.truenorth.scoreware.membership.readers.MembershipReader;
 import com.truenorth.scoreware.membership.readers.MembershipReaderFactory;
 import com.truenorth.scoreware.races.readers.RaceReader;
 import com.truenorth.scoreware.races.readers.RaceReaderFactory;
-
+import com.truenorth.scoreware.Race;
 import com.truenorth.scoreware.Result;
 
 /**
@@ -25,6 +28,13 @@ abstract public class ScoringApp
 	RacePatterns racePattern;
 	
 	IsRacerMember isRacerMember=null;
+	
+	Race race;
+	
+	public ScoringApp()
+	{
+		race=new Race();
+	}
 	
 	public void setIsRacerMember(IsRacerMember isRacerMember)
 	{
@@ -56,16 +66,50 @@ abstract public class ScoringApp
 		System.out.println("Race Pattern: "+racePattern);
 		
 		// use the race source name to get a race reader
-		raceReader=RaceReaderFactory.getRaceReader(raceSourceName, racePattern);
+		raceReader=RaceReaderFactory.getRaceReader(race, racePattern);
 		
 		System.out.println("Race Reader: "+raceReader.getClass().toString());
 		
+		raceReader.ReadRaceHeader();
 		raceReader.read();
+		
+		race=raceReader.getRace();
 		
 		for (Result result:raceReader.getResults())
 		{
 			System.out.println(result);
 		}
+		
+		System.out.println(race);
+	}
+	
+	public void setRaceInfo(String id,
+			String name,
+			String date,
+			String city,
+			String state,
+			String country)
+	{
+		race.setIdentifier(id);
+		race.setName(name);
+		
+		SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+		Date theDate=new Date();
+		
+		try
+		{
+			theDate=format.parse(date);
+			race.setDate(theDate);
+		}
+		catch(Exception e)
+		{
+			System.out.println("can't format string");
+			race.setDate(new Date());
+		}
+		//race.setDate(date);
+		race.setCity(city);
+		race.setState(state);
+		race.setCountry(country);
 	}
 	
 	abstract public void Score();

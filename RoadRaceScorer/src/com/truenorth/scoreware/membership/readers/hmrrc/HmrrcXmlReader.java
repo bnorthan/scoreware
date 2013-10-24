@@ -13,7 +13,7 @@ import javax.xml.parsers.*;
 import javax.xml.xpath.*;
 
 import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.common.utility.DateParser;
+import com.truenorth.scoreware.common.utility.DateTimeParser;
 import com.truenorth.scoreware.common.utility.SexParser;
 import com.truenorth.scoreware.membership.readers.MembershipReader;
 
@@ -123,11 +123,11 @@ public class HmrrcXmlReader extends MembershipReader
 				racer.setLastName(lastName);
 				
 				String birthDate=cellList.item(birthDateIndex).getTextContent();
-				Date date=DateParser.getDate(birthDate);
+				Date date=DateTimeParser.getDate(birthDate);
 				
 				if (date!=null) 
 				{
-					int age=DateParser.howOldInYears(date, new Date());
+					int age=DateTimeParser.howOldInYears(date, new Date());
 					racer.setAge(age);
 				}
 				

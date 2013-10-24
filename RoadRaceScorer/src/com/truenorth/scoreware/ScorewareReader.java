@@ -10,9 +10,7 @@ public abstract class ScorewareReader
 	
 	public ScorewareReader(String sourceName)
 	{
-		this.sourceName=sourceName;
-		
-		
+		this.sourceName=sourceName;	
 	}
 	
 	public abstract void read();

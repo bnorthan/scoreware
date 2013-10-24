@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import com.truenorth.scoreware.common.utility.DateParser;
+import com.truenorth.scoreware.common.utility.DateTimeParser;
 import com.truenorth.scoreware.common.utility.SexParser;
 import com.truenorth.scoreware.membership.readers.MembershipReader;
 import com.truenorth.scoreware.Racer;
@@ -130,7 +130,7 @@ public class HmrrcExcelReader extends MembershipReader
 				{
 					String dateString=cell.getStringCellValue();
 					
-					Date date=DateParser.getDate(dateString);
+					Date date=DateTimeParser.getDate(dateString);
 					
 					if (date==null) 
 					{
@@ -140,7 +140,7 @@ public class HmrrcExcelReader extends MembershipReader
 					}
 					else
 					{
-						int age=DateParser.howOldInYears(date, new Date());
+						int age=DateTimeParser.howOldInYears(date, new Date());
 						racer.setAge(age);
 					}
 					

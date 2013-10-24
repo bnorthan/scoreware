@@ -1,15 +1,21 @@
 package com.truenorth.scoreware.races.readers.hmrrc;
 
-import com.truenorth.scoreware.races.readers.TextRaceReader;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+import com.truenorth.scoreware.races.readers.DOMRaceReader;
 import com.truenorth.scoreware.races.parsers.hmrrc.HudsonMohawk2013Parser;
 
-public class HudsonMohawk2012Reader extends TextRaceReader
+import com.truenorth.scoreware.Race;
+
+public class HudsonMohawk2012Reader extends DOMRaceReader
 {
-	public HudsonMohawk2012Reader(String sourceName)
+	public HudsonMohawk2012Reader(Race race)
 	{
-		super(sourceName);
+		super(race);
 		
-		resultParser=new HudsonMohawk2013Parser();
-		table=true;
+		resultParser=new HudsonMohawk2013Parser(); 
 	}
+	
+
 }

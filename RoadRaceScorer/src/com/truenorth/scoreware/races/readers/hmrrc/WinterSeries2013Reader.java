@@ -10,6 +10,7 @@ import com.truenorth.scoreware.races.parsers.hmrrc.WinterSeries2013Parser;
 import com.truenorth.scoreware.races.readers.RaceReader;
 
 import com.truenorth.scoreware.races.readers.TextRaceReader;
+import com.truenorth.scoreware.Race;
 
 /**
  * Extends race reader to read winter series 2013 results
@@ -18,22 +19,12 @@ import com.truenorth.scoreware.races.readers.TextRaceReader;
  */
 public class WinterSeries2013Reader extends TextRaceReader
 {
-	public WinterSeries2013Reader(String sourceName)
+	public WinterSeries2013Reader(Race race)
 	{
-		super(sourceName);
+		super(race);
 		
-		order.add(ResultHeader.PLACE);
-		order.add(ResultHeader.FIRSTNAME);
-		order.add(ResultHeader.LASTNAME);
-		order.add(ResultHeader.AGE);
-		order.add(ResultHeader.SEX);
-		order.add(ResultHeader.CITY);
-		order.add(ResultHeader.STATE);
-		order.add(ResultHeader.TIME);
-		order.add(ResultHeader.PACE);
-		
-		overallExtractor=new OverallFromSizeAndOrder(order);
-		resultParser=new WinterSeries2013Parser(order);	
+		overallExtractor=new OverallFromSizeAndOrder();
+		resultParser=new WinterSeries2013Parser();	
 		
 		results=new ArrayList<Result>();
 	}

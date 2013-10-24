@@ -1,12 +1,12 @@
 package com.truenorth.scoreware.races.readers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import com.truenorth.scoreware.Race;
 import com.truenorth.scoreware.Result;
-import com.truenorth.scoreware.ScorewareReader;
-import com.truenorth.scoreware.Enums.ResultHeader;
 import com.truenorth.scoreware.races.parsers.ResultParser;
-import com.truenorth.scoreware.extractors.overall.OverallExtractor;
 
 /**
  * Extends Reader to implement a RaceReader.  RaceReader reads
@@ -14,21 +14,61 @@ import com.truenorth.scoreware.extractors.overall.OverallExtractor;
  * @author bnorthan
  *
  */
-public abstract class RaceReader extends ScorewareReader 
+public abstract class RaceReader 
 {
-	public RaceReader(String sourceName)
+	public RaceReader(Race race)
 	{
-		super(sourceName);
-		
+		this.race=race;
 		results=new ArrayList<Result>();
 	}
 	
-	protected ArrayList<ResultHeader> order=new ArrayList<ResultHeader>();
+	// Race class contains race meta data
+	protected Race race;
+
+	// an array containing list of results
 	protected ArrayList<Result> results;
+	
+	// parser used to read a result
 	protected ResultParser resultParser;
 	
 	public ArrayList<Result> getResults()
 	{
 		return results;
 	}
+	
+	public Race getRace()
+	{
+		return race;
+	}
+	
+	// manually read the header info.  This is used for the case where the header cannot be read for some reason
+	public void setHeaderInfo(String id, String name, String city, String state, String country, String dateString)
+	{
+		race.setName(name);
+		race.setCity(city);
+		
+		SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date date=new Date();
+		
+		try
+		{
+			date=format.parse(dateString);
+			race.setDate(date);
+		}
+		catch(Exception e)
+		{
+			System.out.println("can't format string");
+			race.setDate(new Date());
+		}
+		
+		race.setState(state);
+		race.setCountry(country);
+		race.setIdentifier(id);
+	}
+	
+	// read the header
+	abstract public void ReadRaceHeader();
+	
+	abstract public void read();
 }
