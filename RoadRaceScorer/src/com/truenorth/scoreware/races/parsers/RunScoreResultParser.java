@@ -103,6 +103,14 @@ public class RunScoreResultParser extends ResultParser
 			
 				result.getRacer().setCity(city);
 			}
+			if (this.stateIndex!=-1)
+			{
+				String state=getSubStringFromIndex((String)line, stateIndex);
+				
+				state=state.trim();
+				
+				result.getRacer().setState(state);
+			}
 			if (this.gunTimeIndex!=-1)
 			{
 				String gunTime=getSubStringFromIndex((String)line, gunTimeIndex);
@@ -126,6 +134,13 @@ public class RunScoreResultParser extends ResultParser
 		{
 			int start=dataLocations[index-1];
 			int end=dataLocations[index]-1;
+			
+			int size=string.length();
+			
+			if (end>size-1)
+			{
+				end=size-1;
+			}
 		
 			return string.substring(start, end);
 		}

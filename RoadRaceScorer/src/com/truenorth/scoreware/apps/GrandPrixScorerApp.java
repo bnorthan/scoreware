@@ -17,8 +17,11 @@ import com.truenorth.scoreware.scoring.schemes.hmrrc.GrandPrixScoringScheme;
 import com.truenorth.scoreware.ScorewareWriter;
 import com.truenorth.scoreware.writers.CommandLineWriter;
 import com.truenorth.scoreware.writers.FileWriter;
+import com.truenorth.scoreware.writers.SqlWriter;
 import com.truenorth.scoreware.writers.JDBCSqlWriter;
 import com.truenorth.scoreware.Enums.RacePatterns;
+
+import com.truenorth.scoreware.sql.RunwareQuery;
 
 public class GrandPrixScorerApp extends ScoringApp
 {
@@ -42,7 +45,7 @@ public class GrandPrixScorerApp extends ScoringApp
 			searcher.setIsRacerMember(isRacerMember);
 		}
 		
-		scheme.Score(raceReader.getResults(), membershipReader.getMembers(), searcher);;
+		scheme.Score(race.getResults(), membershipReader.getMembers(), searcher);;
 		
 		CommandLineWriter writer=new CommandLineWriter("");
 		
@@ -81,52 +84,31 @@ public class GrandPrixScorerApp extends ScoringApp
 		WriteGrandPrixResults(writer);
 	}
 	
-	public void writeToDatabase()
+	/*public void initializeDatabase(SqlWriter database)
 	{
-		
-		JDBCSqlWriter database=new JDBCSqlWriter();
-		
-		database.CreateRacesTable("gp_races");
-		database.CreateRaceTable(race);
-		
-		int max=scheme.getCategories().size();
-		
-		for (int i=0;i<max;i++)
+		if (database!=null)
 		{
-			Category testCategory=scheme.getCategories().get(i);
-			ArrayList<Result> testResult=testCategory.getResults();
+			database.CreateRacesTable("gp_races");
+			database.CreateRaceTable(race);
 		
-			for (Result res:testResult)
+			int max=scheme.getCategories().size();
+		
+			for (int i=0;i<max;i++)
 			{
-				database.writeResult(res);
+				Category testCategory=scheme.getCategories().get(i);
+				ArrayList<Result> testResult=testCategory.getResults();
+		
+				for (Result res:testResult)
+				{
+					database.writeResult(res);
+				}
 			}
 		}
-	}
-	
-	@Override
-	public void ReadRace(String raceSourceName)
-	{
-		System.out.println("Race Pattern: "+racePattern);
-		
-		race.setSourceName(raceSourceName);
-		// use the race source name to get a race reader
-		raceReader=RaceReaderFactory.getRaceReader(race, racePattern);
-		
-		System.out.println("Race Reader: "+raceReader.getClass().toString());
-		
-		raceReader.read();
-		//raceReader.setHeaderInfo("mhrHalfm_2013", "Hudson Mohawk Half Marathon", "Albany", "NY", "USA", "2013-10-13");
-		//raceReader.setHeaderInfo("mhrm_2013", "Hudson Mohawk Marathon", "Albany", "NY", "USA", "2013-10-13");
-		//raceReader.setHeaderInfo("sefcu_2013", "SEFCU 5k", "Albany", "NY", "USA", "2013-09-02");
-		raceReader.setHeaderInfo("mhrm_gp_2013", "Hudson Mohawk Marathon", "Albany", "NY", "USA", "2013-10-13");
-		
-		race=raceReader.getRace();
-		
-		for (Result result:raceReader.getResults())
+		else
 		{
-			System.out.println(result);
+			
 		}
-		
-		System.out.println(race);
-	}
+	}*/
+	
+	
 }

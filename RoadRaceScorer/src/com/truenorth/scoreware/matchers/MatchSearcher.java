@@ -17,6 +17,9 @@ public class MatchSearcher
 
 	IsRacerMember isRacerMember;
 	
+	String memberString="unknown";
+	String notMemberString="unknown";
+	
 	public MatchSearcher()
 	{
 		matcher=new FuzzyLevenshteinMatcher();
@@ -56,6 +59,7 @@ public class MatchSearcher
 		
 				if (match!=null)
 				{
+					result.getRacer().setCurrentClub(memberString);
 					members.add(result);
 				}
 			
@@ -189,6 +193,16 @@ public class MatchSearcher
 	public void setIsRacerMember(IsRacerMember isRacerMember)
 	{
 		this.isRacerMember=isRacerMember;
+	}
+	
+	public void setMemberString(String memberString)
+	{
+		this.memberString=memberString;
+	}
+	
+	public void setNotMemberString(String notMemberString)
+	{
+		this.notMemberString=notMemberString;
 	}
 	
 	protected void printMatch(String match)

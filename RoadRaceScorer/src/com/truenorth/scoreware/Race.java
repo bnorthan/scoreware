@@ -6,15 +6,24 @@ import java.util.ArrayList;
 public class Race 
 {
 	String sourceName=null;
+	String outputName=null;
+	String outputPath=null;
+	
 	String name=null;
 	Date date=null;
 	String city=null;
 	String state=null;
 	String country=null;
+	String timedBy=null;
 	
 	ArrayList<Result> results;
 	
 	String identifier;
+	
+	public Race()
+	{
+		results=new ArrayList<Result>();
+	}
 	
 	public void setSourceName(String sourceName)
 	{
@@ -76,6 +85,16 @@ public class Race
 		return country;
 	}
 	
+	public void setTimedBy(String timedBy)
+	{
+		this.timedBy=timedBy;
+	}
+	
+	public String getTimedBy()
+	{
+		return this.timedBy;
+	}
+	
 	public void setIdentifier(String identifier)
 	{
 		this.identifier=identifier;
@@ -84,6 +103,21 @@ public class Race
 	public String getIdentifier()
 	{
 		return identifier;
+	}
+	
+	public void setOutputPath(String outputPath)
+	{
+		this.outputPath=outputPath;
+	}
+	
+	public String getOutputPath()
+	{
+		return this.outputPath;
+	}
+	
+	public ArrayList<Result> getResults()
+	{
+		return results;
 	}
 	
 	@Override

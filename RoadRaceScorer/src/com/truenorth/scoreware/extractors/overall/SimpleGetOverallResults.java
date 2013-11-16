@@ -19,8 +19,10 @@ public class SimpleGetOverallResults implements OverallExtractor
 		
 		int expectedPlace=1;
 		
+		
 		for(String line:lines)
 		{
+			line=line.trim();
 			String[] split=line.split("\\s+");
 			
 			int n=split.length;

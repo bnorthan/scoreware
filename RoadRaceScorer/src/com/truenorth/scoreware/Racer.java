@@ -3,11 +3,15 @@ package com.truenorth.scoreware;
 import java.util.Date;
 import java.text.DateFormat;
 
+import java.util.ArrayList;
+
 public class Racer 
 {
+	
 	public enum Sex{MALE, FEMALE};
 	
 	String firstName;
+	
 	String lastName;
 	
 	Date birthDate;
@@ -17,9 +21,25 @@ public class Racer
 	Sex sex;
 	
 	String city;
+	
 	String state;
 	
+	ArrayList<String> clubs=new ArrayList<String>();
+	
+	String currentClub="unknown";
+	
 	boolean member;
+	
+	public void setDummyValues()
+	{	
+		String unknown="unknown";
+		
+		firstName=unknown;
+		lastName=unknown;
+		
+		city=firstName=unknown;
+		state="XX";
+	}
 	
 	public void setFirstName(String firstName)
 	{
@@ -77,17 +97,35 @@ public class Racer
 	
 	public void setState(String state)
 	{
-		this.state=state;
+		if (state.length()>2)
+		{
+			state="XX";
+		}
+		else
+		{
+			this.state=state;
+		}
 	}
+	
 	public String getState()
 	{
 		return state;
 	}
 	
+	public void setCurrentClub(String currentClub)
+	{
+		this.currentClub=currentClub;
+	}
+	
+	public String getCurrentClub()
+	{
+		return currentClub;
+	}
+	
 	@Override
 	public String toString()
 	{
-		return firstName+" "+lastName+" "+age+" "+sex+" "+city+" "+state;
+		return firstName+" "+lastName+" "+age+" "+sex+" "+city+" "+state+" "+currentClub;
 	}
 
 }

@@ -5,15 +5,23 @@ import java.util.ArrayList;
 import com.truenorth.scoreware.extractors.overall.SimpleGetOverallResults;
 import com.truenorth.scoreware.Race;
 import com.truenorth.scoreware.races.readers.UnknownTextReader;
+import com.truenorth.scoreware.races.readers.DOMRaceReader;
 import com.truenorth.scoreware.races.parsers.hmrrc.WineGlass2013Parser;
 
-public class WineGlass2013Reader extends UnknownTextReader
+public class WineGlass2013Reader extends DOMRaceReader
 {
 	public WineGlass2013Reader(Race race)
 	{
 		super(race);
-		
-		throwAwayLines=new ArrayList<String>();
+	}
+
+}
+
+/*public class WineGlass2013Reader extends UnknownTextReader
+{
+	public WineGlass2013Reader(Race race)
+	{
+		super(race);
 		
 		throwAwayLines.add("Corning Wine Glass");
 		throwAwayLines.add(" Corning Wine Glass");
@@ -26,4 +34,4 @@ public class WineGlass2013Reader extends UnknownTextReader
 		
 	}
 
-}
+}*/

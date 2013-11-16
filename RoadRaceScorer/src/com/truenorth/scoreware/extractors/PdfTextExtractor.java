@@ -70,6 +70,9 @@ public class PdfTextExtractor extends TextExtractor
 						   t+=obj.toString();
 					   }
 					   
+					   System.out.println(lt.toString());
+					   System.out.println(t);
+					   
 					   s+=t;
 				   }
 				   

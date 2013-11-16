@@ -45,8 +45,8 @@ public class RoadRaceScorer
 				//JFrame frame = new RoadRaceScorerMainFrameTemp();
 				JFrame frame = new GrandPrixScorerGui(app);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setPreferredSize(new Dimension(500, 500));
-				frame.setSize(new Dimension(500, 500));
+				frame.setPreferredSize(new Dimension(900, 700));
+				frame.setSize(new Dimension(900, 700));
 				frame.setVisible(true);
 			}
 		});

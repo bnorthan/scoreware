@@ -9,6 +9,8 @@ import com.truenorth.scoreware.HeaderStrings;
 import com.truenorth.scoreware.Result;
 import com.truenorth.scoreware.Race;
 
+import com.truenorth.scoreware.extractors.overall.SimpleGetOverallResults;
+
 public class UnknownTextReader extends TextRaceReader
 {
 	
@@ -41,14 +43,29 @@ public class UnknownTextReader extends TextRaceReader
 			UnknownResultParser unknown=(UnknownResultParser)resultParser;
 			unknown.parseHeader(header);
 			
+			overallExtractor=new SimpleGetOverallResults();
+			
+			return true;
 		}
 		
-		for (Result result:results)
+		// no header
+		boolean parsable=TryAFewThings();
+				
+		if (parsable)		
 		{
-			System.out.println(result);
+			
 		}
 		
-		return true;
+	}
+	
+	private boolean TryAFewThings()
+	{
+		for (String s:text)
+		{
+			String[] split=s.split("\\s+");
+		}
+		
+		return false;
 	}
 	
 	private String findHeader()

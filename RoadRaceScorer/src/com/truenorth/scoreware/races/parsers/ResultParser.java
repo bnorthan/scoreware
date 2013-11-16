@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import com.truenorth.scoreware.HeaderStrings;
 import com.truenorth.scoreware.Result;
 
+import java.util.Map;
+import java.util.HashMap;
+
+
 /**
  * Given a line of text representing a result, parses out the information (place, name, 
  * city, sex, etc.)
@@ -14,6 +18,8 @@ import com.truenorth.scoreware.Result;
 public abstract class ResultParser 
 {
 	protected int placeIndex=-1;
+	
+	protected int bibIndex=-1;
 	
 	protected int firstNameIndex=-1;
 	protected int lastNameIndex=-1;
@@ -28,6 +34,21 @@ public abstract class ResultParser
 	protected int chipTimeIndex=-1;
 	protected int gunTimeIndex=-1;
 	
+	protected int paceIndex=-1;
+	protected int categoryIndex=-1;
+	protected int pointsIndex=-1;
+	protected int clubIndex=-1;
+	
+		Map<String, Integer> splitIndexes;
+	Map<String, Integer> metaIndexes;
+	
+	public ResultParser()
+	{
+		splitIndexes=new HashMap<String, Integer>();
+		metaIndexes=new HashMap<String, Integer>();
+		
+	}
+	
 	public abstract Result parseResultFromLine(Object line);
 	
 	boolean matchHeader(String text, ArrayList<String> headers)
@@ -37,6 +58,18 @@ public abstract class ResultParser
 		for (String s:headers)
 		{
 			if ( text.equals(s.toLowerCase()) ) return true;
+		}
+		
+		return false;
+	}
+	
+	boolean containsHeader(String text, ArrayList<String> headers)
+	{
+		text=text.toLowerCase();
+		
+		for (String s:headers)
+		{
+			if ( text.contains(s.toLowerCase()) ) return true;
 		}
 		
 		return false;
@@ -58,6 +91,8 @@ public abstract class ResultParser
 	
 	void setHeaderIndex(String headerString, int i)
 	{
+		headerString=headerString.trim();
+		
 		if (matchHeader(headerString, HeaderStrings.getPlaceStrings()))
 		{
 			System.out.println("place found");
@@ -98,15 +133,25 @@ public abstract class ResultParser
 			System.out.println("state found");
 			stateIndex=i;
 		}
-		else if (matchHeader(headerString, HeaderStrings.getChipTimeStrings()))
+		else if (containsHeader(headerString, HeaderStrings.getChipTimeStrings()))
 		{
 			System.out.println("chip time found");
 			chipTimeIndex=i;
 		}
-		else if (matchHeader(headerString, HeaderStrings.getGunTimeStrings()))
+		else if (containsHeader(headerString, HeaderStrings.getGunTimeStrings()))
 		{
 			System.out.println("gun time found");
 			gunTimeIndex=i;
+		}
+		else if (containsHeader(headerString, HeaderStrings.getSplitStrings()))
+		{
+			// record the split
+			this.splitIndexes.put(headerString, i);
+		}
+		else
+		{
+			// otherwise put this into the meta data Map
+			this.metaIndexes.put(headerString, i);
 		}
 		
 	}

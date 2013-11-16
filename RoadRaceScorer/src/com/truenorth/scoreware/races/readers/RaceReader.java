@@ -19,7 +19,8 @@ public abstract class RaceReader
 	public RaceReader(Race race)
 	{
 		this.race=race;
-		results=new ArrayList<Result>();
+		results=race.getResults();
+		//results=new ArrayList<Result>();
 	}
 	
 	// Race class contains race meta data
@@ -31,17 +32,17 @@ public abstract class RaceReader
 	// parser used to read a result
 	protected ResultParser resultParser;
 	
-	public ArrayList<Result> getResults()
+	/*public ArrayList<Result> getResults()
 	{
 		return results;
-	}
+	}*/
 	
 	public Race getRace()
 	{
 		return race;
 	}
 	
-	// manually read the header info.  This is used for the case where the header cannot be read for some reason
+	// explicitly set the header info.  This is used for the case where the header cannot be read for some reason
 	public void setHeaderInfo(String id, String name, String city, String state, String country, String dateString)
 	{
 		race.setName(name);
@@ -65,6 +66,44 @@ public abstract class RaceReader
 		race.setState(state);
 		race.setCountry(country);
 		race.setIdentifier(id);
+	}
+	
+	public void runChecks()
+	{
+		int numRacers=results.size();
+		System.out.println("Number: "+numRacers);
+				
+		if (numRacers>0)
+		{
+			Result first=results.get(0);
+			int firstRacer=results.get(0).getOverallPlace();
+			int lastRacer=results.get(numRacers-1).getOverallPlace();
+		
+			System.out.println("first: "+firstRacer+" last: "+lastRacer);
+			
+			int i=1;
+			
+			if (lastRacer!=numRacers)
+			{
+				for (Result result:results)
+				{
+					int place = result.getOverallPlace();
+					
+					if (place!=i)
+					{
+						System.out.println("Problem near: "+result);
+						
+						i=place+1;
+					}
+					else
+					{
+						i++;
+					}
+				}	
+			}
+		}
+		
+		
 	}
 	
 	// read the header

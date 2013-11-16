@@ -15,6 +15,8 @@ import com.truenorth.scoreware.common.fromcorejava.GBC;
 import com.truenorth.scoreware.matchers.IsRacerMember;
 import com.truenorth.scoreware.apps.ScoringApp;
 
+import com.truenorth.scoreware.Race;
+
 public abstract class ScorerGui extends JFrame
 {
 	JButton membershipButton;
@@ -27,6 +29,8 @@ public abstract class ScorerGui extends JFrame
 	JButton saveButton;
 	
 	JButton databaseButton;
+	JButton updateDatabaseButton;
+	JButton transferDatabaseButton;
 	
 	JButton scoreButton;
 	
@@ -37,7 +41,7 @@ public abstract class ScorerGui extends JFrame
 	JLabel racePatternLabel;
 	JComboBox raceCombo;
 	
-	JButton raceInfo;
+	RaceInfoFrame raceInfoFrame;
 	
 	ScoringApp app;
 	
@@ -54,6 +58,7 @@ public abstract class ScorerGui extends JFrame
 		
 		raceCombo=new JComboBox();
 		
+		raceCombo.addItem(Enums.RacePatterns.PROPERTIES);
 		raceCombo.addItem(Enums.RacePatterns.UNKNOWN);
 		raceCombo.addItem(Enums.RacePatterns.WINEGLASS2013);
 		raceCombo.addItem(Enums.RacePatterns.PDF_TEXT);
@@ -77,14 +82,21 @@ public abstract class ScorerGui extends JFrame
 		saveButton=new JButton("Save");
 		saveButton.addActionListener(new saveActionListener());
 		
-		databaseButton=new JButton("To database");
+		databaseButton=new JButton("Initialize database");
 	    databaseButton.addActionListener(new databaseListener());
+	    
+	    updateDatabaseButton=new JButton("Update database");
+	    updateDatabaseButton.addActionListener(new updateDatabaseListener());
+	    
+	    transferDatabaseButton=new JButton("Transfer database");
+	    transferDatabaseButton.addActionListener(new transferDatabaseListener());
 	    
 	    scoreButton=new JButton("Score");
 	    scoreButton.addActionListener(new scoreActionListener());
 	    
 		textArea=new JTextArea();
 		textArea.setBorder(BorderFactory.createEtchedBorder());
+		
 	    //Console.redirectOutput( textArea );
 	    
 	    scroll=new JScrollPane(textArea);
@@ -95,19 +107,23 @@ public abstract class ScorerGui extends JFrame
 		
 		add(saveButton, new GBC(0,11).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
 		add(databaseButton, new GBC(0,12).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
+		add(updateDatabaseButton, new GBC(2,12).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
+		add(transferDatabaseButton, new GBC(3,12).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
 		
 		add(racePatternLabel, new GBC(0,6));
 		add(raceCombo, new GBC(1,6,3,1).setFill(GBC.BOTH));
-		add(scroll, new GBC(0,0,4,6).setFill(GBC.BOTH).setWeight(100, 100));
+		add(scroll, new GBC(0,0,9,6).setFill(GBC.BOTH).setWeight(100, 100));
 		
 		add(checkFromWeb, new GBC(1,8,1,1));
 		
 		add(membershipLocation, new GBC(1,7,3,1).setFill(GBC.BOTH));
 		add(raceLocation, new GBC(1,9,3,1).setFill(GBC.BOTH));
 
-		raceInfo=new JButton("set race info");
-		raceInfo.addActionListener(new raceInfoListener());
-		add(raceInfo, new GBC(1,12));
+		raceInfoFrame=new RaceInfoFrame();
+		raceInfoFrame.setActionListener(new RaceInfoListener());
+		//frame.setPreferredSize(new Dimension(500,100));
+		//frame.setSize(500,200);
+		add(raceInfoFrame, new GBC(4,6,5,6).setFill(GBC.BOTH));
 		
 	}
 	
@@ -151,6 +167,17 @@ public abstract class ScorerGui extends JFrame
 			app.ReadRace(chooser.getSelectedFile().getAbsolutePath());
 			
 			raceLocation.setText(chooser.getSelectedFile().getAbsolutePath());
+			
+			Race race=app.getRace();
+			
+			String dateString="";
+			
+			if (race.getDate()!=null)
+			{
+				dateString=race.getDate().toString();
+			}
+			
+			raceInfoFrame.setInfo(race.getIdentifier(), race.getName(), race.getCity(), race.getState(), dateString);
 		}
 	}
 	
@@ -183,7 +210,42 @@ public abstract class ScorerGui extends JFrame
 	{
 		public void actionPerformed(ActionEvent event)
 		{
-			app.writeToDatabase();
+			// choose directory to save properties file to
+			JFileChooser chooser=new JFileChooser();
+			
+			File dir=new File("D:/Brian2012/hmrrc/data/");
+			chooser.setCurrentDirectory(dir);
+			
+			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			
+			int success=chooser.showOpenDialog(null);
+			
+			app.setWorkingDirectory(chooser.getSelectedFile());
+			app.initializeDatabase();
+		}
+	}
+	
+	private class updateDatabaseListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event)
+		{
+			app.updateDatabase();
+		}
+	}
+	
+	private class transferDatabaseListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event)
+		{
+			JFileChooser chooser=new JFileChooser();
+			
+			File dir=new File("D:/Brian2012/hmrrc/data/");
+			chooser.setCurrentDirectory(dir);
+			
+			int success = chooser.showOpenDialog(null);
+			
+			app.transferToDatabase(chooser.getSelectedFile().getAbsolutePath());
+			
 		}
 	}
 	
@@ -198,18 +260,20 @@ public abstract class ScorerGui extends JFrame
 		}
 	}
 	
-	private class raceInfoListener implements ActionListener
+	private class RaceInfoListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent event)
 		{
-			RaceInfoFrame frame=new RaceInfoFrame();
 			
-			frame.showDialog(ScorerGui.this);
 			//frame.setVisible(true);
+			System.out.println("id: "+raceInfoFrame.getID());
 			
-			ScorerGui.this.app.setRaceInfo(frame.getID(), frame.getName(), frame.getDate(), frame.getCity(), frame.getStateProvince(), "USA");
+			ScorerGui.this.app.setRaceInfo(raceInfoFrame.getID(), 
+					raceInfoFrame.getName(), 
+					raceInfoFrame.getDate(), 
+					raceInfoFrame.getCity(), 
+					raceInfoFrame.getStateProvince(), "USA", raceInfoFrame.getTimedBy());
 		}
 	}
 	
-
 }

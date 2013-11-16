@@ -14,7 +14,6 @@ public class RaceInfoFrame extends JPanel
 {
 	JLabel idLabel=new JLabel("ID");
 	JTextField id=new JTextField();
-	String idString;
 	
 	JLabel label=new JLabel("Race Name");
 	JTextField name=new JTextField();
@@ -28,6 +27,9 @@ public class RaceInfoFrame extends JPanel
 	JLabel dateLabel=new JLabel("Date");
 	JTextField date=new JTextField();
 	
+	JLabel timedByLabel=new JLabel("Timed by");
+	JTextField timedBy=new JTextField();
+	
 	JButton ok;
 	JButton cancel;
 	
@@ -38,8 +40,8 @@ public class RaceInfoFrame extends JPanel
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
 			
-		ok=new JButton("OK");
-		ok.addActionListener(new okAction());
+		ok=new JButton("Save race info");
+		//ok.addActionListener(new okAction());
 		cancel=new JButton("Cancel");
 		
 		int i=0;
@@ -58,6 +60,9 @@ public class RaceInfoFrame extends JPanel
 		add(dateLabel, new GBC(0,i,1,1).setFill(GBC.BOTH));
 		add(date, new GBC(1,i++,1,1).setFill(GBC.BOTH).setWeight(100, 0));
 		
+		add(timedByLabel, new GBC(0,i,1,1).setFill(GBC.BOTH));
+		add(timedBy, new GBC(1,i++,1,1).setFill(GBC.BOTH).setWeight(100, 0));
+	
 		add(cancel, new GBC(0,i+2,1,1).setWeight(0, 100));
 		add(ok, new GBC(1,i+2,1,1));
 		
@@ -79,7 +84,7 @@ public class RaceInfoFrame extends JPanel
 	
 	public String getID()
 	{
-		return idString;
+		return id.getText();
 	}
 	
 	public String getName()
@@ -102,11 +107,30 @@ public class RaceInfoFrame extends JPanel
 		return date.getText();
 	}
 	
+	public String getTimedBy()
+	{
+		return timedBy.getText();
+	}
+	
+	public void setActionListener(ActionListener listener)
+	{
+		ok.addActionListener(listener);
+	}
+	
+	public void setInfo(String id, String name, String city, String state, String date)
+	{
+		this.id.setText(id);
+		this.name.setText(name); 
+		this.city.setText(city);
+		this.state.setText(state);
+		this.date.setText(date);
+	}
+	
 	private class okAction implements ActionListener
 	{
 		public void actionPerformed(ActionEvent event)
 		{
-			idString=id.getText();
+		//	idString=id.getText();
 			dialog.setVisible(false);
 		}
 	}

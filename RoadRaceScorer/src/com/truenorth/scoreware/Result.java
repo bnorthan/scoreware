@@ -2,7 +2,7 @@ package com.truenorth.scoreware;
 
 import java.util.Date;
 import java.util.ArrayList;
-
+import java.util.Map;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -29,14 +29,31 @@ public class Result
 	
 	Date chipTime;
 	Date gunTime;
+	
 	ArrayList<Date> splits;
 	
+	// meta data is used to store misc. tags
+	ArrayList<String> metaData;
+		
 	public Result()
 	{
 		racer=new Racer();
 		
+		splits=new ArrayList<Date>();
+		metaData=new ArrayList<String>();
+		
 		categoryString="unknown";
 		points=0;
+	}
+	
+	public void setDummyValues()
+	{
+		chipTimeString="unknown";
+		gunTimeString="unknown";
+		chipTime=new Date();
+		gunTime=new Date();
+		
+		racer.setDummyValues();
 	}
 	
 	public void setOverallPlace(int overallPlace)
@@ -136,6 +153,16 @@ public class Result
 		return categoryString;
 	}
 	
+	public ArrayList<Date> getSplits()
+	{
+		return splits;
+	}
+	
+	public ArrayList<String> getMetaData()
+	{
+		return metaData;
+	}
+	
 	@Override
 	public String toString()
 	{	
@@ -161,6 +188,24 @@ public class Result
 	
 		String str= overallPlace+" "+racer+" "+categoryPlace+" "+number+" "+chipTimeString
 				+" "+gunTimeString+" "+pace+" ";
+		
+		if (splits.size()>0)
+		{
+			str+="\nsplits: ";
+			for (Date date:splits)
+			{
+				str+=" "+DateTimeParser.DateToTimeString(date);
+			}
+		}
+		
+		if (metaData.size()>0)
+		{
+			str+="\nmeta data: ";
+			for (String s:metaData)
+			{
+				str+=s.toString();
+			}
+		}
 		
 		return str;
 	}

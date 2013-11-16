@@ -9,6 +9,7 @@ import com.truenorth.scoreware.extractors.TextExtractor;
 import com.truenorth.scoreware.extractors.TextExtractorFactory;
 import com.truenorth.scoreware.races.parsers.TableResultParser;
 import com.truenorth.scoreware.Race;
+import com.truenorth.scoreware.common.utility.RunwareUtilities;
 
 import org.jsoup.select.Elements;
 
@@ -32,11 +33,16 @@ public class TextRaceReader extends RaceReader
 	public TextRaceReader(Race race)
 	{
 		super(race);
+		
 		// use the TextExtractorFactory to create the appropriate text extractor
-		// based on the type of source
+		// based on the type of source.  The extractor will take the source (.pdf, .htm, etc)
+		// and convert it to raw text
 		this.extractor=TextExtractorFactory.MakeExtractor(race.getSourceName());
 		
-		results=new ArrayList<Result>();
+		// add "" to throwawaylines to get rid of any blank lines
+		throwAwayLines=new ArrayList<String>();
+		throwAwayLines.add("");
+		
 	}
 		
 	public void read()
@@ -44,13 +50,14 @@ public class TextRaceReader extends RaceReader
 		// extract text from the source data (could be a PDF, web page, database, etc.)
 		text=extractor.extractText(race.getSourceName());
 		
-		// set things up for the next steps
-		boolean initialized=initialize();
+		// at this point we should have the data as raw text...
 		
-		if (!initialized)
+		for (String s:text)
 		{
-			return;// false;
+			System.out.println(s);
 		}
+		
+		if (true) return;
 		
 		// if there are any lines marked to be "thrown away" throw them away
 		if (throwAwayLines!=null)
@@ -58,11 +65,36 @@ public class TextRaceReader extends RaceReader
 			throwAway();
 		}
 		
+		for (String s:text)
+		{
+			System.out.println(s);
+		}
+		
+		
+		// set things up for the next steps
+		boolean initialized=initialize();
+		
+		
+		
+		if (!initialized)
+		{
+			return;// false;
+		}
+		
 		// the overall results table may have to be extracted from the rest of the data
 		if (overallExtractor!=null)
 		{
 			text=overallExtractor.extractText(text);
 		}
+		
+		for (String line:text)
+		{
+			System.out.println(line);
+		}
+		
+		System.out.println("size: "+text.size());
+		
+		//RunwareUtilities.Pause();
 		
 		// at this point we should just have a list of overall results.  Loop through each line 
 		// and parse out the data
@@ -77,13 +109,7 @@ public class TextRaceReader extends RaceReader
 					results.add(result);
 				}
 			}
-		}
-		
-		for (Result r:results)
-		{
-			System.out.println(r);
-		}
-		
+		}		
 	}
 	
 	public void throwAway()

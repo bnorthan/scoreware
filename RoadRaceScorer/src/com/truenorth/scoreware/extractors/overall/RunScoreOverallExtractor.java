@@ -24,11 +24,18 @@ public class RunScoreOverallExtractor implements OverallExtractor
 		
 		while(!endOfTable)
 		{
-			overall.add(lines.get(startOfTable+j));
+			try
+			{
+				overall.add(lines.get(startOfTable+j));
 			
-			j++;
+				j++;
 			
-			if (lines.get(startOfTable+j).trim().length()<10)
+				if (lines.get(startOfTable+j).trim().length()<10)
+				{
+					endOfTable=true;
+				}
+			}
+			catch(Exception e)
 			{
 				endOfTable=true;
 			}

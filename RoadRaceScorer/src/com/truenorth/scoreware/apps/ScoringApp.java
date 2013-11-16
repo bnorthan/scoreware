@@ -9,8 +9,13 @@ import com.truenorth.scoreware.membership.readers.MembershipReader;
 import com.truenorth.scoreware.membership.readers.MembershipReaderFactory;
 import com.truenorth.scoreware.races.readers.RaceReader;
 import com.truenorth.scoreware.races.readers.RaceReaderFactory;
+import com.truenorth.scoreware.sql.RunwareQuery;
+import com.truenorth.scoreware.writers.SqlWriter;
+import com.truenorth.scoreware.writers.JDBCSqlWriter;
 import com.truenorth.scoreware.Race;
 import com.truenorth.scoreware.Result;
+
+import java.io.*;
 
 /**
  * Abstract base class for a scoring app
@@ -30,6 +35,10 @@ abstract public class ScoringApp
 	IsRacerMember isRacerMember=null;
 	
 	Race race;
+	
+	File workingDirectory;
+	
+	JDBCSqlWriter databaseWriter;
 	
 	public ScoringApp()
 	{
@@ -65,22 +74,28 @@ abstract public class ScoringApp
 	{
 		System.out.println("Race Pattern: "+racePattern);
 		
+		race.setSourceName(raceSourceName);
 		// use the race source name to get a race reader
 		raceReader=RaceReaderFactory.getRaceReader(race, racePattern);
 		
 		System.out.println("Race Reader: "+raceReader.getClass().toString());
 		
-		raceReader.ReadRaceHeader();
 		raceReader.read();
+		
+		//raceReader.setHeaderInfo("mhrHalfm_2013", "Hudson Mohawk Half Marathon", "Albany", "NY", "USA", "2013-10-13");
+		//raceReader.setHeaderInfo("mhrm_2013", "Hudson Mohawk Marathon", "Albany", "NY", "USA", "2013-10-13");
+		//raceReader.setHeaderInfo("sefcu_2013", "SEFCU 5k", "Albany", "NY", "USA", "2013-09-02");
+		//raceReader.setHeaderInfo("mhrm_gp_2013", "Hudson Mohawk Marathon", "Albany", "NY", "USA", "2013-10-13");
 		
 		race=raceReader.getRace();
 		
-		for (Result result:raceReader.getResults())
+		for (Result result:race.getResults())
 		{
 			System.out.println(result);
 		}
 		
-		System.out.println(race);
+		raceReader.runChecks();
+	//	System.out.println(race);
 	}
 	
 	public void setRaceInfo(String id,
@@ -88,7 +103,8 @@ abstract public class ScoringApp
 			String date,
 			String city,
 			String state,
-			String country)
+			String country,
+			String timedBy)
 	{
 		race.setIdentifier(id);
 		race.setName(name);
@@ -110,11 +126,83 @@ abstract public class ScoringApp
 		race.setCity(city);
 		race.setState(state);
 		race.setCountry(country);
+		race.setTimedBy(timedBy);
 	}
 	
-	abstract public void Score();
+	public void initializeDatabase()
+	{
+		if (databaseWriter==null)
+		{
+			databaseWriter=new JDBCSqlWriter(); 
+		}
+		
+		System.out.println(race);
+		
+		databaseWriter.CreateRacesTable("races");
+		databaseWriter.CreateRaceTable(race);
+		
+		writeResults();
+	}
+	
+	public void writeResults()
+	{
+		if (databaseWriter==null)
+		{
+			databaseWriter=new JDBCSqlWriter();
+		}
+		
+		databaseWriter.writeResults(race.getResults());
+	}
+	
+	public void transferToDatabase(String propertiesFile)
+	{
+		SqlWriter writer=new JDBCSqlWriter(propertiesFile);
+		
+		writer.setPropertiesFile(propertiesFile);
+		
+		writer.CreateRacesTable("races");
+		writer.CreateRaceTable(race);	
+		writer.writeResults(race.getResults());
+	}
+	
+	public void updateDatabase()
+	{
+		if (databaseWriter==null)
+		{
+			databaseWriter=new JDBCSqlWriter();
+		}
+		
+		String test=race.getIdentifier();
+		
+		databaseWriter.setTableName(race.getIdentifier());
+		RunwareQuery queryClass = new RunwareQuery()
+		{
+			public String makeResultQuery(Result result, String tableName)
+			{
+				return "UPDATE "+tableName+" SET Points='"+result.getPoints()
+						+"', Category='"+result.getCategoryString()
+						+"', Club='"+result.getRacer().getCurrentClub()+"' WHERE Place='"
+							+result.getOverallPlace()+"' AND LastName='"+result.getRacer().getLastName()+"'";
+			}
+			
+		};
+		
+		databaseWriter.RunQueriesOnResults(race.getResults(), queryClass);
+	}
+	
+	abstract public void Score();  
 	
 	abstract public void saveResults(String fileName);
 	
-	abstract public void writeToDatabase();
+	public void setWorkingDirectory(File workingDirectory)
+	{
+		this.workingDirectory=workingDirectory;
+		race.setOutputPath(workingDirectory.getAbsolutePath());
+	}
+	
+	public Race getRace()
+	{
+		return this.race;
+	}
+	
 }

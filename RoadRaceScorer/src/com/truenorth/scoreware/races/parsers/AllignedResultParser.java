@@ -5,7 +5,7 @@ import com.truenorth.scoreware.Racer.Sex;
 
 public class AllignedResultParser extends ResultParser
 {
-int[] dataLocations; 
+	int[] dataLocations; 
 	
 	public void parseHeader(String headerLine)
 	{

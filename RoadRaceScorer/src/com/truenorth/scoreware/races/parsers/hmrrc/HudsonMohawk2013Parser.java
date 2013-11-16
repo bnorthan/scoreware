@@ -6,6 +6,7 @@ import com.truenorth.scoreware.Racer.Sex;
 
 public class HudsonMohawk2013Parser extends TableResultParser
 {
+	@Override
 	public Result parseElements()
 	{
 		try

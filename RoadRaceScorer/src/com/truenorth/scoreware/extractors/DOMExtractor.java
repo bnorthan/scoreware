@@ -1,11 +1,6 @@
 package com.truenorth.scoreware.extractors;
 
 import java.io.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -14,12 +9,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class DOMExtractor 
+import com.truenorth.scoreware.HeaderStrings;
+
+public class DOMExtractor extends TableExtractor
 {
-	Elements tableHeaders;
-	Elements tableRows;
-	
-	public Elements getTable(String sourceName, boolean onLine)
+	public Elements getMainTable()
 	{
 		System.out.println("Table extractor!");
 		
@@ -42,32 +36,15 @@ public class DOMExtractor
 			System.out.println(ex.getMessage());
 			return null;
 		}
-
+		
+		// Todo: this routine needs some error checking for the case of
+		// multiple tables
+		
+		// get the table elements
 		Elements elements=doc.select("table");
-		System.out.println("num tables are "+elements.size());
 		
-		tableHeaders=elements.select("thead tr th");
-		System.out.println("num headers are: "+tableHeaders.size());
-		
-		for (int i=0;i<tableHeaders.size();i++)
-		{
-			System.out.println(tableHeaders.get(i).text());
-		}
-		
-		tableRows=elements.select(":not(thead) tr");
-		System.out.println("num rows are: "+tableRows.size());
-		
-		for (int i=0;i<1;i++)
-		{
-			System.out.println(tableRows.get(i).text());
-		}
-		
-		return tableRows;
+		return elements;
 	}
 	
-	public Elements getTableHeaders()
-	{
-		return tableHeaders;
-	}
 }
 

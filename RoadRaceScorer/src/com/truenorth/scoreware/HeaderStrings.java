@@ -13,6 +13,15 @@ public class HeaderStrings
 		return placeStrings;
 	}
 	
+	static public ArrayList<String> getNumberStrings()
+	{
+		ArrayList<String> numberStrings=new ArrayList<String>();
+		
+		numberStrings.add("bib");
+		
+		return numberStrings;
+	}
+	
 	static public ArrayList<String> getFirstNameStrings()
 	{
 		ArrayList<String> fnameStrings=new ArrayList<String>();
@@ -48,6 +57,7 @@ public class HeaderStrings
 		ArrayList<String> ageStrings=new ArrayList<String>();
 		
 		ageStrings.add("age");
+		ageStrings.add("ag");
 		
 		return ageStrings;
 	}
@@ -78,7 +88,7 @@ public class HeaderStrings
 		ArrayList<String> stateStrings=new ArrayList<String>();
 		
 		stateStrings.add("state");
-		stateStrings.add(" st ");
+		stateStrings.add("st");
 		
 		return stateStrings;
 	}
@@ -87,6 +97,7 @@ public class HeaderStrings
 	{
 		ArrayList<String> chipTimeStrings=new ArrayList<String>();
 		
+		chipTimeStrings.add("nettime");
 		chipTimeStrings.add("NET_TIME");
 		chipTimeStrings.add("chip time");
 		
@@ -97,12 +108,25 @@ public class HeaderStrings
 	{
 		ArrayList<String> gunTimeStrings=new ArrayList<String>();
 		
+		gunTimeStrings.add("guntime");
 		gunTimeStrings.add("GUN_TIME");
 		gunTimeStrings.add("gun time");
 		gunTimeStrings.add("Time");
 		gunTimeStrings.add("Official time");
 		
 		return gunTimeStrings;
+	}
+	
+	static public ArrayList<String> getSplitStrings()
+	{
+		ArrayList<String> splitStrings=new ArrayList<String>();
+		
+		splitStrings.add("13.1M");
+		splitStrings.add("17.4M");
+		splitStrings.add("0:split 1");
+		splitStrings.add("0:split 2");
+		
+		return splitStrings;
 	}
 	
 	static public ArrayList<String> getAllStrings()

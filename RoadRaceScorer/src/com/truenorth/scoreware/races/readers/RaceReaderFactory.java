@@ -1,5 +1,10 @@
 package com.truenorth.scoreware.races.readers;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Properties;
+
 import com.truenorth.scoreware.races.readers.hmrrc.*;
 import com.truenorth.scoreware.Enums.RacePatterns;
 import com.truenorth.scoreware.Race;
@@ -28,6 +33,12 @@ public class RaceReaderFactory
 		if (racePattern.equals(RacePatterns.RUNSCORE))
 		{
 			return new RunScoreTextReader(race);
+		}
+		
+		// if reading from a database
+		if (racePattern.equals(RacePatterns.PROPERTIES))
+		{
+			return getRaceReaderFromProperties(race);
 		}
 		
 		// if a specific known race return that reader
@@ -62,8 +73,40 @@ public class RaceReaderFactory
 			return new WineGlass2013Reader(race);
 		}
 		
+		if (racePattern.equals(RacePatterns.TABLE))
+		{
+			return new DOMRaceReader(race);
+		}
+		
 		
 		System.out.println("NOTHING!");
+		
+		return null;
+	}
+	
+	static public RaceReader getRaceReaderFromProperties(Race race)
+	{
+		// the source should be a properties file telling us how to read the race
+		Properties props=new Properties();
+				
+		try 
+		{
+			InputStream in=Files.newInputStream(Paths.get(race.getSourceName()));
+					
+			props.load(in);
+		}
+		catch(Exception e)
+		{
+					
+		}
+		
+		String drivers=props.getProperty("jdbc.drivers");
+		
+		// if the sql drivers are there then the results are allready in a database return an SqlReader
+		if (drivers!=null)
+		{
+			return new SqlRaceReader(race);
+		}
 		
 		return null;
 	}
