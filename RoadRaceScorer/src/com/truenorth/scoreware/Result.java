@@ -50,8 +50,8 @@ public class Result
 	{
 		chipTimeString="unknown";
 		gunTimeString="unknown";
-		chipTime=new Date();
-		gunTime=new Date();
+		//chipTime=new Date();
+		//gunTime=new Date();
 		
 		racer.setDummyValues();
 	}

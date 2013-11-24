@@ -1,6 +1,7 @@
 package com.truenorth.scoreware;
 
 import java.util.ArrayList;
+import com.truenorth.scoreware.common.utility.FuzzyUtilities;
 
 public class HeaderStrings 
 {
@@ -18,6 +19,8 @@ public class HeaderStrings
 		ArrayList<String> numberStrings=new ArrayList<String>();
 		
 		numberStrings.add("bib");
+		numberStrings.add("comp#");
+		numberStrings.add("No.");
 		
 		return numberStrings;
 	}
@@ -129,20 +132,70 @@ public class HeaderStrings
 		return splitStrings;
 	}
 	
+	static public ArrayList<String> getClubStrings()
+	{
+		ArrayList<String> clubStrings=new ArrayList<String>();
+		
+		clubStrings.add("club");
+		clubStrings.add("team");
+		
+		return clubStrings;
+		
+	}
+	
+	static public ArrayList<String> getPaceStrings()
+	{
+		ArrayList<String> paceStrings=new ArrayList<String>();
+		
+		paceStrings.add("pace");
+		
+		return paceStrings;
+	}
+	
 	static public ArrayList<String> getAllStrings()
 	{
 		ArrayList<String> allStrings=new ArrayList<String>();
 		
 		for (String s:getPlaceStrings()) allStrings.add(s);
+		for (String s:getNumberStrings()) allStrings.add(s);
 		for (String s:getAgeStrings()) allStrings.add(s);
 		for (String s:getFirstNameStrings()) allStrings.add(s);
 		for (String s:getLastNameStrings()) allStrings.add(s);
+		for (String s:getFullNameStrings()) allStrings.add(s);
 		for (String s:getGenderStrings()) allStrings.add(s);
 		for (String s:getCityStrings()) allStrings.add(s);
 		for (String s:getStateStrings()) allStrings.add(s);
+		for (String s:getGunTimeStrings()) allStrings.add(s);
+		for (String s:getChipTimeStrings()) allStrings.add(s);
+		for (String s:getClubStrings()) allStrings.add(s);
 		
 		return allStrings;
 		
+	}
+	
+	// given a string will return true if string is a header
+	static public boolean isHeader(String s)
+	{
+		return false;
+	}
+	
+	static public float fuzzyIsHeader(String s)
+	{
+		float fuzzy=0.0f;
+		
+		// number of words in string
+		int numWords=s.split("\\s+").length;
+		
+		int numHeaderWords=headerStringOccurrences(s);
+		
+		float ratio=(float)numHeaderWords/(float)numWords;
+		
+		// is number of header words above 4??
+		double above4=FuzzyUtilities.sigmoid(numHeaderWords-4, 1);
+		
+		fuzzy=(float)above4+ratio;
+		
+		return fuzzy;
 	}
 	
 	static public int headerStringOccurrences(String string)
@@ -155,6 +208,30 @@ public class HeaderStrings
 		}
 		
 		return num;
+	}
+	
+	static public boolean matchHeader(String text, ArrayList<String> headers)
+	{
+		text=text.toLowerCase();
+		
+		for (String s:headers)
+		{
+			if ( text.equals(s.toLowerCase()) ) return true;
+		}
+		
+		return false;
+	}
+	
+	static public boolean containsHeader(String text, ArrayList<String> headers)
+	{
+		text=text.toLowerCase();
+		
+		for (String s:headers)
+		{
+			if ( text.contains(s.toLowerCase()) ) return true;
+		}
+		
+		return false;
 	}
 	
 }

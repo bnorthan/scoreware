@@ -81,12 +81,7 @@ abstract public class ScoringApp
 		System.out.println("Race Reader: "+raceReader.getClass().toString());
 		
 		raceReader.read();
-		
-		//raceReader.setHeaderInfo("mhrHalfm_2013", "Hudson Mohawk Half Marathon", "Albany", "NY", "USA", "2013-10-13");
-		//raceReader.setHeaderInfo("mhrm_2013", "Hudson Mohawk Marathon", "Albany", "NY", "USA", "2013-10-13");
-		//raceReader.setHeaderInfo("sefcu_2013", "SEFCU 5k", "Albany", "NY", "USA", "2013-09-02");
-		//raceReader.setHeaderInfo("mhrm_gp_2013", "Hudson Mohawk Marathon", "Albany", "NY", "USA", "2013-10-13");
-		
+				
 		race=raceReader.getRace();
 		
 		for (Result result:race.getResults())
@@ -151,7 +146,7 @@ abstract public class ScoringApp
 			databaseWriter=new JDBCSqlWriter();
 		}
 		
-		databaseWriter.writeResults(race.getResults());
+		databaseWriter.writeResults2(race.getResults());
 	}
 	
 	public void transferToDatabase(String propertiesFile)
@@ -162,7 +157,7 @@ abstract public class ScoringApp
 		
 		writer.CreateRacesTable("races");
 		writer.CreateRaceTable(race);	
-		writer.writeResults(race.getResults());
+		writer.writeResults2(race.getResults());
 	}
 	
 	public void updateDatabase()

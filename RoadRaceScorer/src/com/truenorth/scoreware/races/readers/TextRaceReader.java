@@ -57,8 +57,6 @@ public class TextRaceReader extends RaceReader
 			System.out.println(s);
 		}
 		
-		if (true) return;
-		
 		// if there are any lines marked to be "thrown away" throw them away
 		if (throwAwayLines!=null)
 		{
@@ -70,11 +68,8 @@ public class TextRaceReader extends RaceReader
 			System.out.println(s);
 		}
 		
-		
 		// set things up for the next steps
 		boolean initialized=initialize();
-		
-		
 		
 		if (!initialized)
 		{
@@ -100,6 +95,19 @@ public class TextRaceReader extends RaceReader
 		// and parse out the data
 		if (text!=null)
 		{
+			// verify it can be parsed by trying to parse the first line
+			boolean parsable=resultParser.verify(text.get(0)); 
+			
+			if (!parsable)
+			{
+				// Todo: Throw error????
+				System.out.println("!!!!!!!!!! NO PARSING SCHEME COULD BE FOUND !!!!!!!!!!!!!!!!");
+				
+				// as a final effort analyze the entire table
+				parsable=AnalyzeEntireTable();
+				return;
+			}
+			
 			for (String line:text)
 			{
 				Result result=resultParser.parseResultFromLine(line);
@@ -146,5 +154,10 @@ public class TextRaceReader extends RaceReader
 	public void ReadRaceHeader()
 	{
 		
+	}
+	
+	protected boolean AnalyzeEntireTable()
+	{
+		return false;
 	}
 }

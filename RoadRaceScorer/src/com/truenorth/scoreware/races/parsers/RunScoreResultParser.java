@@ -117,7 +117,7 @@ public class RunScoreResultParser extends ResultParser
 			
 				gunTime=gunTime.trim();
 			
-				result.setChipTimeString(gunTime);
+				result.setGunTimeString(gunTime);
 			}
 		}
 		catch(Exception e)

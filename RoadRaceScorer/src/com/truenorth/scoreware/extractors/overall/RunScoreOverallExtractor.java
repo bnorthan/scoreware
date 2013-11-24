@@ -20,28 +20,32 @@ public class RunScoreOverallExtractor implements OverallExtractor
 		int startOfTable=maxMarkersLine+1;
 		boolean endOfTable=false;
 		
-		int j=0;
+		int j=1;
 		
-		while(!endOfTable)
+		for (String line:lines)
+		//while(!endOfTable)
 		{
 			try
 			{
-				overall.add(lines.get(startOfTable+j));
-			
-				j++;
-			
-				if (lines.get(startOfTable+j).trim().length()<10)
+				String trim=line.trim();
+				String split[]=trim.split("\\s+");
+				
+				String temp=split[0];
+				temp=temp.trim();
+					
+				int place=Integer.parseInt(temp);
+					
+				if (place==j)
 				{
-					endOfTable=true;
+					overall.add(line);
+					j++;
 				}
 			}
 			catch(Exception e)
 			{
-				endOfTable=true;
+				//continue
 			}
 		}
-			
-		
 		
 		return overall;
 	}

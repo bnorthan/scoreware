@@ -176,6 +176,67 @@ public abstract class SqlWriter extends ScorewareWriter
 		}
 	}
 	
+	public void writeResults2(ArrayList<Result> results)
+	{
+		// create the prepared query... order of data is:
+		// 1. first, 2. last, 3. place, 4. age, 5. gender, 6. time, 7. pace, 8. category, 9. city, 10. state, 11. points, 12. club.
+		String query= "INSERT INTO "+tableName+" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query2="INSERT INTO "+tableName+" VALUES ";
+		
+		PreparedStatement ps;
+		Statement s;
+		
+		try
+		{
+			s = connection.createStatement();
+			s.execute("ALTER TABLE "+tableName+" DISABLE KEYS");
+			ps = connection.prepareStatement(query);
+		}
+		catch (SQLException e)
+		{
+			System.out.println("sql connection error!");
+			return;
+		}
+		
+		// loop through all the results
+		for (Result result:results)
+		//for (int i=0;i<75;i++)
+		{	
+			try
+			{
+				//Result result=results.get(i);
+				fillPreparedStatementWithResult(ps, result);
+				
+				String value=this.createValueWithResult(result);
+				query2+=value+", ";
+				ps.addBatch();
+			}
+			catch(Exception e)
+			{
+				// if something went wrong diplay a message to the user 
+				JOptionPane.showMessageDialog(null, "query not batched: "+e.getMessage());
+			}
+		}
+		
+		query2=query2.substring(0, query2.length()-2);
+		
+		System.out.println(query2);
+		try
+		{
+			s.execute(query2);
+			
+			System.out.println("sent query2!");
+			//ps.executeBatch();
+			s.execute("ALTER TABLE "+tableName+" ENABLE KEYS");
+		}
+		catch(SQLException e)
+		{
+			
+			System.out.println("error sending batch: "+e.getMessage());
+		}
+		
+	}
+	
 	// writes the results to the race table
 	public void writeResults(ArrayList<Result> results)
 	{
@@ -282,6 +343,139 @@ public abstract class SqlWriter extends ScorewareWriter
 		{
 			System.out.println("some bad thing happened!"+e.getMessage());
 		}
+		
+	}
+	
+	protected void fillPreparedStatementWithResult(PreparedStatement ps, Result result) throws SQLException
+	{
+		
+		String fName=result.getRacer().getFirstName();
+		
+		String lName=result.getRacer().getLastName();
+		
+		int place=result.getOverallPlace();
+		
+		int age=result.getRacer().getAge();
+		
+		String gender;
+		if (result.getRacer().getSex()==Racer.Sex.MALE)
+		{
+			gender="M";
+		}
+		else
+		{
+			gender="F";
+		}
+		
+		DateFormat format=new SimpleDateFormat("HH:mm:ss");
+		String time;
+		if (result.getChipTime()!=null)
+		{
+			time=format.format(result.getChipTime());
+		}
+		else
+		{
+			time=format.format(result.getGunTime());
+		}
+		time="2000-01-01 "+time;
+		
+		String pace="00:00:00";
+		
+		String category=result.getCategoryString();
+		
+		String city=result.getRacer().getCity();
+		
+		String state=result.getRacer().getState();
+		if (state==null)
+		{
+			state="XX";
+		}
+		
+		int points=result.getPoints();
+		
+		String club=result.getRacer().getCurrentClub();
+		
+		ps.setString(1, fName);
+		ps.setString(2, lName);
+		ps.setInt(3, place);
+		ps.setInt(4, age);
+		ps.setString(5, gender);
+		ps.setString(6, time);
+		ps.setString(7, pace);
+		ps.setString(8, category);
+		ps.setString(9, city);
+		ps.setString(10, state);
+		ps.setInt(11, points);
+		ps.setString(12, club);
+	}
+	
+	protected String createValueWithResult(Result result)
+	{
+		
+		String fName=result.getRacer().getFirstName();
+		fName=fName.replace("'", "''");
+		
+		String lName=result.getRacer().getLastName();
+		lName=lName.replace("'", "''");
+		
+		int place=result.getOverallPlace();
+		
+		int age=result.getRacer().getAge();
+		
+		String gender;
+		if (result.getRacer().getSex()==Racer.Sex.MALE)
+		{
+			gender="M";
+		}
+		else
+		{
+			gender="F";
+		}
+		
+		DateFormat format=new SimpleDateFormat("HH:mm:ss");
+		String time;
+		if (result.getChipTime()!=null)
+		{
+			time=format.format(result.getChipTime());
+		}
+		else
+		{
+			time=format.format(result.getGunTime());
+		}
+		time="2000-01-01 "+time;
+		
+		String pace="00:00:00";
+		
+		String category=result.getCategoryString();
+		
+		String city=result.getRacer().getCity();
+		city=city.replace("'", "''");
+		
+		String state=result.getRacer().getState();
+		if (state==null)
+		{
+			state="XX";
+		}
+		
+		int points=result.getPoints();
+		
+		String club=result.getRacer().getCurrentClub();
+		
+		String valueString="('"
+				+ fName+"', '"
+				+ lName+"', '"
+				+ place+"', '"
+				+ age+"', '"
+				+ gender+"', '"
+				+ time+"', '"
+				+ pace+"', '"
+				+ category+"', '"
+				+ city+"', '"
+				+ state+"', '"
+				+ points+"', '"
+				+ club+"')";
+		
+		return valueString;
 		
 	}
 	

@@ -82,8 +82,10 @@ public abstract class RaceReader
 			System.out.println("first: "+firstRacer+" last: "+lastRacer);
 			
 			int i=1;
+			int j=0;
 			
-			if (lastRacer!=numRacers)
+			Date lTime=null;
+			//if (lastRacer!=numRacers)
 			{
 				for (Result result:results)
 				{
@@ -91,7 +93,7 @@ public abstract class RaceReader
 					
 					if (place!=i)
 					{
-						System.out.println("Problem near: "+result);
+						System.out.println("Problem with place near: "+result);
 						
 						i=place+1;
 					}
@@ -99,6 +101,28 @@ public abstract class RaceReader
 					{
 						i++;
 					}
+					
+					Date time=result.getGunTime();
+					
+					if (j>0)
+					{
+						if (time!=null && lTime!=null)
+						{	
+							// if new time is before old time something went wrong
+							if (time.before(lTime))
+							{
+								System.out.println("time order problem near: "+result);
+							}
+						}
+						else
+						{
+							System.out.println("time null near: "+result);
+						}
+					}
+					
+					lTime=time;
+					
+					j++;
 				}	
 			}
 		}

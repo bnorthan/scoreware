@@ -11,6 +11,8 @@ import com.truenorth.scoreware.Race;
 
 import com.truenorth.scoreware.extractors.overall.SimpleGetOverallResults;
 
+import com.truenorth.scoreware.races.readers.DataAnalyzer;
+
 public class UnknownTextReader extends TextRaceReader
 {
 	
@@ -24,10 +26,17 @@ public class UnknownTextReader extends TextRaceReader
 	@Override
 	public boolean initialize()
 	{
-		// find out if it is runscore -- if so just set up for run score
-		if (isRunScore())
+		try
 		{
-			return true;
+			// find out if it is runscore -- if so this function will set up for run score
+			if (isRunScore())
+			{
+				return true;
+			}
+		}
+		catch(Exception ex)
+		{
+			// keep going
 		}
 		
 		// we have no idea what kind of format this is 1st lets see if we can find a header. 
@@ -41,7 +50,7 @@ public class UnknownTextReader extends TextRaceReader
 			resultParser=new UnknownResultParser();
 			
 			UnknownResultParser unknown=(UnknownResultParser)resultParser;
-			unknown.parseHeader(header);
+			unknown.parseHeaderWithHeader(header);
 			
 			overallExtractor=new SimpleGetOverallResults();
 			
@@ -49,21 +58,37 @@ public class UnknownTextReader extends TextRaceReader
 		}
 		
 		// no header
-		boolean parsable=TryAFewThings();
+		boolean parsable=AnalyzeEntireTable();
 				
 		if (parsable)		
 		{
 			
 		}
 		
+		return false;
+		
 	}
 	
-	private boolean TryAFewThings()
+	protected boolean AnalyzeEntireTable()
 	{
-		for (String s:text)
+		DataAnalyzer analyzer=new DataAnalyzer(text);
+		
+		// this is our last chance before asking a human to help
+		ArrayList<ArrayList<String>> lines=analyzer.getLines();
+		
+		for (ArrayList<String> line:lines)
 		{
-			String[] split=s.split("\\s+");
+			String string="";
+			
+			for (String s:line)
+			{
+				string+=" :"+s;
+			}
+			
+			System.out.println(string);
 		}
+		
+		analyzer.generateStats();
 		
 		return false;
 	}
@@ -71,12 +96,23 @@ public class UnknownTextReader extends TextRaceReader
 	private String findHeader()
 	{
 		String headerString=null;
+		
+		float maxHeaderFuzzy=0.0f;
+		float fuzzyThresh=0.8f;
+		
 		for (String s:text)
 		{
-			int n=HeaderStrings.headerStringOccurrences(s);
+			float headerFuzzy=HeaderStrings.fuzzyIsHeader(s);
+			//int n=HeaderStrings.headerStringOccurrences(s);
 //			System.out.println("header?? :"+s+" "+n);
 			
-			if (n>3) headerString=s;
+			//if (n>3) headerString=s;
+			
+			if ( (headerFuzzy>maxHeaderFuzzy) && (headerFuzzy>fuzzyThresh) )
+			{
+				maxHeaderFuzzy=headerFuzzy;
+				headerString=s;
+			}
 		}
 		return headerString;
 	}
@@ -90,9 +126,13 @@ public class UnknownTextReader extends TextRaceReader
 		char marker='=';
 		int j=0;
 				
+		// loop through all lines
 		for (String s:text)
 		{
+			
 			int counter = 0;
+			
+			// count the number of markers
 			for( int i=0; i<s.length(); i++ ) 
 			{
 			    if( s.charAt(i) == marker ) 
@@ -115,6 +155,13 @@ public class UnknownTextReader extends TextRaceReader
 		
 		if (maxMarkers>15)
 		{
+			// make sure the maxMarkersString can be split
+			String[] split=maxMarkersString.split("\\s+");
+			
+			if (split.length==1)
+			{
+				return false;
+			}
 				
 			// the header names will be just above the "maxMarkersLine"
 			String headerLine=text.get(maxMarkersLine-1);

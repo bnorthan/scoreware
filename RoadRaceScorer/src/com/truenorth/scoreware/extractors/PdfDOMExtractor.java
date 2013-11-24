@@ -22,6 +22,7 @@ public class PdfDOMExtractor extends TableExtractor
 			
 			ArrayList<String> text=new ArrayList<String>();
 			
+			// open the document
 			URL documentURL = new URL("file:/"+sourceName);
 			Document document = new Document();
 			document.setUrl( documentURL);
@@ -30,31 +31,38 @@ public class PdfDOMExtractor extends TableExtractor
 			//FileOutputStream fileOutputStream = new FileOutputStream( "extracted.txt");
 			   
 			int i=0;
-			   
 			int np=document.getNumberOfPages();
-			   
 			PageText pageText;
 			
+			// we will place the extracted race info in an elements structure
 			Elements elements=new Elements();
-
 			boolean headerFound=false;
 		    Element headerRow=null;
 
-
+		    // loop through all pages of the document
 			while ( (pageText = document.getPageText(i) ) != null)
 			{
 				System.out.print(i+"... ");
+				
+				// extract text from this page
 				pageText = document.getPageText(i);
-						   
 				ArrayList<LineText> lineText = pageText.getPageLines();
 			   
 				String s="";
+				
+				// start a new row
 				Element row=new Element(Tag.valueOf("tr"),"");
 				
+				// keep track of y position of the text (we will start a new line when the y position changes)
 				float lastY=lineText.get(0).getBounds().y;
+				
+				// start a new line
 			    ArrayList<LineText> line=new ArrayList<LineText>();
+			    
+			    // Array list to put the header lines in
 			    ArrayList<LineText> headerLine=null;
-				// go through each line on the page until we find the header
+			    
+				// first go through each line on the page until we find the header
 				for (LineText lt:lineText)
 				{
 					line.add(lt);
@@ -66,6 +74,7 @@ public class PdfDOMExtractor extends TableExtractor
 		
 						if (headerRow!=null)
 						{
+							// the case where there isn't enough information
 							if (row.childNodes().size()<headerRow.childNodes().size())
 							{
 								System.out.println(s);
@@ -113,7 +122,6 @@ public class PdfDOMExtractor extends TableExtractor
 						words+=obj.toString();
 					}
 				   
-					
 					Element e=new Element(Tag.valueOf("td"),"");
 					
 					System.out.println(lt.toString());
@@ -132,19 +140,16 @@ public class PdfDOMExtractor extends TableExtractor
 				// add the last row
 				text.add(s);
 				
-				
-				
-				 // 
-				   if (row.childNodes().size()<headerRow.childNodes().size())
-					{
+				// 
+				if (row.childNodes().size()<headerRow.childNodes().size())
+				{
 						
-						row=padElement(headerRow, row);
-					}
-				   
-				   elements.add(row);
-				   i++;
-				   
-				   
+					row=padElement(headerRow, row);
+				}
+				
+				elements.add(row);
+				i++;
+			   
 			}
 			return elements;
 		}
@@ -198,7 +203,9 @@ public class PdfDOMExtractor extends TableExtractor
 	{
 		int test=HeaderStrings.headerStringOccurrences(s);
 		
-		if (test>=5)
+		float fuzzy=HeaderStrings.fuzzyIsHeader(s);
+		
+		if (fuzzy>1)
 		{
 			return true;
 		}
