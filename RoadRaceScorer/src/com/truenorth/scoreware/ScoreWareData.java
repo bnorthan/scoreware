@@ -10,6 +10,13 @@ public class ScoreWareData
 	
 	DataTypes dataType;
 	
+	int row;
+	int collumn;
+	int dataTypeIndex;
+	
+	int startPosition;
+	int endPosition;
+	
 	public ScoreWareData(String dataString)
 	{
 		this.dataString=dataString;
@@ -44,6 +51,54 @@ public class ScoreWareData
 	{
 		this.dataType=dataType;
 	}
-
 	
+	public void setStartPosition(int startPosition)
+	{
+		this.startPosition=startPosition;
+	}
+	
+	public int getStartPosition()
+	{
+		return this.startPosition;
+	}
+	
+	public void setEndPosition(int endPosition)
+	{
+		this.endPosition=endPosition;
+	}
+	
+	public int getEndPosition()
+	{
+		return this.endPosition;
+	}
+	
+	public void setDataTypeIndex(int dataTypeIndex)
+	{
+		this.dataTypeIndex=dataTypeIndex;
+	}
+	
+	public int getDataTypeIndex()
+	{
+		return this.dataTypeIndex;
+	}
+	
+	public void setCollumn(int collumn)
+	{
+		this.collumn=collumn;
+	}
+	
+	public int getCollumn()
+	{
+		return this.collumn;
+	}
+	
+	public void setRow(int row)
+	{
+		this.row=row;
+	}
+	
+	public int getRow()
+	{
+		return this.row;
+	}
 }

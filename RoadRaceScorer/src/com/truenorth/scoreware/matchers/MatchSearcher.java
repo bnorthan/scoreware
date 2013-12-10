@@ -89,6 +89,13 @@ public class MatchSearcher
 		// loop through all members
 		for(Racer member:members)
 		{
+			System.out.println(member.getFirstName().toLowerCase()+":"+member.getLastName().toLowerCase());
+			System.out.println(racer.getFirstName().toLowerCase()+":"+racer.getLastName().toLowerCase());
+			
+			if (member.getLastName().toLowerCase().equals("roig")&&(racer.getLastName().toLowerCase().equals("roig")))
+			{
+				int stop=5;
+			}
 			// check for a match
 			double matchNum=matcher.Match(member, racer);
 			

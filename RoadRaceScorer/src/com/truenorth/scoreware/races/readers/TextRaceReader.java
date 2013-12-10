@@ -28,6 +28,8 @@ public class TextRaceReader extends RaceReader
 	
 	protected ArrayList<String> throwAwayLines; 
 	
+	protected String header;
+	
 	protected ArrayList<String> text;
 	
 	public TextRaceReader(Race race)
@@ -88,9 +90,7 @@ public class TextRaceReader extends RaceReader
 		}
 		
 		System.out.println("size: "+text.size());
-		
-		//RunwareUtilities.Pause();
-		
+			
 		// at this point we should just have a list of overall results.  Loop through each line 
 		// and parse out the data
 		if (text!=null)
@@ -102,9 +102,13 @@ public class TextRaceReader extends RaceReader
 			{
 				// Todo: Throw error????
 				System.out.println("!!!!!!!!!! NO PARSING SCHEME COULD BE FOUND !!!!!!!!!!!!!!!!");
+			
+				System.out.println("header is: "+header);
+				//RunwareUtilities.Pause();
 				
 				// as a final effort analyze the entire table
 				parsable=AnalyzeEntireTable();
+				
 				return;
 			}
 			

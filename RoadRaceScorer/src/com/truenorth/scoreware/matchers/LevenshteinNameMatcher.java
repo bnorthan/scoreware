@@ -45,17 +45,17 @@ public class LevenshteinNameMatcher extends AbstractMatcher
 	double matchName(Racer racer, Racer member)
 	{
 		// method 1 is firstname match + lastname match times 2
-		double firstNameMatch=LevenshteinDistance.similarity(member.getFirstName(), racer.getFirstName());
+		double firstNameMatch=LevenshteinDistance.similarity(member.getFirstName().toLowerCase(), racer.getFirstName().toLowerCase());
 		
-		double lastNameMatch=LevenshteinDistance.similarity(member.getLastName(), racer.getLastName());
+		double lastNameMatch=LevenshteinDistance.similarity(member.getLastName().toLowerCase(), racer.getLastName().toLowerCase());
 		
 		double total1=(firstNameMatch+2*lastNameMatch)/3;
 		
 		// method 2 is just the total match of last+first (this handles the case of possible middle names or 
 		// two last names better. 
 		
-		String racerFullName=racer.getFirstName()+" "+racer.getLastName();
-		String memberFullName=member.getFirstName()+" "+member.getLastName();
+		String racerFullName=racer.getFirstName().toLowerCase()+" "+racer.getLastName().toLowerCase();
+		String memberFullName=member.getFirstName().toLowerCase()+" "+member.getLastName().toLowerCase();
 		
 		double total2=LevenshteinDistance.similarity(memberFullName, racerFullName);
 		

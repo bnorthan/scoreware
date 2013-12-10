@@ -22,8 +22,8 @@ public class SimpleGetOverallResults implements OverallExtractor
 		
 		for(String line:lines)
 		{
-			line=line.trim();
-			String[] split=line.split("\\s+");
+			String trimmed=line.trim();
+			String[] split=trimmed.split("\\s+");
 			
 			int n=split.length;
 			
@@ -31,8 +31,12 @@ public class SimpleGetOverallResults implements OverallExtractor
 			{
 				int place=Integer.parseInt(split[0]);
 				System.out.println("place/expected: "+place+" : "+expectedPlace);
-					
-				if (place==expectedPlace)
+				
+				// check if the place equals the expected place...  if so continue building the results table.
+				// Note:  Also accept the case where place = expectedPlace-1... this is done because I've noticed in
+				// large tables of lives results there can be repeat places.... keep an eye on this and rework logic 
+				// as needed....
+				if ( (place==expectedPlace) || (place==expectedPlace-1) )
 				{
 					overall.add(line);
 					expectedPlace++;

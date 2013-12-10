@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.Pattern; 
 
 import com.truenorth.scoreware.Enums.ResultHeader;
 
@@ -13,7 +13,8 @@ public class DataFormats
 	public enum DataTypes
 	{
 		N, // integer number
-		MM_SS, // mm_ss time,
+		MM_SS, // minutes, seconds time,
+		HH_MM_SS, // hours, minutes, seconds time
 		LETTERS,
 		CHARS_COMMA,
 		CHARS // characters		
@@ -47,6 +48,7 @@ public class DataFormats
 		return null;
 	}
 	
+	// returns the type of data
 	public static DataTypes whatType(String s)
 	{
 		boolean success=false;
@@ -55,11 +57,33 @@ public class DataFormats
 		try
 		{
 			Integer.parseInt(s);
+			
+			// if so return that it was an integer
 			return DataTypes.N;
 		}
 		catch(Exception e)
 		{
 			// if this didn't work keep going
+		}
+		
+		// is it a hour:minute:seconds time??
+		if (!success)
+		{
+			DateFormat format_mmss=new SimpleDateFormat("HH:mm:ss");
+			Date test=null;
+			try
+			{
+				test=format_mmss.parse(s);
+			}
+			catch(Exception e)
+			{
+						
+			}
+					
+			if (test!=null)
+			{
+				return DataTypes.HH_MM_SS;
+			}
 		}
 		
 		// is it a minute:seconds time??
@@ -83,7 +107,7 @@ public class DataFormats
 		}
 		
 		// is it a name
-		Pattern namePattern=Pattern.compile("^[A-Za-z]+$");
+		Pattern namePattern=Pattern.compile("^[A-Za-z-']+$");
 		Matcher nameMatcher=namePattern.matcher(s);
 		
 		if (nameMatcher.matches())

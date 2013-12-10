@@ -205,11 +205,11 @@ public abstract class SqlWriter extends ScorewareWriter
 			try
 			{
 				//Result result=results.get(i);
-				fillPreparedStatementWithResult(ps, result);
+		//		fillPreparedStatementWithResult(ps, result);
 				
 				String value=this.createValueWithResult(result);
 				query2+=value+", ";
-				ps.addBatch();
+	//			ps.addBatch();
 			}
 			catch(Exception e)
 			{
@@ -356,6 +356,10 @@ public abstract class SqlWriter extends ScorewareWriter
 		int place=result.getOverallPlace();
 		
 		int age=result.getRacer().getAge();
+		if ( (age<0) || (age>110) )
+		{
+			age=0;
+		}
 		
 		String gender;
 		if (result.getRacer().getSex()==Racer.Sex.MALE)
@@ -384,6 +388,11 @@ public abstract class SqlWriter extends ScorewareWriter
 		String category=result.getCategoryString();
 		
 		String city=result.getRacer().getCity();
+		
+		if (city==null)
+		{
+			city="";
+		}
 		
 		String state=result.getRacer().getState();
 		if (state==null)
@@ -422,6 +431,11 @@ public abstract class SqlWriter extends ScorewareWriter
 		
 		int age=result.getRacer().getAge();
 		
+		if ( (age<0) || (age>110) )
+		{
+			age=0;
+		}
+		
 		String gender;
 		if (result.getRacer().getSex()==Racer.Sex.MALE)
 		{
@@ -449,6 +463,10 @@ public abstract class SqlWriter extends ScorewareWriter
 		String category=result.getCategoryString();
 		
 		String city=result.getRacer().getCity();
+		if (city==null)
+		{
+			city="";
+		}
 		city=city.replace("'", "''");
 		
 		String state=result.getRacer().getState();

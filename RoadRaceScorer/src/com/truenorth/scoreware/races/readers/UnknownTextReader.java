@@ -40,7 +40,7 @@ public class UnknownTextReader extends TextRaceReader
 		}
 		
 		// we have no idea what kind of format this is 1st lets see if we can find a header. 
-		String header=findHeader();
+		header=findHeader();
 		
 		// if we found a header
 		if (header!=null)
@@ -72,25 +72,12 @@ public class UnknownTextReader extends TextRaceReader
 	protected boolean AnalyzeEntireTable()
 	{
 		DataAnalyzer analyzer=new DataAnalyzer(text);
-		
-		// this is our last chance before asking a human to help
-		ArrayList<ArrayList<String>> lines=analyzer.getLines();
-		
-		for (ArrayList<String> line:lines)
-		{
-			String string="";
 			
-			for (String s:line)
-			{
-				string+=" :"+s;
-			}
-			
-			System.out.println(string);
-		}
-		
 		analyzer.generateStats();
+	
+		analyzer.addResults(race.getResults());
 		
-		return false;
+		return true;
 	}
 	
 	private String findHeader()
