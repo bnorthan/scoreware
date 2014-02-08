@@ -1,7 +1,7 @@
 package com.truenorth.scoreware.common.utility;
 
-import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.Racer.Sex;
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.Racer.Sex;
 
 public class SexParser 
 {

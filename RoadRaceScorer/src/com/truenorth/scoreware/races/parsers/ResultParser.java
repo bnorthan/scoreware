@@ -2,8 +2,8 @@ package com.truenorth.scoreware.races.parsers;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.HeaderStrings;
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.HeaderStrings;
+import com.truenorth.scoreware.data.Result;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -68,7 +68,7 @@ public abstract class ResultParser
 		return -1;
 	}
 	
-	void setHeaderIndex(String headerString, int i)
+	boolean setHeaderIndex(String headerString, int i)
 	{
 		headerString=headerString.trim();
 		
@@ -76,61 +76,73 @@ public abstract class ResultParser
 		{
 			System.out.println("place found");
 			placeIndex=i;
+			return true;
 		}
 		else if (HeaderStrings.matchHeader(headerString, HeaderStrings.getFirstNameStrings()))
 		{
 			System.out.println("first name found");
 			firstNameIndex=i;
+			return true;
 		}
 		else if (HeaderStrings.matchHeader(headerString, HeaderStrings.getLastNameStrings()))
 		{
 			System.out.println("last name found");
 			lastNameIndex=i;
+			return true;
 		}
 		else if (HeaderStrings.matchHeader(headerString, HeaderStrings.getFullNameStrings()))
 		{
 			System.out.println("full name found at "+i);
 			nameIndex=i;
+			return true;
 		}
 		else if (HeaderStrings.matchHeader(headerString, HeaderStrings.getAgeStrings()))
 		{
 			System.out.println("age found");
 			ageIndex=i;
+			return true;
 		}
 		else if (HeaderStrings.matchHeader(headerString, HeaderStrings.getGenderStrings()))
 		{
 			System.out.println("gender found");
 			genderIndex=i;
+			return true;
 		}
 		else if (HeaderStrings.matchHeader(headerString, HeaderStrings.getCityStrings()))
 		{
 			System.out.println("city found");
 			cityIndex=i;
+			return true;
 		}
 		else if (HeaderStrings.matchHeader(headerString, HeaderStrings.getStateStrings()))
 		{
 			System.out.println("state found");
 			stateIndex=i;
+			return true;
 		}
 		else if (HeaderStrings.containsHeader(headerString, HeaderStrings.getChipTimeStrings()))
 		{
 			System.out.println("chip time found");
 			chipTimeIndex=i;
+			return true;
 		}
 		else if (HeaderStrings.containsHeader(headerString, HeaderStrings.getGunTimeStrings()))
 		{
 			System.out.println("gun time found");
 			gunTimeIndex=i;
+			return true;
 		}
 		else if (HeaderStrings.containsHeader(headerString, HeaderStrings.getSplitStrings()))
 		{
 			// record the split
 			this.splitIndexes.put(headerString, i);
+			return true;
 		}
 		else
 		{
 			// otherwise put this into the meta data Map
 			this.metaIndexes.put(headerString, i);
+			return false;
 		}
 		
 	}

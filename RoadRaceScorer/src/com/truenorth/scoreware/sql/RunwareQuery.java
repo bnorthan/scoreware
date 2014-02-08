@@ -1,5 +1,5 @@
 package com.truenorth.scoreware.sql;
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Result;
 
 public interface RunwareQuery 
 {

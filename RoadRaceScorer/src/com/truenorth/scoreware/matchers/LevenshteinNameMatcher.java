@@ -1,8 +1,8 @@
 package com.truenorth.scoreware.matchers;
 
-import com.truenorth.scoreware.Racer;
 import com.truenorth.scoreware.common.utility.FuzzyUtilities;
 import com.truenorth.scoreware.common.utility.LevenshteinDistance;
+import com.truenorth.scoreware.data.Racer;
 
 public class LevenshteinNameMatcher extends AbstractMatcher
 {

@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.truenorth.scoreware.Race;
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Result;
 import com.truenorth.scoreware.races.parsers.ResultParser;
 
 /**

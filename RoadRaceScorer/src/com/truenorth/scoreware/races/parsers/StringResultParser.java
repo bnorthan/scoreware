@@ -2,8 +2,8 @@ package com.truenorth.scoreware.races.parsers;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.Result;
-import com.truenorth.scoreware.Enums.ResultHeader;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.Enums.ResultHeader;
 import com.truenorth.scoreware.races.parsers.ResultParser;
 
 /**

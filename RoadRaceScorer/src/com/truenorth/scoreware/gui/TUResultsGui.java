@@ -7,13 +7,12 @@ import javax.swing.*;
 
 import java.io.*;
 
-import com.truenorth.scoreware.Enums;
-import com.truenorth.scoreware.Enums.RacePatterns;
-import com.truenorth.scoreware.Racer;
 import com.truenorth.scoreware.apps.GrandPrixScorerApp;
 import com.truenorth.scoreware.common.fromcorejava.GBC;
+import com.truenorth.scoreware.data.Enums;
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.Enums.RacePatterns;
 import com.truenorth.scoreware.matchers.IsRacerMember;
-
 import com.truenorth.scoreware.apps.TUResultsApp;
 
 public class TUResultsGui extends ScorerGui

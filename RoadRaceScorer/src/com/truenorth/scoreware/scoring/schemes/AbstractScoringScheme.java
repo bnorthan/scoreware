@@ -2,7 +2,7 @@ package com.truenorth.scoreware.scoring.schemes;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.Racer.Sex;
+import com.truenorth.scoreware.data.Racer.Sex;
 
 public abstract class AbstractScoringScheme implements ScoringScheme
 {

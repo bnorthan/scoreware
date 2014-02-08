@@ -1,21 +1,19 @@
 package com.truenorth.scoreware.races.parsers;
 
-import com.truenorth.scoreware.Result;
-
 import java.util.ArrayList;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.truenorth.scoreware.HeaderStrings;
-import com.truenorth.scoreware.Racer.Sex;
-
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
-
 import java.util.Date;
+
 import com.truenorth.scoreware.common.utility.DateTimeParser;
+import com.truenorth.scoreware.data.HeaderStrings;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.Racer.Sex;
 import com.truenorth.scoreware.races.parsers.elements.FullNameParser;
 import com.truenorth.scoreware.races.parsers.elements.LastFirstNameParser;
 
@@ -33,21 +31,27 @@ public class TableResultParser extends ResultParser
 		return parseElements();
 	}
 	
-	public void parseHeader(Elements header)
+	public int parseHeader(Elements header)
 	{
 		int i=0;
+		int numParsed=0;
 		for (int j=0;j<header.size();j++)
 		{
 			String headerString=header.get(i).text();
 			
 			System.out.println(headerString);
 			
-			setHeaderIndex(headerString, i);
+			if (setHeaderIndex(headerString, i))
+			{
+				numParsed++;
+			}
 				
 			i++;
 		}
 		
 		int stop=5;
+		
+		return numParsed;
 	}
 	
 	public Result parseElements()

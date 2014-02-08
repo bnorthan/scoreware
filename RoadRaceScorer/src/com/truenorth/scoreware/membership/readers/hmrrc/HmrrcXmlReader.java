@@ -12,9 +12,9 @@ import javax.xml.namespace.*;
 import javax.xml.parsers.*;
 import javax.xml.xpath.*;
 
-import com.truenorth.scoreware.Racer;
 import com.truenorth.scoreware.common.utility.DateTimeParser;
 import com.truenorth.scoreware.common.utility.SexParser;
+import com.truenorth.scoreware.data.Racer;
 import com.truenorth.scoreware.membership.readers.MembershipReader;
 
 public class HmrrcXmlReader extends MembershipReader

@@ -2,8 +2,8 @@ package com.truenorth.scoreware.races.readers.hmrrc;
 
 import java.util.ArrayList;
 
+import com.truenorth.scoreware.data.Race;
 import com.truenorth.scoreware.extractors.overall.SimpleGetOverallResults;
-import com.truenorth.scoreware.Race;
 import com.truenorth.scoreware.races.readers.UnknownTextReader;
 import com.truenorth.scoreware.races.readers.DOMRaceReader;
 import com.truenorth.scoreware.races.parsers.hmrrc.WineGlass2013Parser;

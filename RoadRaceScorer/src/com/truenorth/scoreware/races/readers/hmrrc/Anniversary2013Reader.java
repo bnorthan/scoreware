@@ -2,15 +2,13 @@ package com.truenorth.scoreware.races.readers.hmrrc;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.Result;
-import com.truenorth.scoreware.Enums.ResultHeader;
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.Enums.ResultHeader;
 import com.truenorth.scoreware.extractors.overall.OverallFromSizeAndOrder;
 import com.truenorth.scoreware.races.parsers.hmrrc.Anniversary2013Parser;
-
 import com.truenorth.scoreware.races.readers.RaceReader;
 import com.truenorth.scoreware.races.readers.TextRaceReader;
-
-import com.truenorth.scoreware.Race;
 
 /**
  * Extends RaceReader to read Anniversarry 2013 results

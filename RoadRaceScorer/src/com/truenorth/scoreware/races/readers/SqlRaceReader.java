@@ -1,7 +1,5 @@
 package com.truenorth.scoreware.races.readers;
 
-import com.truenorth.scoreware.Race;
-
 import java.io.*;
 import java.nio.file.*;
 import java.sql.*;
@@ -9,9 +7,10 @@ import java.util.*;
 import java.util.Date;
 import java.text.DateFormat;
 
-import com.truenorth.scoreware.Result;
 import com.truenorth.scoreware.races.parsers.SqlResultParser;
 import com.truenorth.scoreware.common.utility.DateTimeParser;
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Result;
 
 public class SqlRaceReader extends RaceReader
 {

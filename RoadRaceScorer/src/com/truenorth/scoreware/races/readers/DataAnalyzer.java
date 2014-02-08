@@ -6,24 +6,26 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.truenorth.scoreware.Enums.ResultHeader;
 import com.truenorth.scoreware.common.utility.ScoreWareStats;
-import com.truenorth.scoreware.Enums;
-import com.truenorth.scoreware.MatchStrings;
-import com.truenorth.scoreware.ScoreWareData;
-import com.truenorth.scoreware.ScoreWareGroup;
-import com.truenorth.scoreware.ScoreWareGroups;
-import com.truenorth.scoreware.DataFormats;
 import com.truenorth.scoreware.common.utility.RunwareUtilities;
-import com.truenorth.scoreware.DataFormats.DataTypes;
 import com.truenorth.scoreware.common.utility.DateTimeParser;
-
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.DataFormats;
+import com.truenorth.scoreware.data.Enums;
+import com.truenorth.scoreware.data.MatchStrings;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.ScoreWareData;
+import com.truenorth.scoreware.data.ScoreWareGroup;
+import com.truenorth.scoreware.data.ScoreWareGroups;
+import com.truenorth.scoreware.data.DataFormats.DataTypes;
+import com.truenorth.scoreware.data.Enums.ResultHeader;
 
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
+
+import org.jsoup.select.Elements;
+import org.jsoup.nodes.Element;
 
 public class DataAnalyzer 
 {	
@@ -50,11 +52,82 @@ public class DataAnalyzer
 	boolean cityFound=false;
 	boolean gunTimeFound=false;
 	
+	public DataAnalyzer(Elements elements)
+	{
+		initStructures();
+		
+		int test=elements.size();
+		
+		// loop through all the elements in the table
+		for (int i=0;i<elements.size();i++)
+		{
+			Element element=elements.get(i);
+			
+			// create a list to store each piece of data from the line
+			ArrayList<ScoreWareData> dataList=new ArrayList<ScoreWareData>();
+									
+			for (int j=0;j<element.children().size();j++)
+			{
+				String text=element.child(j).text();
+				System.out.println(text);
+				
+				ScoreWareData swd=new ScoreWareData(text);
+				
+				// find the type of data this word represents (Letters, int, etc.)
+				DataTypes dt=DataFormats.whatType(text);
+				swd.setDataType(dt);
+				
+				// see if we can determine the result header (Place, Gender, etc.)
+				swd.setResultHeader(DataFormats.whatHeader(text, swd.getDataType()));
+				
+				swd.setCollumn(j);
+				swd.setRow(i);
+				
+				// add the data to the list
+				dataList.add(swd);
+				
+				// add the data to the datagroups
+				groups.addDataToGroup(swd);
+				
+			}
+			
+			data.add(dataList);
+		}
+		
+		// first pass at generating some stats on the data
+		generateStats();
+		
+		analyzeTimes();
+		
+		int nGroups=groups.getGroups().size();
+		
+		for (ScoreWareGroup group:groups.getGroups())
+		{
+			group.compileStats();
+		}
+		
+		printDataArray();
+		
+		for (ScoreWareGroup group:groups.getGroups())
+		{
+			if (group.getResultHeader()==null)
+			{
+				group.setGroupHeaderFromData();
+			}
+			else
+			{
+				group.setDataHeadersFromGroup();
+			}
+			
+			System.out.println("types: "+group.getType()+" type index: "+group.getTypeIndex()+" header: "+group.getResultHeader()+" num: "+group.getData().size());
+		}
+				
+	}
+	
 	public DataAnalyzer(ArrayList<String> text)
 	{
 		// this is our last chance before asking a human to help
-		data=new ArrayList<ArrayList<ScoreWareData>>();
-		groups=new ScoreWareGroups();
+		initStructures();
 		
 		int r=0;
 		
@@ -68,13 +141,14 @@ public class DataAnalyzer
 			String trimmed=line.trim();
 			String[] split=trimmed.split("\\s+");
 			
-			ArrayList<String> list=new ArrayList<String>();
+			// create a list to store each piece of data from the line
 			ArrayList<ScoreWareData> dataList=new ArrayList<ScoreWareData>();
 			
 			// create and initialize a map to keep track of the types of data we find in the line
 			HashMap<DataTypes, Integer> typesMap=new HashMap<DataTypes, Integer>();
 			
-			// initialize the map
+			// initialize the types map.  This is used to keep track of how many
+			// instances of each type of data we find. 
 			for (DataTypes type:DataTypes.values())
 			{
 				typesMap.put(type, 0);
@@ -87,27 +161,26 @@ public class DataAnalyzer
 			// loop through every word on the line
 			for (String word:split)
 			{
+				// some light preprocessing before we put the word in the list
+				word=preprocessWord(word);
+				
+				// create a ScoreWareData structure for the word
+				ScoreWareData d=new ScoreWareData(word);
+				
+				// compile some useful information about the data
+				
 				// index of the word within the trimmed string
 				int index=line.indexOf(word);
 				
-				// position in original string
+				// character position in original string
 				int position=i+index;
 				int ptest=orig.indexOf(word);
 				
-				// increment i to reflect current position in original string (which is being trimmed as we go)
+				// increment i to reflect current character position in original string (which is being trimmed as we go)
 				i=i+index+word.length();
 				
 				// trim the word out of s so we don't find the first index of repeat values (like 2 "1"s)
 				line=line.substring(index+word.length());
-				
-				// some light preprocessing before we put the word in the list
-				word=preprocessWord(word);
-				
-				// add the word to the list
-				list.add(word);
-				
-				// create a ScoreWareData structure for the word
-				ScoreWareData d=new ScoreWareData(word);
 				
 				// find the type of data this word represents (Letters, int, etc.)
 				DataTypes dt=DataFormats.whatType(word);
@@ -121,20 +194,23 @@ public class DataAnalyzer
 				// see if we can determine the result header (Place, Gender, etc.)
 				d.setResultHeader(DataFormats.whatHeader(word, d.getDataType()));
 				
-				// set the start and end position of the word
+				// set the start and end character positions of the word
 				d.setStartPosition(position);
 				d.setEndPosition(i);
 				
 				d.setCollumn(c);
 				d.setRow(r);
 				
-				// add the word to the list
+				// add the data to the list
 				dataList.add(d);
+				
+				// add the data to the datagroups
 				groups.addDataToGroup(d);
 				
 				c++;
 			}// end for (String word:split)
 				
+			// add the list of data from this line to the overall data list
 			data.add(dataList);
 			r++;
 		}// end for (String line:text)
@@ -155,6 +231,7 @@ public class DataAnalyzer
 		for (ScoreWareGroup group:groups.getGroups())
 		{
 			System.out.println("types: "+group.getType()+" type index: "+group.getTypeIndex()+" header: "+group.getResultHeader()+" num: "+group.getData().size());
+			group.compileStats();
 		}
 				
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,7 +262,23 @@ public class DataAnalyzer
 		analyzeLetters();
 		
 	//	RunwareUtilities.Pause();
-		printArrayList(data);
+		printDataArray();
+	}
+	
+	private void initStructures()
+	{
+		// the data structure organizes the data by rows.  Each row is separated 
+		// into multiple pieces of data.  Ideally all rows would have the same number
+		// of data but this is ussually not the case.  Data can be missing.  Sometimes names
+		// have multiple words.
+		data=new ArrayList<ArrayList<ScoreWareData>>();
+		
+		// the groups data structure organizes data into groups of similar pieces of data. 
+		// the groups start off as general (for example integers, letters, etc) and the goal
+		// is to identify what each group represents.  Data can be transferred from one group to
+		// another as we find out more. 
+		groups=new ScoreWareGroups();
+	
 	}
 	
 	public void convertCollumnToGroup(int c)
@@ -357,7 +450,7 @@ public class DataAnalyzer
 		System.out.println();
 		
 		// apply the place test
-		boolean isPlace=isPlace(integerList);
+		boolean isPlace=ScoreWareStats.isPlace(integerList);
 		
 		// if the data is a place label it as such and return
 		if  (isPlace)
@@ -373,7 +466,7 @@ public class DataAnalyzer
 		}
 		
 		// apply the age test 
-		boolean isAge=isAge(integerList);
+		boolean isAge=ScoreWareStats.isAge(integerList);
 		
 		// if the data is a age label it as such and return
 		if (isAge)
@@ -415,35 +508,13 @@ public class DataAnalyzer
 			}
 		}	
 		
-		int numFirstNames=0;
-		
 		// test to see if it is first name
 		if (!firstNameFound)
 		{
-			for (String s:MatchStrings.getFirstNameStrings())
-			{
-				for (String s2:stringList)
-				{
-					String s_lower=s.toLowerCase();
-					String s2_lower=s2.toLowerCase();
-					
-					int index=s2_lower.indexOf(s_lower);
-				
-					if (index>-1)
-					{
-						numFirstNames++;
-					}
-				}
-			}
-		
-			float ratio=(float)numFirstNames/(float)stringList.size();
 			
-			System.out.println("number data points "+n);
-			System.out.println("number first names "+numFirstNames);
-			System.out.println("ratio: "+ratio);
-			System.out.println();
+			firstNameFound=MatchStrings.isListOfFirstNames(stringList);
 			
-			if (ratio>0.15)
+			if (firstNameFound)
 			{
 				// this is first name
 				firstNameFound=true;
@@ -477,12 +548,13 @@ public class DataAnalyzer
 							dataList.get(c+1).setResultHeader(ResultHeader.LASTNAME);
 						}
 					}*/
-				}
-			}
-		
+				} // end for (ArrayList<ScoreWareData> dataList:data)
+			} // if (ratio>0.15)
 		}
 	}
 	
+	// this routine looks through each row, finds all the times and identifies 
+	// gun time, chip time and other splits
 	void analyzeTimes()
 	{
 		// for every row of data
@@ -595,89 +667,12 @@ public class DataAnalyzer
 		}
 	}
 	
-	public boolean isPlace(ArrayList<Integer> integerList)
-	{
-		int expectedPlace=1;
-		int previousPlace=0;
-		
-		int nExpectedPlace=0;
-		int nIncreasingPlace=0;
-		
-		int nTotal=integerList.size();
-		
-		// simple test to see if this is place
-		for (Integer i:integerList)
-		{
-			if (i==expectedPlace) nExpectedPlace++;
-			
-			expectedPlace++;
-			
-			// occasionally we will have a subset of results but overall place
-			// should still increase
-			if (i>previousPlace)
-			{
-				nIncreasingPlace++;
-			}
-			
-			previousPlace=i;
-		}
-		
-		double ratio=(double)nIncreasingPlace/(double)nTotal;
-		
-		System.out.println("place complete: "+expectedPlace);
-		System.out.println("place consistent: "+nIncreasingPlace);
-		System.out.println("ratio: "+ratio);
-		System.out.println();
-		if (ratio>0.9)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	public boolean isAge(ArrayList<Integer> integerList)
-	{
-		int[] intarray=new int[integerList.size()];
-		
-		int n=0;
-		for (int i:integerList)
-		{
-			intarray[n]=i;
-			n++;
-		}
-		
-		ScoreWareStats stats= new ScoreWareStats();
-		
-		stats.calcIntegerHistogram(intarray);
-		
-		int hist[]=stats.getHistogram(); //ScoreWareStats.calcHistogram(numcollumnsarray, minCols, maxCols);
-		
-		int max=stats.getMax();
-		int min=stats.getMin();
-		int mode=stats.getMode();
-		
-		double mean=stats.calculateMean(intarray);
-		
-		System.out.println("min: "+min+" max: "+max+" mode: "+mode+" mean: "+mean);
-		
-		// first simple test to see if this is age
-		if ( (mean>10)&&(mean<55) && (min>-1) && (max<100) )
-		{
-			return true;
-		}
-		
-		return false;
-	}
-	
 	void mergeCollumns()
 	{
 		
 	}
 	
-	public void printArrayList(ArrayList<ArrayList<ScoreWareData>> data)
+	public void printDataArray()
 	{
 		for (ArrayList<ScoreWareData> dataList:data)
 		{
@@ -742,6 +737,24 @@ public class DataAnalyzer
 						//append
 						String lname=result.getRacer().getLastName()+" "+swd.getDataString();
 						result.getRacer().setLastName(lname);
+					}
+				}
+				else if (swd.getResultHeader()==ResultHeader.FULLNAME)
+				{
+					String[] name=swd.getDataString().split("\\s");
+					
+					result.getRacer().setFirstName(name[0]);
+					
+					for (int i=1;i<name.length;i++)
+					{
+						if (i==1)
+						{
+							result.getRacer().setLastName(name[i]);
+						}
+						else
+						{
+							result.getRacer().setLastName(result.getRacer().getLastName()+" "+name[i]);
+						}
 					}
 				}
 				else if (swd.getResultHeader()==ResultHeader.GUN_TIME)

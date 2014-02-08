@@ -2,7 +2,7 @@ package com.truenorth.scoreware.extractors;
 
 import org.jsoup.select.Elements;
 
-import com.truenorth.scoreware.HeaderStrings;
+import com.truenorth.scoreware.data.HeaderStrings;
 
 public abstract class TableExtractor 
 {
@@ -37,9 +37,11 @@ public abstract class TableExtractor
 		{
 			System.out.println("row: "+i+" :"+tableRows.get(i).text());
 			
+			int nData=tableRows.get(i).children().size();
+			
 			int nTemp=HeaderStrings.headerStringOccurrences(tableRows.get(i).text());
 			
-			if (nTemp>nMaxHeaders)
+			if ( (nTemp>nMaxHeaders) && (nTemp/nData>0.5) )
 			{
 				nMaxHeaders=nTemp;
 				nHeaderLine=i;
@@ -49,11 +51,9 @@ public abstract class TableExtractor
 		if (nHeaderLine!=-1)
 		{
 			System.out.println("header found at: "+nHeaderLine+" :"+tableRows.get(nHeaderLine).text());
+			tableHeaders=tableRows.get(nHeaderLine).children();
+			tableRows.remove(nHeaderLine);
 		}
-		
-		tableHeaders=tableRows.get(nHeaderLine).children();
-		
-		tableRows.remove(nHeaderLine);
 		
 		if (true) return tableRows;
 		

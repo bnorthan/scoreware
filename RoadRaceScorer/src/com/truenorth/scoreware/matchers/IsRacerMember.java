@@ -1,6 +1,6 @@
 package com.truenorth.scoreware.matchers;
 
-import com.truenorth.scoreware.Racer;
+import com.truenorth.scoreware.data.Racer;
 
 public interface IsRacerMember 
 {

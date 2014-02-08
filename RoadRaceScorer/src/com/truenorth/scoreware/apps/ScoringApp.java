@@ -3,7 +3,9 @@ package com.truenorth.scoreware.apps;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-import com.truenorth.scoreware.Enums.RacePatterns;
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.Enums.RacePatterns;
 import com.truenorth.scoreware.matchers.IsRacerMember;
 import com.truenorth.scoreware.membership.readers.MembershipReader;
 import com.truenorth.scoreware.membership.readers.MembershipReaderFactory;
@@ -12,8 +14,6 @@ import com.truenorth.scoreware.races.readers.RaceReaderFactory;
 import com.truenorth.scoreware.sql.RunwareQuery;
 import com.truenorth.scoreware.writers.SqlWriter;
 import com.truenorth.scoreware.writers.JDBCSqlWriter;
-import com.truenorth.scoreware.Race;
-import com.truenorth.scoreware.Result;
 
 import java.io.*;
 

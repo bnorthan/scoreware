@@ -11,11 +11,11 @@ import java.util.*;
 
 import javax.swing.JOptionPane;
 
-import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.Result;
-import com.truenorth.scoreware.ScorewareWriter;
-import com.truenorth.scoreware.Race;
 import com.truenorth.scoreware.common.utility.DateTimeParser;
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.ScorewareWriter;
 import com.truenorth.scoreware.sql.RunwareQuery;
 
 public abstract class SqlWriter extends ScorewareWriter

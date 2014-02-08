@@ -1,12 +1,5 @@
 package com.truenorth.scoreware.races.parsers;
 
-import com.truenorth.scoreware.Enums;
-import com.truenorth.scoreware.Enums.ResultHeader;
-import com.truenorth.scoreware.HeaderStrings;
-import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.Result;
-import com.truenorth.scoreware.MatchStrings;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -16,6 +9,12 @@ import java.util.Iterator;
 
 import com.truenorth.scoreware.common.utility.DateTimeParser;
 import com.truenorth.scoreware.common.utility.ValueComparator;
+import com.truenorth.scoreware.data.Enums;
+import com.truenorth.scoreware.data.HeaderStrings;
+import com.truenorth.scoreware.data.MatchStrings;
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.Enums.ResultHeader;
 
 import java.util.ArrayList;
 import java.util.Date;

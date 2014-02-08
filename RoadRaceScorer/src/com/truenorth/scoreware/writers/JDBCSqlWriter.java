@@ -5,8 +5,8 @@ import java.nio.file.*;
 import java.sql.*;
 import java.util.*;
 
-import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.Result;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;

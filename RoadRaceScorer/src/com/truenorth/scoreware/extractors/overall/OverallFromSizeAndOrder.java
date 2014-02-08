@@ -2,7 +2,7 @@ package com.truenorth.scoreware.extractors.overall;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.Enums.ResultHeader;
+import com.truenorth.scoreware.data.Enums.ResultHeader;
 import com.truenorth.scoreware.extractors.TextExtractor;
 
 /**

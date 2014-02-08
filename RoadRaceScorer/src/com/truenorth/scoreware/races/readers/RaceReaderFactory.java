@@ -5,9 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Enums.RacePatterns;
 import com.truenorth.scoreware.races.readers.hmrrc.*;
-import com.truenorth.scoreware.Enums.RacePatterns;
-import com.truenorth.scoreware.Race;
 
 /**
  * 

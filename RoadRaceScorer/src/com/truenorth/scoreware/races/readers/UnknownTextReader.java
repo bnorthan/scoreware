@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 import com.truenorth.scoreware.races.parsers.RunScoreResultParser;
 import com.truenorth.scoreware.races.parsers.UnknownResultParser;
+import com.truenorth.scoreware.data.HeaderStrings;
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Result;
 import com.truenorth.scoreware.extractors.overall.RunScoreOverallExtractor;
-import com.truenorth.scoreware.HeaderStrings;
-import com.truenorth.scoreware.Result;
-import com.truenorth.scoreware.Race;
-
 import com.truenorth.scoreware.extractors.overall.SimpleGetOverallResults;
-
 import com.truenorth.scoreware.races.readers.DataAnalyzer;
 
 public class UnknownTextReader extends TextRaceReader

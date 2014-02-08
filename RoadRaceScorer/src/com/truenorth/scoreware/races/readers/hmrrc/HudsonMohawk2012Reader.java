@@ -3,10 +3,9 @@ package com.truenorth.scoreware.races.readers.hmrrc;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+import com.truenorth.scoreware.data.Race;
 import com.truenorth.scoreware.races.readers.DOMRaceReader;
 import com.truenorth.scoreware.races.parsers.hmrrc.HudsonMohawk2013Parser;
-
-import com.truenorth.scoreware.Race;
 
 public class HudsonMohawk2012Reader extends DOMRaceReader
 {

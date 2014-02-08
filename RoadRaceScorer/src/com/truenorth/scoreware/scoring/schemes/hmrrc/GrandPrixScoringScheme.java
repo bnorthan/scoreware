@@ -6,14 +6,10 @@ import com.truenorth.scoreware.scoring.schemes.AgeGroupScorer;
 import com.truenorth.scoreware.scoring.schemes.MaleFemaleScore;
 import com.truenorth.scoreware.scoring.schemes.ScoringScheme;
 import com.truenorth.scoreware.scoring.schemes.Category;
-
-import com.truenorth.scoreware.Result;
-
-import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.Racer.Sex;
-
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.Racer.Sex;
 import com.truenorth.scoreware.matchers.MatchSearcher;
-
 import com.truenorth.scoreware.scoring.schemes.AbstractScoringScheme;
 
 public class GrandPrixScoringScheme extends AbstractScoringScheme

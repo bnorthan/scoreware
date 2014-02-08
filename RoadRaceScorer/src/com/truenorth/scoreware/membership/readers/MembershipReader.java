@@ -1,8 +1,9 @@
 package com.truenorth.scoreware.membership.readers;
 
 import java.util.ArrayList;
-import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.ScorewareReader;
+
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.ScorewareReader;
 
 /**
  * Abstract class used to read a membership list

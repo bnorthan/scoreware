@@ -2,7 +2,7 @@ package com.truenorth.scoreware.extractors.overall;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Result;
 
 public class RunScoreOverallExtractor implements OverallExtractor
 {

@@ -2,13 +2,13 @@ package com.truenorth.scoreware.races.readers;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Result;
 import com.truenorth.scoreware.extractors.overall.OverallExtractor;
 import com.truenorth.scoreware.extractors.DOMExtractor;
 import com.truenorth.scoreware.extractors.TextExtractor;
 import com.truenorth.scoreware.extractors.TextExtractorFactory;
 import com.truenorth.scoreware.races.parsers.TableResultParser;
-import com.truenorth.scoreware.Race;
 import com.truenorth.scoreware.common.utility.RunwareUtilities;
 
 import org.jsoup.select.Elements;

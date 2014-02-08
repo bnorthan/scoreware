@@ -9,7 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.truenorth.scoreware.HeaderStrings;
+import com.truenorth.scoreware.data.HeaderStrings;
 
 public class DOMExtractor extends TableExtractor
 {

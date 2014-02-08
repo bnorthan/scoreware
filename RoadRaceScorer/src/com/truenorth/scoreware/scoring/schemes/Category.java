@@ -2,8 +2,8 @@ package com.truenorth.scoreware.scoring.schemes;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.Result;
-import com.truenorth.scoreware.Racer.Sex;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.Racer.Sex;
 
 public class Category 
 {

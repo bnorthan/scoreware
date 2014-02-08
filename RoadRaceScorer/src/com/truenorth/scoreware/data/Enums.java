@@ -1,0 +1,41 @@
+package com.truenorth.scoreware.data;
+
+public class Enums 
+{
+	public enum ResultHeader
+	{
+		PLACE, 
+		FIRSTNAME, 
+		LASTNAME, 
+		FULLNAME,
+		LAST_COMMA_FIRSTNAME,
+		AGE, 
+		SEX,
+		SEXAGE,
+		CITY, 
+		STATE, 
+		CHIP_TIME,
+		GUN_TIME,
+		PACE,
+		NUMBER,
+		CATEGORY,
+		YESNO,
+		TEAM,
+		POINTS
+	};
+	
+	public enum RacePatterns
+	{
+		RUNSCORE,
+		TABLE,
+		UNKNOWN,
+		PDF_TEXT,
+		PDF_TABLE,
+		PROPERTIES,
+		HUDSONMOHAWK2012,
+		SEFCU2013,
+		ANNIVERSARY2013,
+		VOORHESVILLE2013,
+		WINEGLASS2013
+	}
+}

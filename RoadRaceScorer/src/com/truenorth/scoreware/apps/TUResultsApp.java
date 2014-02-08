@@ -1,14 +1,14 @@
 package com.truenorth.scoreware.apps;
 
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.Result;
 import com.truenorth.scoreware.matchers.MatchSearcher;
 import com.truenorth.scoreware.matchers.LevenshteinNameMatcher;
 import com.truenorth.scoreware.races.readers.RaceReaderFactory;
 import com.truenorth.scoreware.scoring.schemes.Category;
 import com.truenorth.scoreware.writers.SqlWriter;
 import com.truenorth.scoreware.writers.JDBCSqlWriter;
-import com.truenorth.scoreware.Result;
-import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.Race;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package com.truenorth.scoreware.matchers;
 
-import com.truenorth.scoreware.Racer;
+import com.truenorth.scoreware.data.Racer;
 
 /**
  * An interface used to match a member with a racer

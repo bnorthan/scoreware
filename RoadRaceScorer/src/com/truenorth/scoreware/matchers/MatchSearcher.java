@@ -2,8 +2,8 @@ package com.truenorth.scoreware.matchers;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.Result;
 
 public class MatchSearcher 
 {
@@ -92,23 +92,19 @@ public class MatchSearcher
 			System.out.println(member.getFirstName().toLowerCase()+":"+member.getLastName().toLowerCase());
 			System.out.println(racer.getFirstName().toLowerCase()+":"+racer.getLastName().toLowerCase());
 			
-			if (member.getLastName().toLowerCase().equals("roig")&&(racer.getLastName().toLowerCase().equals("roig")))
-			{
-				int stop=5;
-			}
 			// check for a match
 			double matchNum=matcher.Match(member, racer);
 			
-			/*if ( (racer.getFirstName().equals("Linda")) &&
-					(racer.getLastName().equals("Keeley")) &&
-					(member.getLastName().equals("Keeley")))
+			if ( (racer.getFirstName().equals("Connie")) &&
+					//(racer.getLastName().equals("Thorn")) &&
+					(member.getFirstName().equals("Connie")))
 			//if (result.getRacer().getLastName().equals("O'Connor T"))
 			{
 				
 				System.out.println(matcher.getInfo());
 				//System.out.println("matchNum: "+matchNum);
 				new java.util.Scanner(System.in).nextLine();
-			}*/
+			}
 				
 			//System.out.println(racer.getLastName()+ " matches "+member.getLastName()+" to degree "+matchNum);
 			
@@ -116,6 +112,16 @@ public class MatchSearcher
 			// and the check threshold then just accept it
 			if ( (matchNum>bestMatch) && (matchNum>matchThreshold) && (matchNum>checkThreshold) )
 			{
+				if ( (racer.getFirstName().equals("Kirsten")) &&
+						(racer.getLastName().equals("Blane")))
+				//if (result.getRacer().getLastName().equals("O'Connor T"))
+				{
+					
+					System.out.println(matcher.getInfo());
+					//System.out.println("matchNum: "+matchNum);
+					new java.util.Scanner(System.in).nextLine();
+				}
+				
 				bestMatch=matchNum;
 				match=member;
 				

@@ -1,9 +1,10 @@
 package com.truenorth.scoreware.races.readers;
 
 import java.util.ArrayList;
+
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Result;
 import com.truenorth.scoreware.races.parsers.RunScoreResultParser;
-import com.truenorth.scoreware.Result;
-import com.truenorth.scoreware.Race;
 
 /**
  * Extends TextRaceReader to read results that are in the "run score" format

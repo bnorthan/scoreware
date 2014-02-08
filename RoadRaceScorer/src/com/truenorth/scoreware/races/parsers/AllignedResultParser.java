@@ -1,7 +1,7 @@
 package com.truenorth.scoreware.races.parsers;
 
-import com.truenorth.scoreware.Result;
-import com.truenorth.scoreware.Racer.Sex;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.Racer.Sex;
 
 public class AllignedResultParser extends ResultParser
 {

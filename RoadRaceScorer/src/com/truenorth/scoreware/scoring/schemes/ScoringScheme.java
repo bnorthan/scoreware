@@ -1,6 +1,7 @@
 package com.truenorth.scoreware.scoring.schemes;
 
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Result;
+
 import java.util.ArrayList;
 
 /**

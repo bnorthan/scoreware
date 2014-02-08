@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
 
-import com.truenorth.scoreware.HeaderStrings;
+import com.truenorth.scoreware.data.HeaderStrings;
 
 public class PdfDOMExtractor extends TableExtractor
 {

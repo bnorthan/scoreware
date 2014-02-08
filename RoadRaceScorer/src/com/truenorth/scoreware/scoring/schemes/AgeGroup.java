@@ -2,7 +2,7 @@ package com.truenorth.scoreware.scoring.schemes;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.Racer;
+import com.truenorth.scoreware.data.Racer;
 
 /**
  * represents an age group

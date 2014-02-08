@@ -1,6 +1,6 @@
 package com.truenorth.scoreware.races.parsers;
 
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Result;
 
 /**
  * Given a list of String "elements" parses out (possibly) related information

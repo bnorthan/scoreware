@@ -1,6 +1,6 @@
 package com.truenorth.scoreware.races.parsers.elements;
 
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Result;
 import com.truenorth.scoreware.races.parsers.ElementParser;
 
 /**

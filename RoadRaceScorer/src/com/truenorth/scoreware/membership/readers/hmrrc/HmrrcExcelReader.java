@@ -18,8 +18,8 @@ import java.util.GregorianCalendar;
 
 import com.truenorth.scoreware.common.utility.DateTimeParser;
 import com.truenorth.scoreware.common.utility.SexParser;
+import com.truenorth.scoreware.data.Racer;
 import com.truenorth.scoreware.membership.readers.MembershipReader;
-import com.truenorth.scoreware.Racer;
 
 /**
  * Extends MembershipReader to read in the HMRRC membership list in excel format

@@ -2,8 +2,10 @@ package com.truenorth.scoreware.apps;
 
 import java.util.ArrayList;
 
-import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.ScorewareWriter;
+import com.truenorth.scoreware.data.Enums.RacePatterns;
 import com.truenorth.scoreware.matchers.IsRacerMember;
 import com.truenorth.scoreware.matchers.MatchSearcher;
 import com.truenorth.scoreware.membership.readers.MembershipReader;
@@ -14,13 +16,10 @@ import com.truenorth.scoreware.scoring.schemes.AgeGroupScorer;
 import com.truenorth.scoreware.scoring.schemes.MaleFemaleScore;
 import com.truenorth.scoreware.scoring.schemes.Category;
 import com.truenorth.scoreware.scoring.schemes.hmrrc.GrandPrixScoringScheme;
-import com.truenorth.scoreware.ScorewareWriter;
 import com.truenorth.scoreware.writers.CommandLineWriter;
 import com.truenorth.scoreware.writers.FileWriter;
 import com.truenorth.scoreware.writers.SqlWriter;
 import com.truenorth.scoreware.writers.JDBCSqlWriter;
-import com.truenorth.scoreware.Enums.RacePatterns;
-
 import com.truenorth.scoreware.sql.RunwareQuery;
 
 public class GrandPrixScorerApp extends ScoringApp

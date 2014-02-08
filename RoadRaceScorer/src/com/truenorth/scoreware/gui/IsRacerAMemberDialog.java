@@ -2,11 +2,11 @@ package com.truenorth.scoreware.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
-import com.truenorth.scoreware.Racer;
-
 import com.truenorth.scoreware.common.fromcorejava.GBC;
+import com.truenorth.scoreware.data.Racer;
 
 public class IsRacerAMemberDialog extends JPanel
 {

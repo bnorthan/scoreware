@@ -1,8 +1,8 @@
 package com.truenorth.scoreware.races.parsers.hmrrc;
 
-import com.truenorth.scoreware.Result;
+import com.truenorth.scoreware.data.Result;
+import com.truenorth.scoreware.data.Racer.Sex;
 import com.truenorth.scoreware.races.parsers.TableResultParser;
-import com.truenorth.scoreware.Racer.Sex;
 
 public class HudsonMohawk2013Parser extends TableResultParser
 {

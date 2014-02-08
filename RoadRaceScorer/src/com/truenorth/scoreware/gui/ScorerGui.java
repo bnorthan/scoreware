@@ -8,14 +8,13 @@ import javax.swing.*;
 import java.io.*;
 import java.awt.GridBagLayout;
 
-import com.truenorth.scoreware.Enums;
-import com.truenorth.scoreware.Racer;
-import com.truenorth.scoreware.Enums.RacePatterns;
 import com.truenorth.scoreware.common.fromcorejava.GBC;
+import com.truenorth.scoreware.data.Enums;
+import com.truenorth.scoreware.data.Race;
+import com.truenorth.scoreware.data.Racer;
+import com.truenorth.scoreware.data.Enums.RacePatterns;
 import com.truenorth.scoreware.matchers.IsRacerMember;
 import com.truenorth.scoreware.apps.ScoringApp;
-
-import com.truenorth.scoreware.Race;
 
 public abstract class ScorerGui extends JFrame
 {
@@ -58,8 +57,8 @@ public abstract class ScorerGui extends JFrame
 		
 		raceCombo=new JComboBox();
 		
-		raceCombo.addItem(Enums.RacePatterns.PROPERTIES);
 		raceCombo.addItem(Enums.RacePatterns.UNKNOWN);
+		raceCombo.addItem(Enums.RacePatterns.PROPERTIES);
 		raceCombo.addItem(Enums.RacePatterns.WINEGLASS2013);
 		raceCombo.addItem(Enums.RacePatterns.PDF_TEXT);
 		raceCombo.addItem(Enums.RacePatterns.RUNSCORE);

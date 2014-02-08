@@ -3,7 +3,7 @@ package com.truenorth.scoreware.membership.readers;
 import java.io.*;
 import java.util.*;
 
-import com.truenorth.scoreware.Racer;
+import com.truenorth.scoreware.data.Racer;
 
 public class SimpleTextMembershipReader extends MembershipReader
 {

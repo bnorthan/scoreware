@@ -1,9 +1,8 @@
 package com.truenorth.scoreware.matchers;
 
-import com.truenorth.scoreware.Racer;
-
 import com.truenorth.scoreware.common.utility.LevenshteinDistance;
 import com.truenorth.scoreware.common.utility.FuzzyUtilities;
+import com.truenorth.scoreware.data.Racer;
 
 /**
  * A matching algorithm that uses fuzzy logic and the Levenshtein algorithm
@@ -20,7 +19,7 @@ public class FuzzyLevenshteinMatcher extends AbstractMatcher
 	
 	public double getCheckThreshold()
 	{
-		return .85;
+		return .9;
 	}
 	
 	public double getMaxMatch()

@@ -1,7 +1,8 @@
 package com.truenorth.scoreware.scoring.schemes;
 
 import java.util.ArrayList;
-import com.truenorth.scoreware.Result;
+
+import com.truenorth.scoreware.data.Result;
 
 /**
  * Extracts all Racers of an age group from a larger list of results
