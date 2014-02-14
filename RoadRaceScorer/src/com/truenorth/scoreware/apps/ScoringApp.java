@@ -90,7 +90,6 @@ abstract public class ScoringApp
 		}
 		
 		raceReader.runChecks();
-	//	System.out.println(race);
 	}
 	
 	public void setRaceInfo(String id,
@@ -128,7 +127,7 @@ abstract public class ScoringApp
 	{
 		if (databaseWriter==null)
 		{
-			databaseWriter=new JDBCSqlWriter(); 
+			databaseWriter=new JDBCSqlWriter("D:\\Brian2012\\hmrrc\\data\\2014\\Database\\Scoreware3.properties"); 
 		}
 		
 		System.out.println(race);
@@ -141,12 +140,10 @@ abstract public class ScoringApp
 	
 	public void writeResults()
 	{
-		if (databaseWriter==null)
+		if (databaseWriter!=null)
 		{
-			databaseWriter=new JDBCSqlWriter();
+			databaseWriter.writeResults2(race.getResults());
 		}
-		
-		databaseWriter.writeResults2(race.getResults());
 	}
 	
 	public void transferToDatabase(String propertiesFile)
@@ -164,7 +161,7 @@ abstract public class ScoringApp
 	{
 		if (databaseWriter==null)
 		{
-			databaseWriter=new JDBCSqlWriter();
+			databaseWriter=new JDBCSqlWriter("D:\\Brian2012\\hmrrc\\data\\2014\\Database\\Scoreware3.properties");
 		}
 		
 		String test=race.getIdentifier();

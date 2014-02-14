@@ -19,7 +19,7 @@ import org.jsoup.select.Elements;
  * @author bnorthan
  *
  */
-public class TextRaceReader extends RaceReader
+public abstract class TextRaceReader extends RaceReader
 {
 	// utility to extract the source as text
 	protected TextExtractor extractor;
@@ -73,11 +73,6 @@ public class TextRaceReader extends RaceReader
 		// set things up for the next steps
 		boolean initialized=initialize();
 		
-		if (!initialized)
-		{
-			return;// false;
-		}
-		
 		// the overall results table may have to be extracted from the rest of the data
 		if (overallExtractor!=null)
 		{
@@ -93,35 +88,43 @@ public class TextRaceReader extends RaceReader
 			
 		// at this point we should just have a list of overall results.  Loop through each line 
 		// and parse out the data
-		if (text!=null)
+		if ((initialized)&&(text!=null))
 		{
 			// verify it can be parsed by trying to parse the first line
 			boolean parsable=resultParser.verify(text.get(0)); 
 			
 			if (!parsable)
 			{
-				// Todo: Throw error????
-				System.out.println("!!!!!!!!!! NO PARSING SCHEME COULD BE FOUND !!!!!!!!!!!!!!!!");
-			
-				System.out.println("header is: "+header);
-				//RunwareUtilities.Pause();
 				
-				// as a final effort analyze the entire table
-				parsable=AnalyzeEntireTable();
+			}
+		
+			if (parsable)
+			{
+				for (String line:text)
+				{
+					Result result=resultParser.parseResultFromLine(line);
+				
+					if (result!=null)
+					{
+						results.add(result);
+					}
+				}
 				
 				return;
 			}
-			
-			for (String line:text)
-			{
-				Result result=resultParser.parseResultFromLine(line);
-				
-				if (result!=null)
-				{
-					results.add(result);
-				}
-			}
-		}		
+		}// end if ((initialized)&&(text!=null))
+		
+		// if we get here nothing worked try analyzeentiretable routine
+		// Todo: Throw error????
+		System.out.println("!!!!!!!!!! NO PARSING SCHEME WORKED !!!!!!!!!!!!!!!!");
+	
+		System.out.println("header is: "+header);
+		//RunwareUtilities.Pause();
+		
+		// as a final effort analyze the entire table
+		AnalyzeEntireTable();
+		
+		return;
 	}
 	
 	public void throwAway()
@@ -155,10 +158,7 @@ public class TextRaceReader extends RaceReader
 		return true;
 	}
 	
-	public void ReadRaceHeader()
-	{
-		
-	}
+
 	
 	protected boolean AnalyzeEntireTable()
 	{

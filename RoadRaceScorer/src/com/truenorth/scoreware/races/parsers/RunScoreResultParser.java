@@ -119,6 +119,15 @@ public class RunScoreResultParser extends ResultParser
 			
 				result.setGunTimeString(gunTime);
 			}
+			// if there is a chip time but no gun time use the chip time as the gun time
+			if ( (this.chipTimeIndex!=-1) && (this.gunTimeIndex==-1) )
+			{
+				String gunTime=getSubStringFromIndex((String)line, chipTimeIndex);
+			
+				gunTime=gunTime.trim();
+			
+				result.setGunTimeString(gunTime);
+			}
 		}
 		catch(Exception e)
 		{

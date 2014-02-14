@@ -39,26 +39,7 @@ public class RaceReaderFactory
 		if (racePattern.equals(RacePatterns.PROPERTIES))
 		{
 			return getRaceReaderFromProperties(race);
-		}
-		
-		// if a specific known race return that reader
-		
-		if (racePattern.equals(RacePatterns.SEFCU2013))
-		{
-			return new Sefcu2013Reader(race);
-		}
-		else if (racePattern.equals(RacePatterns.ANNIVERSARY2013))
-		{
-			return new Anniversary2013Reader(race);
-		}
-		else if (racePattern.equals(RacePatterns.VOORHESVILLE2013))
-		{
-			return new Voorhesville2013Reader(race);
-		}
-		else if (racePattern.equals(RacePatterns.HUDSONMOHAWK2012))
-		{
-			return new HudsonMohawk2012Reader(race);
-		}
+		}	
 		
 		// if pdf (no known pattern)
 		if (racePattern.equals(RacePatterns.PDF_TEXT))

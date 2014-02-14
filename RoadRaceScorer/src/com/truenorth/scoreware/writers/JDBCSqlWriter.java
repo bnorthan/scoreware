@@ -21,7 +21,7 @@ public class JDBCSqlWriter extends SqlWriter
 	String username="scoreware3";
 	String password="Ba3542b36!";
 	
-	public JDBCSqlWriter()
+/*	public JDBCSqlWriter()
 	{
 		
 		// open connection
@@ -36,7 +36,7 @@ public class JDBCSqlWriter extends SqlWriter
 			System.out.println("Could not open database because: "+e.getMessage());
 		}
 	
-	}
+	}*/
 	
 	public JDBCSqlWriter(String propertiesFile)
 	{

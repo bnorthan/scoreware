@@ -54,7 +54,7 @@ public class UnknownResultParser extends ResultParser
 	 * actually look at the data to correct ommissions and mistakes in the header.
 	 * @param headerLine
 	 */
-	public void parseHeaderWithHeader(String headerLine)
+	public void parseHeader(String headerLine)
 	{
 		Map<Enums.ResultHeader, Integer> map=new HashMap<Enums.ResultHeader, Integer>();
 		

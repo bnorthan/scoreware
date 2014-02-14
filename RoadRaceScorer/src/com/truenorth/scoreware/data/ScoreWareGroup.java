@@ -183,7 +183,7 @@ public class ScoreWareGroup
 					
 				}
 				
-				RunwareUtilities.Pause();
+				//RunwareUtilities.Pause();
 			}
 		}
 

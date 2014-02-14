@@ -15,7 +15,7 @@ import com.truenorth.scoreware.races.readers.TextRaceReader;
  * @author bnorthan
  *
  */
-public class WinterSeries2013Reader extends TextRaceReader
+/*public class WinterSeries2013Reader extends TextRaceReader
 {
 	public WinterSeries2013Reader(Race race)
 	{
@@ -27,4 +27,4 @@ public class WinterSeries2013Reader extends TextRaceReader
 		results=new ArrayList<Result>();
 	}
 
-}
+}*/

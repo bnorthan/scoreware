@@ -33,6 +33,7 @@ public class HeaderStrings
 		
 		fnameStrings.add("fname");
 		fnameStrings.add("First Name");
+		fnameStrings.add("First");
 		
 		return fnameStrings;
 	}
@@ -43,6 +44,7 @@ public class HeaderStrings
 		
 		lnameStrings.add("lname");
 		lnameStrings.add("Last Name");
+		lnameStrings.add("Last");
 		
 		return lnameStrings;
 	}

@@ -15,7 +15,7 @@ import com.truenorth.scoreware.races.readers.TextRaceReader;
  * @author bnorthan
  *
  */
-public class Anniversary2013Reader extends TextRaceReader
+/*public class Anniversary2013Reader extends TextRaceReader
 {
 	public Anniversary2013Reader(Race race)
 	{
@@ -26,4 +26,4 @@ public class Anniversary2013Reader extends TextRaceReader
 		
 		results=new ArrayList<Result>();
 	}
-}
+}*/

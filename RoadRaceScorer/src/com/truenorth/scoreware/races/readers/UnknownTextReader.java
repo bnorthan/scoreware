@@ -26,8 +26,8 @@ public class UnknownTextReader extends TextRaceReader
 	{
 		try
 		{
-			// find out if it is runscore -- if so this function will set up for run score
-			if (isRunScore())
+			// try and set up for run score.  If successful return.
+			if (setUpForRunScore())
 			{
 				return true;
 			}
@@ -45,24 +45,18 @@ public class UnknownTextReader extends TextRaceReader
 		{
 			System.out.println(header);
 			
+			// set up to parse unknown data using the header as a guide 
 			resultParser=new UnknownResultParser();
-			
 			UnknownResultParser unknown=(UnknownResultParser)resultParser;
-			unknown.parseHeaderWithHeader(header);
+			unknown.parseHeader(header);
 			
 			overallExtractor=new SimpleGetOverallResults();
 			
 			return true;
 		}
 		
-		// no header
-		boolean parsable=AnalyzeEntireTable();
-				
-		if (parsable)		
-		{
-			
-		}
 		
+		// no header found
 		return false;
 		
 	}
@@ -102,7 +96,12 @@ public class UnknownTextReader extends TextRaceReader
 		return headerString;
 	}
 	
-	private boolean isRunScore()
+	public void ReadRaceHeader()
+	{
+		
+	}
+	
+	private boolean setUpForRunScore()
 	{
 		// find the line with all the "=" characters that will be just above the table header
 		int maxMarkersLine=0;

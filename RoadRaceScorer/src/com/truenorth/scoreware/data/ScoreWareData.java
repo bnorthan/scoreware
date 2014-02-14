@@ -1,6 +1,7 @@
 package com.truenorth.scoreware.data;
 
 import com.truenorth.scoreware.data.DataFormats.DataTypes;
+import com.truenorth.scoreware.data.Enums.ResultHeader;
 
 public class ScoreWareData 
 {

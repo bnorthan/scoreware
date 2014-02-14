@@ -131,9 +131,11 @@ public class DataAnalyzer
 		
 		int r=0;
 		
+		// see if there is a header
+		
 		// build the 2D ArrayList of data by analyzing each line of text
 		for (String line:text)
-		{
+		{	
 			// make a copy of the line
 			String orig=line.toString();
 			
@@ -411,7 +413,7 @@ public class DataAnalyzer
 		 System.out.println(maxType);
 		 System.out.println();
 		 
-		 RunwareUtilities.Pause();
+	//	 RunwareUtilities.Pause();
 		
 		 // return the type that has occurred the most
 		 return maxType;

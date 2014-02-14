@@ -8,6 +8,9 @@ import com.truenorth.scoreware.data.Result;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern; 
+
 
 /**
  * Given a line of text representing a result, parses out the information (place, name, 
@@ -58,9 +61,28 @@ public abstract class ResultParser
 		{
 			if (s.length()==1)
 			{
-				s=" "+s+" ";
+			//	s=" "+s+" ";
 			}
-			int location=text.indexOf(s.toLowerCase());
+			
+			// is it a name
+			//Pattern pattern=Pattern.compile(".*\\b"+s.toLowerCase()+"\\b.*");
+	//		Matcher matcher=pattern.matcher(text);
+			
+		//	int location=-1;
+			
+			//Pattern f=Pattern.compile(".*\\btest\\b.*");
+			//Matcher m=f.matcher("test");
+			
+			//if (matcher.matches())
+			//{
+			//	location=matcher.toMatchResult().start();
+			//}
+			
+			int location=text.indexOf(s.toLowerCase()+" ");
+			
+			if (location==0) return 0;
+			
+			location=text.indexOf(" "+s.toLowerCase());
 			
 			if (location!=-1) return location;
 		}

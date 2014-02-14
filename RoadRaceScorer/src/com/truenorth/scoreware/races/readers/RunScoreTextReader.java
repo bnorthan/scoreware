@@ -113,4 +113,9 @@ public class RunScoreTextReader extends TextRaceReader
 		
 		System.out.println(split.length);*/
 	}
+	
+	public void ReadRaceHeader()
+	{
+		
+	}
 }
