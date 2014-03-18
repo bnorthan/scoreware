@@ -10,7 +10,12 @@ import com.truenorth.scoreware.common.utility.DateTimeParser;
 
 public class Result 
 {
+	// the racer as represented in the results listing
 	Racer racer;
+	
+	// the racer as represented in the membership listing (note: details can be different 
+	// because of spelling mistakes etc.)
+	Racer member;
 	
 	int overallPlace;
 	
@@ -131,6 +136,16 @@ public class Result
 	public Racer getRacer()
 	{
 		return racer;
+	}
+	
+	public void setMember(Racer member)
+	{
+		this.member=member;
+	}
+	
+	public Racer getMember()
+	{
+		return this.member;
 	}
 	
 	public int getPoints()

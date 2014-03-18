@@ -63,6 +63,8 @@ public class UnknownTextReader extends TextRaceReader
 	
 	protected boolean AnalyzeEntireTable()
 	{
+		race.getResults().clear();
+		
 		DataAnalyzer analyzer=new DataAnalyzer(text);
 			
 		analyzer.generateStats();

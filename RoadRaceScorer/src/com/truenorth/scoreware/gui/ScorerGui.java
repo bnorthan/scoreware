@@ -26,7 +26,7 @@ public abstract class ScorerGui extends JFrame
 	JCheckBox checkFromWeb;
 	
 	JButton saveButton;
-	
+	JButton chooseDatabaseButton;
 	JButton databaseButton;
 	JButton updateDatabaseButton;
 	JButton transferDatabaseButton;
@@ -90,6 +90,9 @@ public abstract class ScorerGui extends JFrame
 	    transferDatabaseButton=new JButton("Transfer database");
 	    transferDatabaseButton.addActionListener(new transferDatabaseListener());
 	    
+	    chooseDatabaseButton=new JButton("Open database");
+	    chooseDatabaseButton.addActionListener(new chooseDatabaseListener());
+	    
 	    scoreButton=new JButton("Score");
 	    scoreButton.addActionListener(new scoreActionListener());
 	    
@@ -106,6 +109,7 @@ public abstract class ScorerGui extends JFrame
 		
 		add(saveButton, new GBC(0,11).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
 		add(databaseButton, new GBC(0,12).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
+		add(chooseDatabaseButton, new GBC(1,12).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
 		add(updateDatabaseButton, new GBC(2,12).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
 		add(transferDatabaseButton, new GBC(3,12).setAnchor(GBC.WEST).setFill(GBC.HORIZONTAL));
 		
@@ -245,6 +249,21 @@ public abstract class ScorerGui extends JFrame
 			
 			app.transferToDatabase(chooser.getSelectedFile().getAbsolutePath());
 			
+		}
+	}
+	
+	private class chooseDatabaseListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event)
+		{
+			JFileChooser chooser=new JFileChooser();
+			
+			File dir=new File("D:/Brian2012/hmrrc/data/");
+			chooser.setCurrentDirectory(dir);
+			
+			int success = chooser.showOpenDialog(null);
+			
+			app.setDatabasePropertiesFile(chooser.getSelectedFile().getAbsolutePath());;
 		}
 	}
 	

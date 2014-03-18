@@ -142,8 +142,13 @@ abstract public class ScoringApp
 	{
 		if (databaseWriter!=null)
 		{
-			databaseWriter.writeResults2(race.getResults());
+			databaseWriter.writeResults(race.getResults());
 		}
+	}
+	
+	public void setDatabasePropertiesFile(String propertiesFile)
+	{
+		databaseWriter=new JDBCSqlWriter(propertiesFile);
 	}
 	
 	public void transferToDatabase(String propertiesFile)
@@ -154,7 +159,7 @@ abstract public class ScoringApp
 		
 		writer.CreateRacesTable("races");
 		writer.CreateRaceTable(race);	
-		writer.writeResults2(race.getResults());
+		writer.writeResults(race.getResults());
 	}
 	
 	public void updateDatabase()

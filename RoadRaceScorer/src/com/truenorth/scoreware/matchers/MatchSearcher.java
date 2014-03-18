@@ -60,6 +60,7 @@ public class MatchSearcher
 				if (match!=null)
 				{
 					result.getRacer().setCurrentClub(memberString);
+					result.setMember(match);
 					members.add(result);
 				}
 			

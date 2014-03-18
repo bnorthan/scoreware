@@ -18,6 +18,7 @@ import com.truenorth.scoreware.data.ScoreWareGroup;
 import com.truenorth.scoreware.data.ScoreWareGroups;
 import com.truenorth.scoreware.data.DataFormats.DataTypes;
 import com.truenorth.scoreware.data.Enums.ResultHeader;
+import com.truenorth.scoreware.data.Racer.Sex;
 
 import java.util.Date;
 import java.util.Map;
@@ -265,6 +266,20 @@ public class DataAnalyzer
 		
 	//	RunwareUtilities.Pause();
 		printDataArray();
+		
+		for (ScoreWareGroup group:groups.getGroups())
+		{
+			if (group.getResultHeader()==null)
+			{
+			//	group.setGroupHeaderFromData();
+			}
+			else
+			{
+				group.setDataHeadersFromGroup();
+			}
+			
+			System.out.println("types: "+group.getType()+" type index: "+group.getTypeIndex()+" header: "+group.getResultHeader()+" num: "+group.getData().size());
+		}
 	}
 	
 	private void initStructures()
@@ -770,6 +785,17 @@ public class DataAnalyzer
 				else if (swd.getResultHeader()==ResultHeader.CITY)
 				{
 					result.getRacer().setCity(swd.getDataString());
+				}
+				else if (swd.getResultHeader()==ResultHeader.SEX)
+				{
+					if (swd.getDataString().toLowerCase().equals("f"))
+					{
+						result.getRacer().setSex(Sex.FEMALE);
+					}
+					else 
+					{
+						result.getRacer().setSex(Sex.MALE);
+					}
 				}
 				
 			

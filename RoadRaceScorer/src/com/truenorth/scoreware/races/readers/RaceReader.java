@@ -68,10 +68,12 @@ public abstract class RaceReader
 		race.setIdentifier(id);
 	}
 	
-	public void runChecks()
+	public boolean runChecks()
 	{
 		int numRacers=results.size();
 		System.out.println("Number: "+numRacers);
+		
+		int errors=0;
 				
 		if (numRacers>0)
 		{
@@ -96,6 +98,7 @@ public abstract class RaceReader
 						System.out.println("Problem with place near: "+result);
 						
 						i=place+1;
+						errors++;
 					}
 					else
 					{
@@ -117,6 +120,7 @@ public abstract class RaceReader
 						else
 						{
 							System.out.println("time null near: "+result);
+							errors++;
 						}
 					}
 					
@@ -126,7 +130,17 @@ public abstract class RaceReader
 				}	
 			}
 		}
+	
+		float errorsPercentage = (float)errors/(float)numRacers;
 		
+		// abrtrary but return a fail if error rate is above 10%
+		// (perhaps it sould be 1%)
+		if (errorsPercentage>.10)
+		{
+			return false;
+		}
+		
+		return true;
 		
 	}
 	

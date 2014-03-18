@@ -59,11 +59,7 @@ public abstract class TextRaceReader extends RaceReader
 			System.out.println(s);
 		}
 		
-		// if there are any lines marked to be "thrown away" throw them away
-		if (throwAwayLines!=null)
-		{
-			throwAway();
-		}
+		preprocess();
 		
 		for (String s:text)
 		{
@@ -110,7 +106,7 @@ public abstract class TextRaceReader extends RaceReader
 					}
 				}
 				
-				return;
+				if (runChecks()) return;
 			}
 		}// end if ((initialized)&&(text!=null))
 		
@@ -125,6 +121,42 @@ public abstract class TextRaceReader extends RaceReader
 		AnalyzeEntireTable();
 		
 		return;
+	}
+	
+	public void preprocess()
+	{
+		// if there are any lines marked to be "thrown away" throw them away
+		if (throwAwayLines!=null)
+		{
+			throwAway();
+		}  
+		
+		for (int i=0;i<text.size();i++)
+		{
+			System.out.println(text.get(i));
+			// replace any line breaks and carriage returns with space
+			text.set(i, text.get(i).replace("\r"," ").replace("\n", " "));
+			
+			System.out.println();
+			for(char c:text.get(i).toCharArray())
+			{
+			  System.out.print((int)c+"_"+c+"::");
+			}
+			
+			text.set(i, text.get(i).replace("\t", " "));
+			String temp=text.get(i).replaceAll("[^\\x00-\\x7f]", "");
+			text.set(i, temp);
+		
+			System.out.println();
+			for(char c:text.get(i).toCharArray())
+			{
+			  System.out.print((int)c+"_"+c+"::");
+			}
+		
+			System.out.println();
+			System.out.println(text.get(i));
+		}
+	
 	}
 	
 	public void throwAway()

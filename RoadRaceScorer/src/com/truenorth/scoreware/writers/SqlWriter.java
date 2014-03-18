@@ -89,6 +89,7 @@ public abstract class SqlWriter extends ScorewareWriter
 			{
 				Statement statement=connection.createStatement();
 				
+				// create the table structure
 				String query = "CREATE TABLE "+race.getIdentifier()+ " (FirstName CHAR(50), LastName CHAR(50), Place INT, Age INT, Sex CHAR(1), Time DATETIME, Pace DATETIME, Category CHAR(20), City CHAR(40), State CHAR(2), Points INT, Club CHAR(40) )";
 				
 				System.out.println(query);
@@ -123,10 +124,6 @@ public abstract class SqlWriter extends ScorewareWriter
 				// replace single quotes with two single quotes for SQL
 				raceName=raceName.replace("'", "''");
 				
-				//int year=race.getDate().getYear()+1900;
-				
-				//String dateString="2013-10-13";
-				//String dateString=year+"-"+race.getDate().getMonth()+"-"+race.getDate().getDay();
 				String dateString=DateTimeParser.makeSqlDateString(race.getDate());
 				String timedBy=race.getTimedBy();
 				
@@ -176,7 +173,7 @@ public abstract class SqlWriter extends ScorewareWriter
 		}
 	}
 	
-	public void writeResults2(ArrayList<Result> results)
+	public void writeResults(ArrayList<Result> results)
 	{
 		// create the prepared query... order of data is:
 		// 1. first, 2. last, 3. place, 4. age, 5. gender, 6. time, 7. pace, 8. category, 9. city, 10. state, 11. points, 12. club.
@@ -200,16 +197,11 @@ public abstract class SqlWriter extends ScorewareWriter
 		
 		// loop through all the results
 		for (Result result:results)
-		//for (int i=0;i<75;i++)
 		{	
 			try
-			{
-				//Result result=results.get(i);
-		//		fillPreparedStatementWithResult(ps, result);
-				
+			{			
 				String value=this.createValueWithResult(result);
 				query2+=value+", ";
-	//			ps.addBatch();
 			}
 			catch(Exception e)
 			{
@@ -238,7 +230,7 @@ public abstract class SqlWriter extends ScorewareWriter
 	}
 	
 	// writes the results to the race table
-	public void writeResults(ArrayList<Result> results)
+/*	public void writeResults(ArrayList<Result> results)
 	{
 		Statement statement;
 		
@@ -280,7 +272,7 @@ public abstract class SqlWriter extends ScorewareWriter
 		{
 			JOptionPane.showMessageDialog(null, "error executing batch: "+e.getMessage());
 		}
-	}
+	}*/
 		
 	// run given query on all the results
 	public void RunQueriesOnResults(ArrayList<Result> results, RunwareQuery runwareQuery)
@@ -426,6 +418,31 @@ public abstract class SqlWriter extends ScorewareWriter
 		
 		String lName=result.getRacer().getLastName();
 		lName=lName.replace("'", "''");
+		
+		String fmName;
+		String lmName;
+		
+		if (result.getMember()!=null)
+		{
+			fmName=result.getMember().getFirstName();
+			if (fmName!=null)
+			{
+				fmName=fmName.replace("'", "''");
+			}
+			
+			lmName=result.getRacer().getLastName();
+			if (lmName!=null)
+			{
+				lmName=lmName.replace("'", "''");
+			}
+		}
+		else
+		{
+			fmName="";
+			lmName="";
+		}
+		
+		lmName=lmName.replace("'", "''");
 		
 		int place=result.getOverallPlace();
 		
